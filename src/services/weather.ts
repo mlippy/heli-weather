@@ -6,6 +6,14 @@ export const LOCATIONS = [
     { name: 'Chugach State Park', lat: 61.1667, lon: -149.3333 },
     { name: 'Crown Mountain', lat: 61.2586, lon: -148.8153 },
     { name: 'Majestic Heli (Glacier View)', lat: 61.8153, lon: -147.5256 },
+    { name: 'Valdez Heli-Ski Guides', lat: 61.1315, lon: -145.7360 },
+    { name: 'Black Ops Valdez', lat: 61.0833, lon: -146.2483 },
+    { name: 'H2O Guides (Valdez)', lat: 61.1340, lon: -145.7500 },
+    { name: 'Points North (Cordova)', lat: 60.5487, lon: -145.7480 },
+    { name: 'Tordrillo Mountain Lodge', lat: 61.8080, lon: -151.3530 },
+    { name: 'SEABA (Haines)', lat: 59.2358, lon: -135.4450 },
+    { name: 'Alaska Heliskiing (Haines)', lat: 59.4087, lon: -136.0665 },
+    { name: 'Silverton Mountain Guides (Seward)', lat: 60.1042, lon: -149.4422 },
 ];
 
 export async function getWeather(lat: number, lon: number): Promise<WeatherData> {
