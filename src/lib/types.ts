@@ -8,6 +8,15 @@ export interface WeatherData {
     };
     forecast: DailyForecast[];
     heliAttributes: HeliAttributes;
+    hourly: HourlyForecast[];
+}
+
+export interface HourlyForecast {
+    time: string;
+    temp: number;
+    precipProb: number;
+    condition: string;
+    weatherCode: number;
 }
 
 export interface DailyForecast {

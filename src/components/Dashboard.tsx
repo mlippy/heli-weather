@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { CurrentConditions } from "./CurrentConditions";
 import { HeliCast } from "./HeliCast";
 import { SnowChart } from "./SnowChart";
-import { LocationMap } from "./LocationMap";
+import { SatelliteMap } from "./SatelliteMap";
+import { HourlyForecastList } from "./HourlyForecastList";
 import { WeatherData, Location } from "@/lib/types";
 import { Loader2 } from "lucide-react";
 
@@ -35,17 +36,22 @@ export default function Dashboard({ weather, loading, location }: DashboardProps
     }
 
     return (
-        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 md:gap-6 max-w-5xl mx-auto">
-            {/* Top Row: Current Stats & Heli Status */}
-            <CurrentConditions data={weather.current} />
-            <HeliCast data={weather.heliAttributes} />
+        <div className="flex flex-col gap-6 max-w-5xl mx-auto">
+            {/* Row 1: Current Stats & Heli Status */}
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 md:gap-6">
+                <CurrentConditions data={weather.current} />
+                <HeliCast data={weather.heliAttributes} />
+            </div>
 
-            {/* Middle Row: Charts & Trends */}\
-            <SnowChart data={weather.forecast} />\
-            <LocationMap location={location} />\
-            \
-            {/* Footer / Credits */}\
-            <div className="col-span-1 lg:col-span-2 text-center text-slate-500 text-xs mt-8">
+            {/* Row 2: Hourly Forecast */}
+            <HourlyForecastList data={weather.hourly} />
+
+            {/* Row 3: Main Map & Snow Chart */}
+            <SatelliteMap location={location} />
+            <SnowChart data={weather.forecast} />
+
+            {/* Footer / Credits */}
+            <div className="text-center text-slate-500 text-xs mt-8">
                 <p>Values provided by WeatherNext 2 (via OpenMeteo Proxy).
                     Conditions at ridge line (2000ft) estimated. Units: °F, mph, Inches.</p>
             </div>

@@ -12,7 +12,7 @@ export async function getWeather(lat: number, lon: number): Promise<WeatherData>
         latitude: lat.toString(),
         longitude: lon.toString(),
         current: 'temperature_2m,wind_speed_10m,wind_gusts_10m,weather_code',
-        hourly: 'visibility,wind_speed_80m', // 80m as proxy for ridge/flight level start
+        hourly: 'visibility,wind_speed_80m,temperature_2m,precipitation_probability,weather_code', // 80m as proxy for ridge/flight level start
         daily: 'temperature_2m_max,temperature_2m_min,snowfall_sum,precipitation_probability_max',
         timezone: 'America/Anchorage',
         wind_speed_unit: 'mph',
@@ -64,7 +64,14 @@ export async function getWeather(lat: number, lon: number): Promise<WeatherData>
             visibilityCheck: currentVis >= 3200,
             flightViable,
             reason
-        }
+        },
+        hourly: data.hourly.time.slice(0, 24).map((time: string, i: number) => ({
+            time: new Date(time).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true }),
+            temp: data.hourly.temperature_2m[i],
+            precipProb: data.hourly.precipitation_probability[i],
+            weatherCode: data.hourly.weather_code[i],
+            condition: decodeWeatherCode(data.hourly.weather_code[i]),
+        }))
     };
 }
 
