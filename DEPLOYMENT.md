@@ -18,7 +18,7 @@ Create a **Public** repository named `heli-weather`.
 git init
 git add .
 git commit -m "Initial commit"
-git remote add origin https://github.com/YOUR_USERNAME/heli-weather.git
+git remote add origin https://github.com/mlippy/heli-weather.git
 git branch -M main
 git push -u origin main
 ```

@@ -8,23 +8,12 @@ import { SnowChart } from "./SnowChart";
 import { WeatherData } from "@/lib/types";
 import { Loader2 } from "lucide-react";
 
-export default function Dashboard() {
-    const [weather, setWeather] = useState<WeatherData | null>(null);
-    const [loading, setLoading] = useState(true);
+interface DashboardProps {
+    weather: WeatherData | null;
+    loading: boolean;
+}
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const data = await getAlyeskaWeather();
-                setWeather(data);
-            } catch (error) {
-                console.error("Failed to fetch weather", error);
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetchData();
-    }, []);
+export default function Dashboard({ weather, loading }: DashboardProps) {
 
     if (loading) {
         return (

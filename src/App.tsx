@@ -1,11 +1,31 @@
 import Dashboard from "@/components/Dashboard";
 import { Mountain } from "lucide-react";
-import { SnowBackground } from "@/components/SnowBackground";
+import { WeatherBackground } from "@/components/WeatherBackground";
+import { useEffect, useState } from "react";
+import { WeatherData } from "@/lib/types";
+import { getAlyeskaWeather } from "@/services/weather";
 
 export default function App() {
+    const [weather, setWeather] = useState<WeatherData | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const data = await getAlyeskaWeather();
+                setWeather(data);
+            } catch (error) {
+                console.error("Failed to fetch weather", error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchData();
+    }, []);
+
     return (
         <div className="antialiased min-h-screen relative text-slate-50 bg-slate-900">
-            <SnowBackground />
+            <WeatherBackground condition={weather?.current.condition} />
             <main className="min-h-screen p-4 md:p-12 relative">
                 <div className="max-w-7xl mx-auto relative z-10">
 
@@ -23,7 +43,7 @@ export default function App() {
                     </header>
 
                     {/* Dashboard Content */}
-                    <Dashboard />
+                    <Dashboard weather={weather} loading={loading} />
 
                 </div>
             </main>
