@@ -4,6 +4,8 @@ export const LOCATIONS = [
     { name: 'Alyeska Resort', lat: 60.9705, lon: -149.0991 },
     { name: 'Turnagain Pass', lat: 60.7936, lon: -149.1917 },
     { name: 'Chugach State Park', lat: 61.1667, lon: -149.3333 },
+    { name: 'Crown Mountain', lat: 61.2586, lon: -148.8153 },
+    { name: 'Majestic Heli (Glacier View)', lat: 61.8153, lon: -147.5256 },
 ];
 
 export async function getWeather(lat: number, lon: number): Promise<WeatherData> {
