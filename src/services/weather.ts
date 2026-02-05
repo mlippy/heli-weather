@@ -19,7 +19,7 @@ export async function getAlyeskaWeather(): Promise<WeatherData> {
         temperature_unit: 'fahrenheit',
     });
 
-    const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params.toString()}`, { next: { revalidate: 900 } });
+    const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params.toString()}`);
 
     if (!res.ok) {
         throw new Error('Failed to fetch weather data');
