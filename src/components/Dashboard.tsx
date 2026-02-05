@@ -45,7 +45,7 @@ export default function Dashboard() {
     }
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 max-w-5xl mx-auto">
             {/* Top Row: Current Stats & Heli Status */}
             <CurrentConditions data={weather.current} />
             <HeliCast data={weather.heliAttributes} />

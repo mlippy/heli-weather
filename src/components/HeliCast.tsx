@@ -6,7 +6,7 @@ export function HeliCast({ data }: { data: WeatherData["heliAttributes"] }) {
 
     return (
         <div className={`glass-panel p-6 rounded-3xl border-l-4 ${isGo ? 'border-signal-green' : 'border-signal-red'}`}>
-            <div className="flex items-start justify-between">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6 sm:gap-0">
                 <div>
                     <h2 className="text-xl font-bold text-arctic-200 mb-2 uppercase tracking-wider flex items-center gap-2">
                         <Plane size={20} className={isGo ? "-rotate-45" : ""} /> Heli Ops Status

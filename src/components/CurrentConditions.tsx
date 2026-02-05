@@ -12,7 +12,7 @@ export function CurrentConditions({ data }: { data: WeatherData["current"] }) {
                 <Thermometer size={20} /> Current Conditions
             </h2>
 
-            <div className="grid grid-cols-2 gap-8 relative z-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 relative z-10">
                 <div>
                     <p className="text-slate-400 text-sm">Temperature</p>
                     <div className="text-5xl font-bold text-white tracking-tighter">
