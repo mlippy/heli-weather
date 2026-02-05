@@ -1,0 +1,15 @@
+FAIL __tests__/weather.test.ts
+  ΓùÅ Test suite failed to run
+
+    Cannot find module '@testing-library/jest-dom' from 'jest.setup.js'
+
+    
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/index.js:863:11)
+      at Object.<anonymous> (jest.setup.js:5:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        1.812 s
+Ran all test suites.
