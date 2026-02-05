@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getAlyeskaWeather } from "@/services/weather";
 import { CurrentConditions } from "./CurrentConditions";
 import { HeliCast } from "./HeliCast";
 import { SnowChart } from "./SnowChart";

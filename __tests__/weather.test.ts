@@ -1,4 +1,4 @@
-import { getAlyeskaWeather } from '../src/services/weather';
+import { getWeather, LOCATIONS } from '../src/services/weather';
 import '@testing-library/jest-dom';
 
 // Mock the global fetch
@@ -33,7 +33,7 @@ describe('Heli-Ski Logic V1', () => {
             }),
         });
 
-        const data = await getAlyeskaWeather();
+        const data = await getWeather(LOCATIONS[0].lat, LOCATIONS[0].lon);
         expect(data.heliAttributes.flightViable).toBe(true);
         expect(data.heliAttributes.reason).toBe(null);
     });
@@ -51,7 +51,7 @@ describe('Heli-Ski Logic V1', () => {
             }),
         });
 
-        const data = await getAlyeskaWeather();
+        const data = await getWeather(LOCATIONS[0].lat, LOCATIONS[0].lon);
         expect(data.heliAttributes.flightViable).toBe(false);
         expect(data.heliAttributes.reason).toBe("Poor Visibility");
     });
@@ -69,7 +69,7 @@ describe('Heli-Ski Logic V1', () => {
             }),
         });
 
-        const data = await getAlyeskaWeather();
+        const data = await getWeather(LOCATIONS[0].lat, LOCATIONS[0].lon);
         expect(data.heliAttributes.flightViable).toBe(false);
         expect(data.heliAttributes.reason).toBe("High Winds Aloft");
     });

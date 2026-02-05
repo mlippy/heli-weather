@@ -4,23 +4,29 @@ export interface WeatherData {
         windSpeed: number;
         windGust: number;
         condition: string;
-        visibility: number; // meters
+        visibility: number;
     };
     forecast: DailyForecast[];
-    heliAttributes: {
-        baseWind: number; // at 2000ft approx
-        visibilityCheck: boolean;
-        flightViable: boolean;
-        reason: string | null;
-    };
+    heliAttributes: HeliAttributes;
 }
 
 export interface DailyForecast {
     date: string;
     maxTemp: number;
     minTemp: number;
-    snowfall: number; // cm
+    snowfall: number;
     precipProb: number;
 }
 
-export type HeliStatus = 'GO' | 'STANDBY' | 'NO-FLY';
+export interface HeliAttributes {
+    baseWind: number;
+    visibilityCheck: boolean;
+    flightViable: boolean;
+    reason: string | null;
+}
+
+export interface Location {
+    name: string;
+    lat: number;
+    lon: number;
+}

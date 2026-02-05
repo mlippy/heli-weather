@@ -1,15 +1,16 @@
 import { WeatherData } from '@/lib/types';
 
-const ALYESKA_COORDS = {
-    lat: 60.9705,
-    lon: -149.0991
-};
+export const LOCATIONS = [
+    { name: 'Alyeska Resort', lat: 60.9705, lon: -149.0991 },
+    { name: 'Turnagain Pass', lat: 60.7936, lon: -149.1917 },
+    { name: 'Chugach State Park', lat: 61.1667, lon: -149.3333 },
+];
 
-export async function getAlyeskaWeather(): Promise<WeatherData> {
+export async function getWeather(lat: number, lon: number): Promise<WeatherData> {
     // Fetch current, hourly (for visibility/wind at altitude), and daily
     const params = new URLSearchParams({
-        latitude: ALYESKA_COORDS.lat.toString(),
-        longitude: ALYESKA_COORDS.lon.toString(),
+        latitude: lat.toString(),
+        longitude: lon.toString(),
         current: 'temperature_2m,wind_speed_10m,wind_gusts_10m,weather_code',
         hourly: 'visibility,wind_speed_80m', // 80m as proxy for ridge/flight level start
         daily: 'temperature_2m_max,temperature_2m_min,snowfall_sum,precipitation_probability_max',
