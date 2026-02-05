@@ -4,15 +4,17 @@ import { useEffect, useState } from "react";
 import { CurrentConditions } from "./CurrentConditions";
 import { HeliCast } from "./HeliCast";
 import { SnowChart } from "./SnowChart";
-import { WeatherData } from "@/lib/types";
+import { LocationMap } from "./LocationMap";
+import { WeatherData, Location } from "@/lib/types";
 import { Loader2 } from "lucide-react";
 
 interface DashboardProps {
     weather: WeatherData | null;
     loading: boolean;
+    location: Location;
 }
 
-export default function Dashboard({ weather, loading }: DashboardProps) {
+export default function Dashboard({ weather, loading, location }: DashboardProps) {
 
     if (loading) {
         return (
@@ -38,10 +40,11 @@ export default function Dashboard({ weather, loading }: DashboardProps) {
             <CurrentConditions data={weather.current} />
             <HeliCast data={weather.heliAttributes} />
 
-            {/* Middle Row: Charts & Trends */}
-            <SnowChart data={weather.forecast} />
-
-            {/* Footer / Credits */}
+            {/* Middle Row: Charts & Trends */}\
+            <SnowChart data={weather.forecast} />\
+            <LocationMap location={location} />\
+            \
+            {/* Footer / Credits */}\
             <div className="col-span-1 lg:col-span-2 text-center text-slate-500 text-xs mt-8">
                 <p>Values provided by WeatherNext 2 (via OpenMeteo Proxy).
                     Conditions at ridge line (2000ft) estimated. Units: °F, mph, Inches.</p>

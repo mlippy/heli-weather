@@ -26,7 +26,7 @@ export default function App() {
     }, [selectedLocation]);
 
     return (
-        <div className="antialiased min-h-screen relative text-slate-50 bg-slate-900">
+        <div className="antialiased min-h-screen relative text-slate-50">
             <WeatherBackground condition={weather?.current.condition} />
             <main className="min-h-screen p-4 md:p-12 relative">
                 <div className="max-w-7xl mx-auto relative z-10">
@@ -61,7 +61,7 @@ export default function App() {
                     </header>
 
                     {/* Dashboard Content */}
-                    <Dashboard weather={weather} loading={loading} />
+                    <Dashboard weather={weather} loading={loading} location={selectedLocation} />
 
                 </div>
             </main>
