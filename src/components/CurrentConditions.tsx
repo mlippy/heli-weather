@@ -16,7 +16,7 @@ export function CurrentConditions({ data }: { data: WeatherData["current"] }) {
                 <div>
                     <p className="text-slate-400 text-sm">Temperature</p>
                     <div className="text-5xl font-bold text-white tracking-tighter">
-                        {Math.round(data.temp)}°
+                        {Math.round(data.temp)}&deg;
                     </div>
                     <p className="text-arctic-400 mt-1 font-medium">{data.condition}</p>
                 </div>

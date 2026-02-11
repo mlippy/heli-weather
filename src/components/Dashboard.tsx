@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import "react";
 import { CurrentConditions } from "./CurrentConditions";
 import { HeliCast } from "./HeliCast";
 import { SnowChart } from "./SnowChart";
@@ -53,7 +53,7 @@ export default function Dashboard({ weather, loading, location }: DashboardProps
             {/* Footer / Credits */}
             <div className="text-center text-slate-500 text-xs mt-8">
                 <p>Values provided by WeatherNext 2 (via OpenMeteo Proxy).
-                    Conditions at ridge line (2000ft) estimated. Units: °F, mph, Inches.</p>
+                    Conditions at ridge line (2000ft) estimated. Units: &deg;F, mph, Inches.</p>
             </div>
         </div>
     );

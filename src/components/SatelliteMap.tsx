@@ -46,7 +46,7 @@ function MapController({ selectedLocation }: { selectedLocation: Location }) {
         }
     }, [map]);
 
-    // Optional: Fly to selected location if desire, but user asked for "entire area visible"
+    // Optional: Fly to selected location if desire, but user asked for entire area visible
     // So we might just keep the view or subtle pan. 
     // For now, let's prioritize showing the popup for the selected one.
 

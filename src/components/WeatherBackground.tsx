@@ -11,7 +11,7 @@ interface Particle {
     drift: number;
 }
 
-type WeatherType = 'Snow' | 'Rain' | 'Clear' | 'Clouds' | 'Fog' | 'Storm' | 'Drizzle' | 'Heavy Shower' | 'Partly Cloudy';
+
 
 export function WeatherBackground({ condition }: { condition?: string }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
