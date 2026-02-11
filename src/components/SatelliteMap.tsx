@@ -8,7 +8,7 @@ import L from "leaflet";
 import { useEffect, useRef } from "react";
 
 // Fix for default marker icon in React-Leaflet
-// @ts-ignore
+// @ts-expect-error - Fix for known Leaflet icon issue
 delete L.Icon.Default.prototype._getIconUrl;
 
 const DefaultIcon = L.icon({
@@ -35,7 +35,7 @@ L.Icon.Default.mergeOptions({
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-function MapController({ selectedLocation }: { selectedLocation: Location }) {
+function MapController() {
     const map = useMap();
 
     // Fit bounds to show all locations on mount
@@ -76,7 +76,7 @@ export function SatelliteMap({ location }: { location: Location }) {
                     style={{ height: "100%", width: "100%" }}
                 >
                     <TileLayer
-                        attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+                        attribution='&copy; <a href="https://www.esri.com/">Esri</a>'
                         url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
                     />
                     <TileLayer
@@ -106,7 +106,7 @@ export function SatelliteMap({ location }: { location: Location }) {
                         </Marker>
                     ))}
 
-                    <MapController selectedLocation={location} />
+                    <MapController />
                 </MapContainer>
             </div>
         </div>

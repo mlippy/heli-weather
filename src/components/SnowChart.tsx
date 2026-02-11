@@ -47,7 +47,7 @@ export function SnowChart({ data }: { data: WeatherData["forecast"] }) {
 
             <div className="mt-4 flex justify-between text-sm text-slate-400">
                 <p>Next 5 Days</p>
-                <p>Total Potential: <span className="text-white font-bold">{chartData.reduce((a, b) => a + b.snow, 0).toFixed(1)}"</span></p>
+                <p>Total Potential: <span className="text-white font-bold">{chartData.reduce((a, b) => a + b.snow, 0).toFixed(1)}&quot;</span></p>
             </div>
         </div>
     );
