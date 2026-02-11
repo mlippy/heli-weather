@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Heli-Vibe Heli Skiing Weather App
 
-## Getting Started
+A static React application designed to provide crucial weather data for heli-skiing operations. This app aggregates real-time weather conditions, forecasts, and improved satellite imagery to help guides and pilots make informed decisions.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+-   **Dashboard:** Instant overview of current conditions (temp, wind, visibility) and heli-specific status indicators.
+-   **Hourly Forecast:** Detailed hourly breakdown of weather metrics.
+-   **Interactive Map:** Satellite view with location markers for key landing zones and weather stations.
+-   **Snow Chart:** 7-day snow accumulation forecast.
+-   **Multiple Locations:** Switch between different operational zones (e.g., Base, Ridge Top, Pick-up Zones).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Origins
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This project was "vibe coded" during downtime while waiting for a weather hold to clear for a heli-skiing trip. It was built rapidly to address a specific need for consolidated, easy-to-read weather data in a high-stakes environment.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tech Stack
 
-## Learn More
+-   **React:** UI library (Vite for build tooling).
+-   **TypeScript:** Type safety and developer experience.
+-   **Tailwind CSS:** Utility-first styling for a custom, responsive design.
+-   **Leaflet / React-Leaflet:** Interactive maps.
+-   **Recharts:** Data visualization for snow totals.
+-   **Lucide React:** Icons.
+-   **OpenMeteo API:** Source for weather data (free for non-commercial use).
 
-To learn more about Next.js, take a look at the following resources:
+## Development
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/mlippy/heli-weather.git
+    cd heli-weather
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-## Deploy on Vercel
+3.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4.  **Build for production:**
+    ```bash
+    npm run build
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment
+
+This project is configured as a static site and can be deployed to GitHub Pages, Vercel, or any static hosting provider.
