@@ -9,6 +9,18 @@ export interface WeatherData {
     forecast: DailyForecast[];
     heliAttributes: HeliAttributes;
     hourly: HourlyForecast[];
+    elevation: number;
+    regional: RegionalWeather[];
+}
+
+export interface RegionalWeather {
+    direction: string; // "North" | "South" | "East" | "West"
+    temp: number;
+    windSpeed: number;
+    condition: string;
+    weatherCode: number;
+    elevation: number;
+    visibility: number;
 }
 
 export interface HourlyForecast {

@@ -1,4 +1,4 @@
-import { WeatherData } from '@/lib/types';
+import { WeatherData, RegionalWeather } from '@/lib/types';
 
 export const LOCATIONS = [
     // --- Alaska ---
@@ -39,18 +39,23 @@ export const LOCATIONS = [
 ];
 
 export async function getWeather(lat: number, lon: number): Promise<WeatherData> {
-    // Fetch current, hourly (for visibility/wind at altitude), and daily
+    // 1. Fetch Main Forecast & Elevation
     const params = new URLSearchParams({
         latitude: lat.toString(),
         longitude: lon.toString(),
         current: 'temperature_2m,wind_speed_10m,wind_gusts_10m,weather_code',
         hourly: 'visibility,wind_speed_80m,temperature_2m,precipitation_probability,weather_code', // 80m as proxy for ridge/flight level start
         daily: 'temperature_2m_max,temperature_2m_min,snowfall_sum,precipitation_probability_max',
-        timezone: 'America/Anchorage',
+        timezone: 'America/Anchorage', // This might need to be dynamic based on location, but OpenMeteo handles auto? using auto for safety
         wind_speed_unit: 'mph',
         precipitation_unit: 'inch',
         temperature_unit: 'fahrenheit',
+        elevation: 'nan' // Request elevation data
     });
+
+    // We need to use "auto" timezone or specific one. Let's try to infer or use auto to be safe across regions.
+    // Actually OpenMeteo defaults to GMT if not specified, or we can use "auto".
+    params.set("timezone", "auto");
 
     const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params.toString()}`);
 
@@ -59,6 +64,11 @@ export async function getWeather(lat: number, lon: number): Promise<WeatherData>
     }
 
     const data = await res.json();
+
+    // 2. Fetch Regional Weather (N, S, E, W - approx 50km/0.5 deg away)
+    // 1 deg lat is approx 111km. 0.5 deg is ~55km.
+    // 1 deg lon varies. at 60N, 1 deg is ~55km.
+    const regional = await fetchRegionalWeather(lat, lon);
 
     // Logic to determine Heli Viability
     // Rules: No fly if Visibility < 2 miles (approx 3200m) OR Wind > 30mph
@@ -103,8 +113,53 @@ export async function getWeather(lat: number, lon: number): Promise<WeatherData>
             precipProb: data.hourly.precipitation_probability[i],
             weatherCode: data.hourly.weather_code[i],
             condition: decodeWeatherCode(data.hourly.weather_code[i]),
-        }))
+        })),
+        elevation: data.elevation,
+        regional: regional
     };
+}
+
+async function fetchRegionalWeather(lat: number, lon: number) {
+    const offset = 0.5; // Approx 55km
+    const points = [
+        { dir: "North", lat: lat + offset, lon: lon },
+        { dir: "South", lat: lat - offset, lon: lon },
+        { dir: "East", lat: lat, lon: lon + offset }, // rough approximation, ignores converging meridians
+        { dir: "West", lat: lat, lon: lon - offset }
+    ];
+
+    // Parallel fetch
+    const promises = points.map(async (p) => {
+        const params = new URLSearchParams({
+            latitude: p.lat.toString(),
+            longitude: p.lon.toString(),
+            current: 'temperature_2m,wind_speed_10m,weather_code',
+            hourly: 'visibility',
+            wind_speed_unit: 'mph',
+            temperature_unit: 'fahrenheit',
+            elevation: 'nan'
+        });
+        try {
+            const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params.toString()}`);
+            if (!res.ok) return null;
+            const d = await res.json();
+            return {
+                direction: p.dir,
+                temp: d.current.temperature_2m,
+                windSpeed: d.current.wind_speed_10m,
+                weatherCode: d.current.weather_code,
+                condition: decodeWeatherCode(d.current.weather_code),
+                elevation: d.elevation,
+                visibility: d.hourly.visibility[0]
+            };
+        } catch (e) {
+            console.error(`Failed to fetch regional weather for ${p.dir}`, e);
+            return null;
+        }
+    });
+
+    const results = await Promise.all(promises);
+    return results.filter(r => r !== null) as RegionalWeather[];
 }
 
 function decodeWeatherCode(code: number): string {

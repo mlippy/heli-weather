@@ -1,7 +1,7 @@
 import { WeatherData } from "@/lib/types";
 import { Wind, Thermometer, Eye, CloudSnow } from "lucide-react";
 
-export function CurrentConditions({ data }: { data: WeatherData["current"] }) {
+export function CurrentConditions({ data, elevation }: { data: WeatherData["current"], elevation: number | undefined }) {
     return (
         <div className="glass-panel p-6 rounded-3xl relative overflow-hidden">
             <div className="absolute top-0 right-0 p-4 opacity-10">
@@ -19,6 +19,7 @@ export function CurrentConditions({ data }: { data: WeatherData["current"] }) {
                         {Math.round(data.temp)}&deg;
                     </div>
                     <p className="text-arctic-400 mt-1 font-medium">{data.condition}</p>
+                    {elevation && <p className="text-xs text-slate-500 mt-2">Elev: {Math.round(elevation)} ft</p>}
                 </div>
 
                 <div className="space-y-4">
