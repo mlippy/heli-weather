@@ -5,6 +5,8 @@ export interface WeatherData {
         windGust: number;
         condition: string;
         visibility: number;
+        lightCondition: string;
+        cloudCeiling: string;
     };
     forecast: DailyForecast[];
     heliAttributes: HeliAttributes;

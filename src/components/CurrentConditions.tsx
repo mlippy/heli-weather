@@ -1,5 +1,5 @@
 import { WeatherData } from "@/lib/types";
-import { Wind, Thermometer, Eye, CloudSnow } from "lucide-react";
+import { Wind, Thermometer, Eye, CloudSnow, Sun } from "lucide-react";
 
 export function CurrentConditions({ data, elevation }: { data: WeatherData["current"], elevation: number | undefined }) {
     return (
@@ -24,27 +24,44 @@ export function CurrentConditions({ data, elevation }: { data: WeatherData["curr
 
                 <div className="space-y-4">
                     <div className="flex items-center gap-3">
-                        <div className="p-2 bg-white/10 rounded-lg">
+                        <div className="bg-white/10 p-2 rounded-lg">
                             <Wind size={20} className="text-arctic-300" />
                         </div>
                         <div>
-                            <p className="text-xs text-slate-400">Wind (Gust)</p>
-                            <p className="text-lg font-semibold text-white">
-                                {Math.round(data.windSpeed)} <span className="text-sm text-slate-400">mph</span>
-                                <span className="text-slate-500 mx-1">/</span>
-                                <span className="text-signal-orange">{Math.round(data.windGust)}</span>
-                            </p>
+                            <p className="text-slate-400 text-xs uppercase tracking-wider">Wind Speed</p>
+                            <p className="text-white font-mono text-lg">{Math.round(data.windSpeed)} <span className="text-sm text-slate-500">mph</span></p>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <div className="p-2 bg-white/10 rounded-lg">
+                        <div className="bg-white/10 p-2 rounded-lg">
+                            <Wind size={20} className="text-arctic-300 opacity-60" />
+                        </div>
+                        <div>
+                            <p className="text-slate-400 text-xs uppercase tracking-wider">Wind Gust</p>
+                            <p className="text-white font-mono text-lg">{Math.round(data.windGust)} <span className="text-sm text-slate-500">mph</span></p>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                        <div className="bg-white/10 p-2 rounded-lg">
                             <Eye size={20} className="text-arctic-300" />
                         </div>
                         <div>
-                            <p className="text-xs text-slate-400">Visibility</p>
-                            <p className="text-lg font-semibold text-white">
-                                {(data.visibility / 1609.34).toFixed(1)} <span className="text-sm text-slate-400">mi</span>
+                            <p className="text-slate-400 text-xs uppercase tracking-wider">Visibility</p>
+                            <p className="text-white font-mono text-lg">{(data.visibility / 1609.34).toFixed(1)} <span className="text-sm text-slate-500">mi</span></p>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                        <div className="bg-white/10 p-2 rounded-lg">
+                            <Sun size={20} className="text-arctic-300" />
+                        </div>
+                        <div>
+                            <p className="text-slate-400 text-xs uppercase tracking-wider">Light & Ceiling</p>
+                            <p className="text-white font-mono text-sm leading-tight">
+                                {data.lightCondition}<br />
+                                <span className="text-slate-500 text-xs">{data.cloudCeiling}</span>
                             </p>
                         </div>
                     </div>

@@ -43,7 +43,7 @@ export async function getWeather(lat: number, lon: number): Promise<WeatherData>
     const params = new URLSearchParams({
         latitude: lat.toString(),
         longitude: lon.toString(),
-        current: 'temperature_2m,wind_speed_10m,wind_gusts_10m,weather_code',
+        current: 'temperature_2m,wind_speed_10m,wind_gusts_10m,weather_code,cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high,direct_radiation,diffuse_radiation',
         hourly: 'visibility,wind_speed_80m,temperature_2m,precipitation_probability,weather_code', // 80m as proxy for ridge/flight level start
         daily: 'temperature_2m_max,temperature_2m_min,snowfall_sum,precipitation_probability_max',
         timezone: 'America/Anchorage', // This might need to be dynamic based on location, but OpenMeteo handles auto? using auto for safety
@@ -70,8 +70,22 @@ export async function getWeather(lat: number, lon: number): Promise<WeatherData>
     // 1 deg lon varies. at 60N, 1 deg is ~55km.
     const regional = await fetchRegionalWeather(lat, lon);
 
+    // Helper: Estimate Ceiling
+    const ceiling = estimateCeiling(
+        data.current.cloud_cover_low,
+        data.current.cloud_cover_mid,
+        data.current.cloud_cover_high
+    );
+
+    // Helper: Estimate Light
+    const light = calculateLightCondition(
+        data.current.direct_radiation,
+        data.current.diffuse_radiation,
+        data.current.cloud_cover
+    );
+
     // Logic to determine Heli Viability
-    // Rules: No fly if Visibility < 2 miles (approx 3200m) OR Wind > 30mph
+    // Rules: No fly if Visibility < 2 miles (approx 3200m) OR Wind > 30mph OR Flat Light
     const currentVis = data.hourly.visibility[0]; // simplistic, should match current hour
     const currentWind80m = data.hourly.wind_speed_80m[0];
 
@@ -84,6 +98,9 @@ export async function getWeather(lat: number, lon: number): Promise<WeatherData>
     } else if (currentWind80m > 30) {
         flightViable = false;
         reason = "High Winds Aloft";
+    } else if (light === "Flat Light") {
+        flightViable = false;
+        reason = "Flat Light / Low Contrast";
     }
 
     return {
@@ -93,6 +110,8 @@ export async function getWeather(lat: number, lon: number): Promise<WeatherData>
             windGust: data.current.wind_gusts_10m,
             condition: decodeWeatherCode(data.current.weather_code),
             visibility: currentVis,
+            lightCondition: light,
+            cloudCeiling: ceiling,
         },
         forecast: data.daily.time.map((date: string, i: number) => ({
             date,
@@ -117,6 +136,33 @@ export async function getWeather(lat: number, lon: number): Promise<WeatherData>
         elevation: data.elevation,
         regional: regional
     };
+}
+
+function estimateCeiling(low: number, mid: number, high: number): string {
+    if (low > 50) return "Low (< 6500ft)";
+    if (mid > 50) return "Mid (6500-20k ft)";
+    if (high > 50) return "High (> 20k ft)";
+    return "Unlimited / Clear";
+}
+
+function calculateLightCondition(direct: number, diffuse: number, cloudCover: number): string {
+    // If it's night (both near 0), handled simply?
+    if (direct < 5 && diffuse < 5) return "Low Light / Night";
+
+    const total = direct + diffuse;
+    if (total === 0) return "Low Light";
+
+    // Ratio of diffuse to total. High diffuse means scattered light (flat).
+    // If cloud cover is high (>85%) and most light is diffuse, it's flat.
+    const diffuseRatio = diffuse / total;
+
+    if (cloudCover > 85 && diffuseRatio > 0.8) {
+        return "Flat Light";
+    }
+    if (cloudCover > 60 && diffuseRatio > 0.6) {
+        return "Soft / Diffused";
+    }
+    return "High Contrast";
 }
 
 async function fetchRegionalWeather(lat: number, lon: number) {
