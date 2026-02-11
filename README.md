@@ -1,5 +1,7 @@
 # Heli-Vibe Heli Skiing Weather App
 
+**Live Demo:** [https://mlippy.github.io/heli-weather/](https://mlippy.github.io/heli-weather/)
+
 A static React application designed to provide crucial weather data for heli-skiing operations. This app aggregates real-time weather conditions, forecasts, and improved satellite imagery to help guides and pilots make informed decisions.
 
 ## Features
