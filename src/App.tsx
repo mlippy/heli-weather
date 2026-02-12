@@ -1,6 +1,6 @@
 import Dashboard from "@/components/Dashboard";
 import LocationsTable from "@/components/LocationsTable";
-import { Mountain } from "lucide-react";
+import logoImg from "@/lib/images/Gemini_Generated_Image_xokrtixokrtixokr-Picsart-BackgroundRemover.png";
 import { WeatherBackground } from "@/components/WeatherBackground";
 import { useEffect, useState } from "react";
 import { WeatherData } from "@/lib/types";
@@ -34,11 +34,11 @@ export default function App() {
 
                     {/* Header */}
                     <header className="mb-12 flex flex-col items-center justify-center text-center">
-                        <div className="p-4 bg-arctic-500/10 rounded-full mb-6 border border-arctic-400/20 backdrop-blur-md">
-                            <Mountain className="text-arctic-300 w-12 h-12" />
+                        <div className="mb-6">
+                            <img src={logoImg} alt="Heli Vibes" className="w-24 h-24 md:w-32 md:h-32 rounded-full" />
                         </div>
                         <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-arctic-200 mb-4">
-                            HELI<span className="text-arctic-500"> VIBE</span>
+                            HELI<span className="text-arctic-500"> VIBES</span>
                         </h1>
                         <div className="relative">
                             <select
