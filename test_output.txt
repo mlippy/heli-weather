@@ -1,15 +1,58 @@
+(node:2707752) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
 FAIL __tests__/weather.test.ts
-  ΓùÅ Test suite failed to run
+  Heli-Ski Logic V1
+    ├ù should be GO if conditions are perfect (4 ms)
+    ├ù should be NO-FLY if visibility is low (< 2 miles / 3200m) (3 ms)
+    ├ù should be NO-FLY if ridge wind is high (> 30mph) (3 ms)
 
-    Cannot find module '@testing-library/jest-dom' from 'jest.setup.js'
+  ΓùÅ Heli-Ski Logic V1 ΓÇ║ should be GO if conditions are perfect
 
-    
+    TypeError: Cannot read properties of undefined (reading 'slice')
 
-      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/index.js:863:11)
-      at Object.<anonymous> (jest.setup.js:5:1)
+      129 |             reason
+      130 |         },
+    > 131 |         hourly: data.hourly.time.slice(0, 24).map((time: string, i: number) => ({
+          |                                  ^
+      132 |             time: new Date(time).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true }),
+      133 |             temp: data.hourly.temperature_2m[i],
+      134 |             precipProb: data.hourly.precipitation_probability[i],
+
+      at getWeather (src/services/weather.ts:131:34)
+      at Object.<anonymous> (__tests__/weather.test.ts:36:22)
+
+  ΓùÅ Heli-Ski Logic V1 ΓÇ║ should be NO-FLY if visibility is low (< 2 miles / 3200m)
+
+    TypeError: Cannot read properties of undefined (reading 'slice')
+
+      129 |             reason
+      130 |         },
+    > 131 |         hourly: data.hourly.time.slice(0, 24).map((time: string, i: number) => ({
+          |                                  ^
+      132 |             time: new Date(time).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true }),
+      133 |             temp: data.hourly.temperature_2m[i],
+      134 |             precipProb: data.hourly.precipitation_probability[i],
+
+      at getWeather (src/services/weather.ts:131:34)
+      at Object.<anonymous> (__tests__/weather.test.ts:54:22)
+
+  ΓùÅ Heli-Ski Logic V1 ΓÇ║ should be NO-FLY if ridge wind is high (> 30mph)
+
+    TypeError: Cannot read properties of undefined (reading 'slice')
+
+      129 |             reason
+      130 |         },
+    > 131 |         hourly: data.hourly.time.slice(0, 24).map((time: string, i: number) => ({
+          |                                  ^
+      132 |             time: new Date(time).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true }),
+      133 |             temp: data.hourly.temperature_2m[i],
+      134 |             precipProb: data.hourly.precipitation_probability[i],
+
+      at getWeather (src/services/weather.ts:131:34)
+      at Object.<anonymous> (__tests__/weather.test.ts:72:22)
 
 Test Suites: 1 failed, 1 total
-Tests:       0 total
+Tests:       3 failed, 3 total
 Snapshots:   0 total
-Time:        1.812 s
+Time:        2.758 s
 Ran all test suites.

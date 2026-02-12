@@ -20,8 +20,12 @@ describe('Heli-Ski Logic V1', () => {
                     weather_code: 0,
                 },
                 hourly: {
-                    visibility: [10000], // 10km (clear)
-                    wind_speed_80m: [15] // 15mph aloft
+                    visibility: [10000],
+                    wind_speed_80m: [15],
+                    time: Array(24).fill('2026-02-05T12:00:00'),
+                    temperature_2m: Array(24).fill(25),
+                    precipitation_probability: Array(24).fill(0),
+                    weather_code: Array(24).fill(0)
                 },
                 daily: {
                     time: ['2026-02-05'],
@@ -44,8 +48,12 @@ describe('Heli-Ski Logic V1', () => {
             json: async () => ({
                 current: { temperature_2m: 25, wind_speed_10m: 10, wind_gusts_10m: 15, weather_code: 0 },
                 hourly: {
-                    visibility: [1000], // 1km (Fog)
-                    wind_speed_80m: [10]
+                    visibility: [1000],
+                    wind_speed_80m: [10],
+                    time: Array(24).fill('2026-02-05T12:00:00'),
+                    temperature_2m: Array(24).fill(25),
+                    precipitation_probability: Array(24).fill(0),
+                    weather_code: Array(24).fill(0)
                 },
                 daily: { time: [], temperature_2m_max: [], temperature_2m_min: [], snowfall_sum: [], precipitation_probability_max: [] }
             }),
@@ -63,7 +71,11 @@ describe('Heli-Ski Logic V1', () => {
                 current: { temperature_2m: 25, wind_speed_10m: 10, wind_gusts_10m: 15, weather_code: 0 },
                 hourly: {
                     visibility: [10000],
-                    wind_speed_80m: [45] // 45mph aloft
+                    wind_speed_80m: [45],
+                    time: Array(24).fill('2026-02-05T12:00:00'),
+                    temperature_2m: Array(24).fill(25),
+                    precipitation_probability: Array(24).fill(0),
+                    weather_code: Array(24).fill(0)
                 },
                 daily: { time: [], temperature_2m_max: [], temperature_2m_min: [], snowfall_sum: [], precipitation_probability_max: [] }
             }),

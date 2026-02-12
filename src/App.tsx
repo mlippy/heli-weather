@@ -58,6 +58,20 @@ export default function App() {
                                 <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
                             </div>
                         </div>
+
+                        <div className="mt-6 max-w-2xl mx-auto space-y-2">
+                            <p className="text-slate-300 text-lg leading-relaxed font-light">{selectedLocation.description}</p>
+                            {selectedLocation.website && (
+                                <a
+                                    href={selectedLocation.website}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 text-arctic-400 hover:text-arctic-300 transition-colors font-medium border-b border-arctic-400/30 pb-0.5 hover:border-arctic-300"
+                                >
+                                    Visit Website
+                                </a>
+                            )}
+                        </div>
                     </header>
 
                     {/* Dashboard Content */}
