@@ -54,4 +54,5 @@ export interface Location {
     lon: number;
     website: string;
     description: string;
+    pricing: string;
 }

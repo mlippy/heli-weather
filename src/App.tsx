@@ -1,4 +1,5 @@
 import Dashboard from "@/components/Dashboard";
+import LocationsTable from "@/components/LocationsTable";
 import { Mountain } from "lucide-react";
 import { WeatherBackground } from "@/components/WeatherBackground";
 import { useEffect, useState } from "react";
@@ -77,8 +78,12 @@ export default function App() {
                     {/* Dashboard Content */}
                     <Dashboard weather={weather} loading={loading} location={selectedLocation} />
 
+                    {/* All Operators Table */}
+                    <LocationsTable />
+
                 </div>
             </main>
         </div>
     );
 }
+
