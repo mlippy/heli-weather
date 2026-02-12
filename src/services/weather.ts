@@ -8,7 +8,7 @@ export const LOCATIONS: Location[] = [
         lon: -145.7578,
         website: 'https://alaskaheliski.com/',
         description: 'Premier heli-skiing and boarding operation located in Cordova, Alaska, known for its unique access to the southeastern Chugach Mountains.',
-        pricing: '$8,850/week (7-night all-inclusive, 4 heli-hours)'
+        pricing: '$8,850 pp/week (7-night all-inclusive, 4 heli-hrs pp)'
     },
     {
         name: 'Judd Lake, AK (Tordrillo Mountain Lodge)',
@@ -16,7 +16,7 @@ export const LOCATIONS: Location[] = [
         lon: -151.5564,
         website: 'https://tordrillomountainlodge.com/',
         description: 'Remote, multi-sport luxury lodge nestled in the heart of Alaska\'s Tordrillo Range, offering world-class heli-skiing.',
-        pricing: 'From $18,500/week (7-night all-inclusive, 5 Hobbs hrs)'
+        pricing: 'From $18,500 pp/week (7-night all-inclusive, 5 Hobbs hrs/group of 4)'
     },
     {
         name: 'Girdwood, AK (Chugach Powder Guides)',
@@ -24,7 +24,7 @@ export const LOCATIONS: Location[] = [
         lon: -149.1246,
         website: 'https://chugachpowderguides.com/',
         description: 'Offering access to some of the world\'s finest backcountry skiing and snowboarding near Alyeska Resort.',
-        pricing: '$1,695–$1,825/day'
+        pricing: '$1,695–$1,825 pp/day (groups of 4–5)'
     },
     {
         name: 'Valdez, AK (Valdez Heli-Ski Guides)',
@@ -32,7 +32,7 @@ export const LOCATIONS: Location[] = [
         lon: -145.7876,
         website: 'https://valdezheliskiguides.com/',
         description: 'Founded in 1993 by Doug and Emily Coombs, offering unparalleled heli-skiing in the Chugach Mountains.',
-        pricing: 'From $15,000/week (8-day membership)'
+        pricing: 'From $15,000 pp/week (8-day, groups of 4)'
     },
     {
         name: 'Valdez, AK (Black Ops Valdez)',
@@ -40,7 +40,7 @@ export const LOCATIONS: Location[] = [
         lon: -146.1360,
         website: 'https://blackopsvaldez.com/',
         description: 'Offering first-class Alaska heli-skiing experiences with deluxe lodging and dining at Robe Lake Lodge.',
-        pricing: '$9,750/week (7-night all-inclusive, 5 hrs)'
+        pricing: '$9,750 pp/week (7-night all-inclusive, 5 hrs, groups of 4)'
     },
     {
         name: 'Valdez, AK (Alaska Backcountry Guides)',
@@ -48,7 +48,7 @@ export const LOCATIONS: Location[] = [
         lon: -146.3680,
         website: 'https://alaskabackcountryguides.com/',
         description: 'Specializes in providing exceptional and personalized heli-ski and snowboard programs in the Chugach Mountains.',
-        pricing: 'From $10,999/week (7-night semi-private, 4 hrs)'
+        pricing: 'From $10,999 pp/week (7-night, 4 hrs, groups of 4, max 8)'
     },
     {
         name: 'Glacier View, AK (Majestic Heli Ski)',
@@ -56,7 +56,7 @@ export const LOCATIONS: Location[] = [
         lon: -147.4579,
         website: 'https://majesticheliski.com/',
         description: 'Offers an all-inclusive helicopter skiing and snowboarding adventure in the heart of Alaska\'s Chugach and Talkeetna Mountains.',
-        pricing: '~$2,200/day (3–7 day packages)'
+        pricing: '~$2,200 pp/day (3–7 day all-inclusive packages)'
     },
     {
         name: 'Haines, AK (SEABA)',
@@ -64,7 +64,7 @@ export const LOCATIONS: Location[] = [
         lon: -135.4450,
         website: 'https://seaba-heli.com/',
         description: 'Offers guided heli skiing and snowboarding experiences in Haines, Alaska, providing access to over 250 nautical miles of terrain.',
-        pricing: '$9,000–$11,400/week (7-day all-inclusive)'
+        pricing: '$9,000–$11,400 pp/week (7-day all-inclusive, 4 Hobbs hrs)'
     },
     {
         name: 'Haines, AK (Alaska Heliskiing)',
@@ -72,7 +72,7 @@ export const LOCATIONS: Location[] = [
         lon: -136.0665,
         website: 'https://alaskaheliskiing.com/',
         description: 'Family-run operation dedicated to providing an authentic and affordable heliskiing experience in the Chilkat Range.',
-        pricing: '$8,195/week (30 runs); $4,150/4-day'
+        pricing: '$8,195 pp/week (30 runs); $4,150 pp/4-day (15 runs)'
     },
     {
         name: 'Seward, AK (Silverton Mountain Guides)',
@@ -80,7 +80,7 @@ export const LOCATIONS: Location[] = [
         lon: -149.4422,
         website: 'https://silvertonmountainguides.com/',
         description: 'Highly acclaimed luxury private heli-skiing operator accessing vast terrain across multiple Alaskan mountain ranges.',
-        pricing: '$8,890/5-day; $9,890/6-day peak'
+        pricing: '$8,890 pp/5-day; $9,890 pp/6-day peak (groups of 4)'
     },
     {
         name: 'Alyeska Resort, AK (Resort Base)',
@@ -98,7 +98,7 @@ export const LOCATIONS: Location[] = [
         lon: -116.2439,
         website: 'https://www.rkheliski.com/',
         description: 'Specializes in daily heliskiing and heliboarding in the Purcell Mountains with over 50 seasons of experience.',
-        pricing: 'From ~$1,700 CAD/day (5-run packages)'
+        pricing: 'From ~$1,700 CAD pp/day (5-run, groups of 5–10)'
     },
     {
         name: 'Bella Coola, BC (Bella Coola Heli Sports)',
@@ -106,7 +106,7 @@ export const LOCATIONS: Location[] = [
         lon: -126.1666,
         website: 'https://bellacoolaheliskiing.com/',
         description: 'Premier heli-skiing destination located in the Coast Mountains of British Columbia, renowned for vast terrain.',
-        pricing: '$8,980–$13,880 CAD (4–5 night packages)'
+        pricing: '$8,980–$13,880 CAD pp (4–5 night all-inclusive, groups of 4)'
     },
     {
         name: 'Revelstoke, BC (Eagle Pass Heli Skiing)',
@@ -114,7 +114,7 @@ export const LOCATIONS: Location[] = [
         lon: -118.1957,
         website: 'https://www.eaglepassheli.com/',
         description: 'Known for their "Small Groups. BIG Difference" philosophy, exclusively flying in groups of four.',
-        pricing: '$1,590–$2,450 CAD/day; $7,130–$25,860 CAD lodge packages'
+        pricing: '$1,590–$2,450 CAD pp/day; lodge pkgs $7,130–$25,860 CAD pp (groups of 4)'
     },
     {
         name: 'Revelstoke, BC (Selkirk Tangiers)',
@@ -122,7 +122,7 @@ export const LOCATIONS: Location[] = [
         lon: -118.2000,
         website: 'https://www.selkirk-tangiers.com/',
         description: 'Offers an unparalleled heli-skiing experience in Revelstoke with over 45 years of experience.',
-        pricing: '$2,049–$3,059 CAD/day; $8,229–$12,129 CAD/4-day'
+        pricing: '$2,049–$3,059 CAD pp/day; $8,229–$12,129 CAD pp/4-day (groups of 4–5)'
     },
     {
         name: 'Revelstoke, BC (Eleven Experience)',
@@ -130,7 +130,7 @@ export const LOCATIONS: Location[] = [
         lon: -118.1957,
         website: 'https://elevenexperience.com/revelstoke-lodge-winter/',
         description: 'Offers exclusive heli-skiing and year-round adventures from a renovated historic lodge in downtown Revelstoke.',
-        pricing: 'From $11,436 USD/night (private group, 1–3 guests)'
+        pricing: 'From $11,436 USD/night for group of 1–3 (private heli + guides)'
     },
     {
         name: 'Gold Bridge, BC (Tyax Lodge & Heliskiing)',
@@ -138,7 +138,7 @@ export const LOCATIONS: Location[] = [
         lon: -122.7667,
         website: 'https://tyax.com/',
         description: 'Offers a world-class heliskiing adventure located in the South Chilcotin Mountains with a unique single group format.',
-        pricing: '$134,000 CAD/week (private, 1–4 guests)'
+        pricing: '$134,000 CAD/week for group of 1–4 (private heli + lodge)'
     },
     {
         name: 'Golden, BC (Great Canadian Heliskiing)',
@@ -146,7 +146,7 @@ export const LOCATIONS: Location[] = [
         lon: -116.9686,
         website: 'https://canadianheli-skiing.com/',
         description: 'Provides heliskiing and heliboarding adventures in the renowned snowbelt between the Rocky and Selkirk Mountains.',
-        pricing: 'From $3,998 CAD/2-day; unlimited vertical'
+        pricing: 'From $3,998 CAD pp/2-day (groups of 4, unlimited vertical)'
     },
     {
         name: 'Blue River, BC (Mike Wiegele Heli Skiing)',
@@ -154,7 +154,7 @@ export const LOCATIONS: Location[] = [
         lon: -119.2818,
         website: 'https://www.wiegele.com/',
         description: 'Pioneering and leading helicopter skiing operation offering an ultimate heliski resort experience since 1970.',
-        pricing: '$6,765–$19,411 CAD (3–7 day Deluxe packages)'
+        pricing: '$6,765–$19,411 CAD pp (3–7 day Deluxe, groups of 4–11)'
     },
     {
         name: 'Stewart, BC (Last Frontier Heliskiing)',
@@ -162,7 +162,7 @@ export const LOCATIONS: Location[] = [
         lon: -129.9881,
         website: 'https://lastfrontierheli.com/',
         description: 'Offers exclusive heli-skiing and heli-boarding experiences in the vast, remote mountain ranges of Northern British Columbia.',
-        pricing: '$12,440–$18,630 CAD (5–7 day packages)'
+        pricing: '$12,440–$18,630 CAD pp (5–7 day all-inclusive, groups of 4)'
     },
     {
         name: 'Terrace, BC (Northern Escape Heli Skiing)',
@@ -170,7 +170,7 @@ export const LOCATIONS: Location[] = [
         lon: -128.6044,
         website: 'https://www.neheliskiing.com/',
         description: 'Offers unparalleled heli-skiing and heli-boarding adventures in the remote Skeena Mountains with unlimited vertical.',
-        pricing: 'From ~$2,400 USD/day; unlimited vertical'
+        pricing: 'From ~$2,400 USD pp/day (groups of 4, unlimited vertical)'
     },
     {
         name: 'Whistler, BC (Whistler Heli-Skiing)',
@@ -178,7 +178,7 @@ export const LOCATIONS: Location[] = [
         lon: -122.9574,
         website: 'https://www.whistlerblackcomb.com/explore-the-resort/activities-and-events/whistler-heli-skiing/whistler-heli-skiing.aspx',
         description: 'Offers access to extensive backcountry areas around Whistler, including the remote Bella Coola region.',
-        pricing: 'From ~$1,720 CAD/day (3-run package)'
+        pricing: 'From ~$1,720 CAD pp/day (3-run, groups of 4–10)'
     },
     {
         name: 'Nelson, BC (Snowwater Heli Skiing)',
@@ -186,7 +186,7 @@ export const LOCATIONS: Location[] = [
         lon: -117.2946,
         website: 'https://www.snowwater.com/',
         description: 'Offers an all-inclusive, unlimited vertical heli-skiing and boarding experience in British Columbia\'s Selkirk Mountains.',
-        pricing: 'From ~$5,780 CAD (multi-day, unlimited vertical)'
+        pricing: 'From ~$5,780 CAD pp (multi-day, groups of 4, unlimited vertical)'
     },
 
     // --- Lower 48 States ---
@@ -196,7 +196,7 @@ export const LOCATIONS: Location[] = [
         lon: -120.4427,
         website: 'https://heli-ski.com/',
         description: 'Premier heli-skiing and heli-boarding operation located in the "American Alps" of the North Cascades.',
-        pricing: '$1,850/day (8 runs guaranteed)'
+        pricing: '$1,850 pp/day (8 runs guaranteed, groups of 4)'
     },
     {
         name: 'Sun Valley, ID (Sun Valley Heli Ski)',
@@ -204,7 +204,7 @@ export const LOCATIONS: Location[] = [
         lon: -114.3517,
         website: 'https://sunvalleyheliski.com/',
         description: 'Recognized as the oldest helicopter ski operator in the lower 48 states, offering exclusive access to vast terrain.',
-        pricing: '$1,500–$1,900/day (6 runs)'
+        pricing: '$1,500–$1,900 pp/day (6 runs, groups of 4)'
     },
     {
         name: 'Driggs/Victor, ID (High Mountain Heli)',
@@ -212,7 +212,7 @@ export const LOCATIONS: Location[] = [
         lon: -111.1969,
         website: 'https://www.heliskijackson.com/',
         description: 'Offers world-class helicopter skiing adventures in Jackson Hole, Wyoming, with a satellite office near Victor.',
-        pricing: '$1,900/day (6 runs, ~12–15k vertical ft)'
+        pricing: '$1,900 pp/day (6 runs, groups of 4, ~12–15k vert ft)'
     },
     {
         name: 'Jackson, WY (High Mountain Heli - Snake River)',
@@ -220,7 +220,7 @@ export const LOCATIONS: Location[] = [
         lon: -110.7800,
         website: 'https://www.heliskijackson.com/',
         description: 'Offers expert-guided heli-ski tours providing the ultimate deep powder helicopter skiing experience.',
-        pricing: '$1,900/day (6 runs, ~12–15k vertical ft)'
+        pricing: '$1,900 pp/day (6 runs, groups of 4, ~12–15k vert ft)'
     },
     {
         name: 'Snowbird, UT (Powderbird)',
@@ -228,7 +228,7 @@ export const LOCATIONS: Location[] = [
         lon: -111.6669,
         website: 'https://powderbird.com/',
         description: 'Premier heli-skiing and heli-boarding operation based in Utah, accessing the backcountry of the Wasatch Mountains.',
-        pricing: 'From $1,558/day (early bird, 6 laps)'
+        pricing: 'From $1,558 pp/day (early bird, 6 laps, groups of up to 8)'
     },
     {
         name: 'Lamoille, NV (Ruby Mountain Heli)',
@@ -236,7 +236,7 @@ export const LOCATIONS: Location[] = [
         lon: -115.4157,
         website: 'https://helicopterskiing.com/',
         description: 'Offers premier helicopter skiing and snowboarding adventures in the Ruby Mountains of northeastern Nevada.',
-        pricing: '~$2,091/day; ~$6,593/3-day package'
+        pricing: '~$2,091 pp/day; ~$6,593 pp/3-day (groups of 4)'
     },
     {
         name: 'Telluride, CO (Helitrax)',
@@ -244,7 +244,7 @@ export const LOCATIONS: Location[] = [
         lon: -107.8340,
         website: 'https://www.helitrax.com/',
         description: 'Colorado\'s ultimate and most experienced helicopter skiing and snowboarding operation.',
-        pricing: '$1,975/day (6 runs)'
+        pricing: '$1,975 pp/day (6 runs, groups of 4)'
     },
     {
         name: 'Silverton, CO (Silverton Mountain)',
@@ -252,7 +252,7 @@ export const LOCATIONS: Location[] = [
         lon: -107.6653,
         website: 'https://silvertonmountain.com/',
         description: 'Unparalleled destination for advanced and expert skiers seeking an authentic, rugged mountain experience.',
-        pricing: '$99/single run; $999–$1,599/6-run day'
+        pricing: '$99 pp/single run; $999–$1,599 pp/6-run day'
     },
     {
         name: 'Bridgeport, CA (Sweetwater Heli)',
@@ -260,7 +260,7 @@ export const LOCATIONS: Location[] = [
         lon: -119.2313,
         website: 'https://sweetwater-heli.com/',
         description: 'California\'s only heli-skiing and heli-boarding operation, offering exclusive access to the Sweetwater Mountains.',
-        pricing: 'From $1,800/day (6–8 runs)'
+        pricing: 'From $1,800 pp/day (6–8 runs, small groups)'
     },
 ];
 
