@@ -79,7 +79,7 @@ export default function App() {
                     <Dashboard weather={weather} loading={loading} location={selectedLocation} />
 
                     {/* All Operators Table */}
-                    <LocationsTable />
+                    <LocationsTable onSelectLocation={setSelectedLocation} />
 
                 </div>
             </main>
