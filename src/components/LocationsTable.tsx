@@ -1,6 +1,6 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { LOCATIONS } from "@/services/weather";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, ChevronDown, ChevronRight } from "lucide-react";
 import { Location } from "@/lib/types";
 
 const regions = [
@@ -41,6 +41,14 @@ function extractOperator(name: string): string {
 }
 
 export default function LocationsTable({ onSelectLocation }: { onSelectLocation: (loc: Location) => void }) {
+    const [expandedRegions, setExpandedRegions] = useState<Record<string, boolean>>(() =>
+        regions.reduce((acc, r) => ({ ...acc, [r.label]: true }), {})
+    );
+
+    const toggleRegion = (label: string) => {
+        setExpandedRegions(prev => ({ ...prev, [label]: !prev[label] }));
+    };
+
     return (
         <section className="mt-20 mb-8">
             {/* Section heading */}
@@ -70,20 +78,29 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                         {regions.map((region) => {
                             const locs = locsForRegion(region.label);
                             if (locs.length === 0) return null;
+                            const isExpanded = expandedRegions[region.label];
+
                             return (
                                 <Fragment key={region.label}>
                                     {/* Region header row */}
-                                    <tr>
+                                    <tr
+                                        onClick={() => toggleRegion(region.label)}
+                                        className="cursor-pointer hover:bg-slate-700/20 transition-colors"
+                                    >
                                         <td colSpan={5} className="px-0 py-0">
-                                            <div className={`px-5 py-2.5 bg-slate-900/80 border-l-4 ${region.borderColor}`}>
-                                                <span className={`text-sm font-black uppercase tracking-[0.2em] ${region.textColor}`}>
-                                                    ▸ {region.label}
+                                            <div className={`px-5 py-2.5 bg-slate-900/80 border-l-4 ${region.borderColor} flex items-center justify-between`}>
+                                                <span className={`text-sm font-black uppercase tracking-[0.2em] ${region.textColor} flex items-center gap-2`}>
+                                                    {isExpanded ? <ChevronDown size={14} className="opacity-70" /> : <ChevronRight size={14} className="opacity-70" />}
+                                                    {region.label}
                                                     <span className="text-slate-500 font-normal ml-2">({locs.length})</span>
+                                                </span>
+                                                <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">
+                                                    {isExpanded ? "Collapse" : "Expand"}
                                                 </span>
                                             </div>
                                         </td>
                                     </tr>
-                                    {locs.map((loc, i) => {
+                                    {isExpanded && locs.map((loc, i) => {
                                         const city = loc.name.split("(")[0].trim();
                                         const operator = extractOperator(loc.name);
                                         const reg = regionForLoc(loc.name);
@@ -134,54 +151,65 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                 {regions.map((region) => {
                     const locs = locsForRegion(region.label);
                     if (locs.length === 0) return null;
+                    const isExpanded = expandedRegions[region.label];
+
                     return (
                         <div key={region.label} className="space-y-3">
                             {/* Region Header */}
-                            <div className={`px-4 py-2 bg-slate-900/80 border-l-4 ${region.borderColor} rounded-r-lg`}>
-                                <span className={`text-xs font-black uppercase tracking-[0.2em] ${region.textColor}`}>
+                            <div
+                                onClick={() => toggleRegion(region.label)}
+                                className={`px-4 py-3 bg-slate-900/80 border-l-4 ${region.borderColor} rounded-r-lg flex items-center justify-between cursor-pointer active:bg-slate-800/60 transition-colors`}
+                            >
+                                <span className={`text-xs font-black uppercase tracking-[0.2em] ${region.textColor} flex items-center gap-2`}>
+                                    {isExpanded ? <ChevronDown size={14} className="opacity-70" /> : <ChevronRight size={14} className="opacity-70" />}
                                     {region.label} <span className="text-slate-500 font-normal ml-1">({locs.length})</span>
+                                </span>
+                                <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">
+                                    {isExpanded ? "Hide" : "Show"}
                                 </span>
                             </div>
 
                             {/* Cards */}
-                            <div className="grid grid-cols-1 gap-3">
-                                {locs.map((loc) => {
-                                    const city = loc.name.split("(")[0].trim();
-                                    const operator = extractOperator(loc.name);
-                                    const reg = regionForLoc(loc.name);
-                                    return (
-                                        <div
-                                            key={loc.name}
-                                            className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 active:bg-slate-800/60 transition-colors cursor-pointer"
-                                            onClick={() => { onSelectLocation(loc); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                                        >
-                                            <div className="flex justify-between items-start mb-2">
-                                                <h3 className="font-bold text-white text-lg leading-tight">{operator}</h3>
-                                                <span className={`text-[10px] font-bold px-2 py-1 rounded border ml-2 text-right ${reg.badge}`}>
-                                                    {loc.pricing}
-                                                </span>
-                                            </div>
+                            {isExpanded && (
+                                <div className="grid grid-cols-1 gap-3">
+                                    {locs.map((loc) => {
+                                        const city = loc.name.split("(")[0].trim();
+                                        const operator = extractOperator(loc.name);
+                                        const reg = regionForLoc(loc.name);
+                                        return (
+                                            <div
+                                                key={loc.name}
+                                                className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 active:bg-slate-800/60 transition-colors cursor-pointer"
+                                                onClick={() => { onSelectLocation(loc); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                                            >
+                                                <div className="flex justify-between items-start mb-2">
+                                                    <h3 className="font-bold text-white text-lg leading-tight">{operator}</h3>
+                                                    <span className={`text-[10px] font-bold px-2 py-1 rounded border ml-2 text-right ${reg.badge}`}>
+                                                        {loc.pricing}
+                                                    </span>
+                                                </div>
 
-                                            <div className="mb-3">
-                                                <p className="text-slate-300 text-sm font-medium mb-1">{city}</p>
-                                                <p className="text-slate-400 text-xs line-clamp-2 leading-relaxed">{loc.description}</p>
-                                            </div>
+                                                <div className="mb-3">
+                                                    <p className="text-slate-300 text-sm font-medium mb-1">{city}</p>
+                                                    <p className="text-slate-400 text-xs line-clamp-2 leading-relaxed">{loc.description}</p>
+                                                </div>
 
-                                            <div>
-                                                <a
-                                                    href={loc.website}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="inline-flex items-center gap-1.5 text-sky-400 hover:text-sky-300 transition-colors text-xs font-medium uppercase tracking-wide"
-                                                    onClick={(e) => e.stopPropagation()}
-                                                >
-                                                    Visit Website <ExternalLink size={12} />
-                                                </a>
+                                                <div>
+                                                    <a
+                                                        href={loc.website}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="inline-flex items-center gap-1.5 text-sky-400 hover:text-sky-300 transition-colors text-xs font-medium uppercase tracking-wide"
+                                                        onClick={(e) => e.stopPropagation()}
+                                                    >
+                                                        Visit Website <ExternalLink size={12} />
+                                                    </a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
+                                        );
+                                    })}
+                                </div>
+                            )}
                         </div>
                     );
                 })}
