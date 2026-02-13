@@ -157,7 +157,7 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                                         >
                                             <div className="flex justify-between items-start mb-2">
                                                 <h3 className="font-bold text-white text-lg leading-tight">{operator}</h3>
-                                                <span className={`text-[10px] font-bold px-2 py-1 rounded border whitespace-nowrap ml-2 ${reg.badge}`}>
+                                                <span className={`text-[10px] font-bold px-2 py-1 rounded border ml-2 text-right ${reg.badge}`}>
                                                     {loc.pricing}
                                                 </span>
                                             </div>
