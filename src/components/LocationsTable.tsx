@@ -20,7 +20,7 @@ function extractOperator(name: string): string {
 
 export default function LocationsTable({ onSelectLocation }: { onSelectLocation: (loc: Location) => void }) {
     const [expandedRegions, setExpandedRegions] = useState<Record<string, boolean>>(() =>
-        regions.reduce((acc, r) => ({ ...acc, [r.label]: true }), {})
+        REGIONS.reduce((acc: Record<string, boolean>, r) => ({ ...acc, [r.label]: true }), {})
     );
 
     const toggleRegion = (label: string) => {
