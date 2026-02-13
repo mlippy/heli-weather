@@ -42,8 +42,8 @@ export default function App() {
                             </h1>
                         </div>
 
-                        {/* Center: Dropdown */}
-                        <div className="flex justify-center w-full">
+                        {/* Center: Dropdown & Link */}
+                        <div className="flex flex-col items-center justify-center w-full gap-3">
                             <div className="relative w-full max-w-md">
                                 <select
                                     value={selectedLocation.name}
@@ -63,21 +63,31 @@ export default function App() {
                                     <svg className="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
                                 </div>
                             </div>
-                        </div>
-
-                        {/* Right: Info */}
-                        <div className="flex flex-col items-center lg:items-end gap-2 text-center lg:text-right justify-self-end">
-                            <p className="text-slate-300 text-sm font-medium leading-relaxed max-w-md">{selectedLocation.description}</p>
                             {selectedLocation.website && (
                                 <a
                                     href={selectedLocation.website}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-arctic-400 hover:text-arctic-300 text-sm font-bold whitespace-nowrap hover:underline decoration-arctic-400/30 underline-offset-4 flex items-center gap-1"
+                                    className="text-arctic-400 hover:text-arctic-300 text-sm font-bold tracking-wide hover:underline decoration-arctic-400/30 underline-offset-4 transition-colors"
                                 >
-                                    Visit Website
+                                    {(() => {
+                                        try {
+                                            return new URL(selectedLocation.website).hostname.replace(/^www\./, "");
+                                        } catch {
+                                            return "Visit Website";
+                                        }
+                                    })()}
                                 </a>
                             )}
+                        </div>
+
+                        {/* Right: Info */}
+                        <div className="flex flex-col items-center lg:items-end justify-center h-full">
+                            <div className="bg-slate-800/40 p-4 rounded-2xl border border-white/5 shadow-inner backdrop-blur-sm max-w-md">
+                                <p className="text-slate-100 text-base lg:text-lg font-medium leading-relaxed text-left">
+                                    {selectedLocation.description}
+                                </p>
+                            </div>
                         </div>
                     </header>
 
