@@ -30,44 +30,50 @@ export default function App() {
         <div className="antialiased min-h-screen relative text-slate-50">
             <WeatherBackground condition={weather?.current.condition} />
             <main className="min-h-screen p-4 md:p-12 relative">
-                <div className="max-w-7xl mx-auto relative z-10">
+                <div className="w-full max-w-[95%] mx-auto relative z-10">
 
                     {/* Header */}
-                    <header className="mb-12 flex flex-col items-center justify-center text-center">
-                        <div className="mb-6">
-                            <img src={logoImg} alt="Heli Vibes" className="w-24 h-24 md:w-32 md:h-32 rounded-full" />
+                    <header className="mb-8 grid grid-cols-1 lg:grid-cols-3 items-center gap-6 p-6 bg-slate-900/40 backdrop-blur-md rounded-3xl border border-white/10 shadow-2xl">
+                        {/* Left: Logo & Title */}
+                        <div className="flex items-center gap-5 justify-start">
+                            <img src={logoImg} alt="Heli Vibes" className="w-20 h-20 rounded-full shadow-lg shadow-arctic-500/20" />
+                            <h1 className="text-4xl xl:text-5xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-arctic-200 leading-none">
+                                HELI<span className="text-arctic-500"> VIBES</span>
+                            </h1>
                         </div>
-                        <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-arctic-200 mb-4">
-                            HELI<span className="text-arctic-500"> VIBES</span>
-                        </h1>
-                        <div className="relative">
-                            <select
-                                value={selectedLocation.name}
-                                onChange={(e) => {
-                                    const loc = LOCATIONS.find(l => l.name === e.target.value);
-                                    if (loc) setSelectedLocation(loc);
-                                }}
-                                className="appearance-none bg-slate-800/50 backdrop-blur-md border border-slate-700 text-slate-200 text-sm md:text-base rounded-full px-6 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-arctic-500 cursor-pointer hover:bg-slate-800/80 transition-colors text-center"
-                            >
-                                {LOCATIONS.map(loc => (
-                                    <option key={loc.name} value={loc.name} className="bg-slate-900 text-slate-200">
-                                        {loc.name}
-                                    </option>
-                                ))}
-                            </select>
-                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-400">
-                                <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+
+                        {/* Center: Dropdown */}
+                        <div className="flex justify-center w-full">
+                            <div className="relative w-full max-w-md">
+                                <select
+                                    value={selectedLocation.name}
+                                    onChange={(e) => {
+                                        const loc = LOCATIONS.find(l => l.name === e.target.value);
+                                        if (loc) setSelectedLocation(loc);
+                                    }}
+                                    className="w-full appearance-none bg-slate-950/50 backdrop-blur-md border border-slate-700/60 text-slate-200 text-base font-medium rounded-xl px-4 py-3 pr-10 focus:outline-none focus:ring-2 focus:ring-arctic-500/50 cursor-pointer hover:bg-slate-900/60 transition-colors shadow-lg"
+                                >
+                                    {LOCATIONS.map(loc => (
+                                        <option key={loc.name} value={loc.name} className="bg-slate-900 text-slate-200">
+                                            {loc.name}
+                                        </option>
+                                    ))}
+                                </select>
+                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+                                    <svg className="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="mt-6 max-w-2xl mx-auto space-y-2">
-                            <p className="text-slate-300 text-lg leading-relaxed font-light">{selectedLocation.description}</p>
+                        {/* Right: Info */}
+                        <div className="flex flex-col items-center lg:items-end gap-2 text-center lg:text-right justify-self-end">
+                            <p className="text-slate-300 text-sm font-medium leading-relaxed max-w-md">{selectedLocation.description}</p>
                             {selectedLocation.website && (
                                 <a
                                     href={selectedLocation.website}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 text-arctic-400 hover:text-arctic-300 transition-colors font-medium border-b border-arctic-400/30 pb-0.5 hover:border-arctic-300"
+                                    className="text-arctic-400 hover:text-arctic-300 text-sm font-bold whitespace-nowrap hover:underline decoration-arctic-400/30 underline-offset-4 flex items-center gap-1"
                                 >
                                     Visit Website
                                 </a>
