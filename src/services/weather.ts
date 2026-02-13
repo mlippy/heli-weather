@@ -263,7 +263,7 @@ export const LOCATIONS: Location[] = [
         pricing: 'Contact for pricing'
     },
 
-    // --- Asia & Japan ---
+    // --- Asia, Japan & Caucasus ---
     {
         name: 'Niseko, Japan (Hokkaido Backcountry Club)',
         lat: 42.8048,
@@ -287,6 +287,14 @@ export const LOCATIONS: Location[] = [
         website: 'https://www.himalayanheliski.com/',
         description: 'Extreme high-altitude heli-skiing in the shadow of the world\'s highest peaks, providing once-in-a-lifetime descents.',
         pricing: 'Contact for pricing (Expedition style)'
+    },
+    {
+        name: 'Svaneti, Georgia (Svaneti Heliskiing)',
+        lat: 43.0441,
+        lon: 42.7246,
+        website: 'https://www.svanetiheliskiing.com/',
+        description: 'Spectacular heli-skiing in the Greater Caucasus, based in the medieval mountain region of Svaneti with access to untracked alpine terrain.',
+        pricing: 'From ~€850 pp/day; ~€5,400 pp/week (all-inclusive)'
     },
 
     // --- South America ---
