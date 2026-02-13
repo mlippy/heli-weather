@@ -64,7 +64,7 @@ export function SatelliteMap({ location }: { location: Location }) {
     }, [location]);
 
     return (
-        <div className="glass-card rounded-3xl p-6 h-full flex flex-col">
+        <div className="glass-card rounded-3xl p-6 h-[500px] lg:h-full flex flex-col">
             <h3 className="text-slate-400 text-sm font-medium uppercase tracking-wider mb-4">
                 Satellite Recon
             </h3>

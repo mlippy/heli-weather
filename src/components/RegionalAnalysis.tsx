@@ -27,7 +27,7 @@ export function RegionalAnalysis({ data }: { data: RegionalWeather[] }) {
     };
 
     return (
-        <div className="glass-panel p-6 rounded-3xl h-full flex flex-col">
+        <div className="glass-panel p-6 rounded-3xl min-h-[600px] lg:h-full flex flex-col">
             <h3 className="text-slate-400 text-sm font-medium uppercase tracking-wider mb-4 flex items-center gap-2">
                 <Wind size={16} /> Regional Recon
             </h3>

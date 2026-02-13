@@ -48,7 +48,7 @@ export default function Dashboard({ weather, loading, location }: DashboardProps
             <HourlyForecastList data={weather.hourly} />
 
             {/* Row 3: Regional Analysis & Main Map */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[600px]">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:h-[600px]">
                 <RegionalAnalysis data={weather.regional} />
                 <SatelliteMap location={location} />
             </div>
