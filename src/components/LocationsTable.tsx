@@ -54,7 +54,8 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                 </p>
             </div>
 
-            <div className="overflow-x-auto rounded-xl border border-slate-600/50 bg-slate-900/80">
+            {/* Desktop/Tablet Table View */}
+            <div className="hidden md:block overflow-x-auto rounded-xl border border-slate-600/50 bg-slate-900/80">
                 <table className="w-full text-left text-base">
                     <thead>
                         <tr className="bg-slate-800">
@@ -104,6 +105,7 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         className="inline-flex items-center gap-1.5 text-sky-400 hover:text-sky-300 transition-colors text-sm"
+                                                        onClick={(e) => e.stopPropagation()}
                                                     >
                                                         {extractDomain(loc.website)}
                                                         <ExternalLink size={11} className="opacity-40" />
@@ -125,6 +127,64 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                         })}
                     </tbody>
                 </table>
+            </div>
+
+            {/* Mobile Card View */}
+            <div className="md:hidden space-y-8">
+                {regions.map((region) => {
+                    const locs = locsForRegion(region.label);
+                    if (locs.length === 0) return null;
+                    return (
+                        <div key={region.label} className="space-y-3">
+                            {/* Region Header */}
+                            <div className={`px-4 py-2 bg-slate-900/80 border-l-4 ${region.borderColor} rounded-r-lg`}>
+                                <span className={`text-xs font-black uppercase tracking-[0.2em] ${region.textColor}`}>
+                                    {region.label} <span className="text-slate-500 font-normal ml-1">({locs.length})</span>
+                                </span>
+                            </div>
+
+                            {/* Cards */}
+                            <div className="grid grid-cols-1 gap-3">
+                                {locs.map((loc) => {
+                                    const city = loc.name.split("(")[0].trim();
+                                    const operator = extractOperator(loc.name);
+                                    const reg = regionForLoc(loc.name);
+                                    return (
+                                        <div
+                                            key={loc.name}
+                                            className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-4 active:bg-slate-800/60 transition-colors cursor-pointer"
+                                            onClick={() => { onSelectLocation(loc); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                                        >
+                                            <div className="flex justify-between items-start mb-2">
+                                                <h3 className="font-bold text-white text-lg leading-tight">{operator}</h3>
+                                                <span className={`text-[10px] font-bold px-2 py-1 rounded border whitespace-nowrap ml-2 ${reg.badge}`}>
+                                                    {loc.pricing}
+                                                </span>
+                                            </div>
+
+                                            <div className="mb-3">
+                                                <p className="text-slate-300 text-sm font-medium mb-1">{city}</p>
+                                                <p className="text-slate-400 text-xs line-clamp-2 leading-relaxed">{loc.description}</p>
+                                            </div>
+
+                                            <div>
+                                                <a
+                                                    href={loc.website}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center gap-1.5 text-sky-400 hover:text-sky-300 transition-colors text-xs font-medium uppercase tracking-wide"
+                                                    onClick={(e) => e.stopPropagation()}
+                                                >
+                                                    Visit Website <ExternalLink size={12} />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
         </section>
     );
