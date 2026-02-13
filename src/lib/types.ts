@@ -56,3 +56,10 @@ export interface Location {
     description: string;
     pricing: string;
 }
+export interface Region {
+    label: string;
+    filter: string;
+    borderColor: string;
+    badge: string;
+    textColor: string;
+}

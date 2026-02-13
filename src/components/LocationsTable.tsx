@@ -3,54 +3,7 @@ import { LOCATIONS } from "@/services/weather";
 import { ExternalLink, ChevronDown, ChevronRight } from "lucide-react";
 import { Location } from "@/lib/types";
 
-const regions = [
-    { label: "Alaska", filter: ", AK", borderColor: "border-l-amber-500", badge: "bg-amber-500/15 text-amber-400 border-amber-500/30", textColor: "text-amber-400" },
-    { label: "British Columbia", filter: ", BC", borderColor: "border-l-sky-400", badge: "bg-sky-500/15 text-sky-400 border-sky-500/30", textColor: "text-sky-400" },
-    { label: "Europe - Alps & Scandinavia", filter: "__europe__", borderColor: "border-l-indigo-400", badge: "bg-indigo-500/15 text-indigo-400 border-indigo-500/30", textColor: "text-indigo-400" },
-    { label: "Greenland & Iceland", filter: "__arctic__", borderColor: "border-l-cyan-400", badge: "bg-cyan-500/15 text-cyan-400 border-cyan-500/30", textColor: "text-cyan-400" },
-    { label: "Asia, Japan & Caucasus", filter: "__asia__", borderColor: "border-l-rose-400", badge: "bg-rose-500/15 text-rose-400 border-rose-500/30", textColor: "text-rose-400" },
-    { label: "South America - Andes", filter: "__chile__", borderColor: "border-l-rose-600", badge: "bg-rose-600/15 text-rose-500 border-rose-600/30", textColor: "text-rose-500" },
-    { label: "New Zealand", filter: "__nz__", borderColor: "border-l-teal-400", badge: "bg-teal-500/15 text-teal-400 border-teal-500/30", textColor: "text-teal-400" },
-    { label: "Lower 48 States", filter: "__lower48__", borderColor: "border-l-emerald-400", badge: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30", textColor: "text-emerald-400" },
-];
-
-function regionForLoc(name: string) {
-    if (name.includes(", AK")) return regions[0];
-    if (name.includes(", BC") || name.includes("Bugaboos")) return regions[1];
-    if (name.includes("Switzerland") || name.includes("Italy") || name.includes("Sweden")) return regions[2];
-    if (name.includes("Greenland") || name.includes("Iceland")) return regions[3];
-    if (name.includes("Japan") || name.includes("India") || name.includes("Nepal") || name.includes("Georgia")) return regions[4];
-    if (name.includes("Chile") || name.includes("Patagonia")) return regions[5];
-    if (name.includes(", NZ")) return regions[6];
-    return regions[7];
-}
-
-function locsForRegion(label: string) {
-    if (label === "Alaska") return LOCATIONS.filter(l => l.name.includes(", AK"));
-    if (label === "British Columbia") return LOCATIONS.filter(l => l.name.includes(", BC") || l.name.includes("Bugaboos"));
-    if (label === "Europe - Alps & Scandinavia") return LOCATIONS.filter(l => l.name.includes("Switzerland") || l.name.includes("Italy") || l.name.includes("Sweden"));
-    if (label === "Greenland & Iceland") return LOCATIONS.filter(l => l.name.includes("Greenland") || l.name.includes("Iceland"));
-    if (label === "Asia, Japan & Caucasus") return LOCATIONS.filter(l => l.name.includes("Japan") || l.name.includes("India") || l.name.includes("Nepal") || l.name.includes("Georgia"));
-    if (label === "South America - Andes") return LOCATIONS.filter(l => l.name.includes("Chile") || l.name.includes("Patagonia"));
-    if (label === "New Zealand") return LOCATIONS.filter(l => l.name.includes(", NZ"));
-    return LOCATIONS.filter(l =>
-        !l.name.includes(", AK") &&
-        !l.name.includes(", BC") &&
-        !l.name.includes("Bugaboos") &&
-        !l.name.includes("Switzerland") &&
-        !l.name.includes("Italy") &&
-        !l.name.includes("Sweden") &&
-        !l.name.includes("Greenland") &&
-        !l.name.includes("Iceland") &&
-        !l.name.includes("Japan") &&
-        !l.name.includes("India") &&
-        !l.name.includes("Nepal") &&
-        !l.name.includes("Georgia") &&
-        !l.name.includes("Chile") &&
-        !l.name.includes("Patagonia") &&
-        !l.name.includes(", NZ")
-    );
-}
+import { REGIONS, getRegionForLoc, getLocsForRegion } from "@/services/weather";
 
 function extractDomain(url: string): string {
     try {
@@ -87,77 +40,65 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                 </p>
             </div>
 
-            {/* Desktop/Tablet Table View */}
-            <div className="hidden md:block overflow-x-auto rounded-xl border border-slate-600/50 bg-slate-900/80">
-                <table className="w-full text-left text-base">
-                    <thead>
-                        <tr className="bg-slate-800">
-                            <th className="px-5 py-4 font-bold text-white uppercase text-sm tracking-widest">Operator</th>
-                            <th className="px-5 py-4 font-bold text-white uppercase text-sm tracking-widest hidden md:table-cell">Location</th>
-                            <th className="px-5 py-4 font-bold text-white uppercase text-sm tracking-widest">Site</th>
-                            <th className="px-5 py-4 font-bold text-white uppercase text-sm tracking-widest hidden lg:table-cell">Description</th>
-                            <th className="px-5 py-4 font-bold text-white uppercase text-sm tracking-widest">Pricing</th>
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-hidden rounded-3xl border border-white/10 shadow-2xl bg-slate-900/40 backdrop-blur-md">
+                <table className="w-full text-left border-collapse">
+                    <thead className="bg-slate-950/50 backdrop-blur-md">
+                        <tr>
+                            <th className="px-6 py-5 text-xs font-black uppercase tracking-[0.2em] text-slate-400 border-b border-white/5">Operator</th>
+                            <th className="px-6 py-5 text-xs font-black uppercase tracking-[0.2em] text-slate-400 border-b border-white/5">Location</th>
+                            <th className="px-6 py-5 text-xs font-black uppercase tracking-[0.2em] text-slate-400 border-b border-white/5">Details</th>
+                            <th className="px-6 py-5 text-xs font-black uppercase tracking-[0.2em] text-slate-400 border-b border-white/5 text-right">Estimated Pricing</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {regions.map((region) => {
-                            const locs = locsForRegion(region.label);
+                        {REGIONS.map((region) => {
+                            const locs = getLocsForRegion(region.label);
                             if (locs.length === 0) return null;
                             const isExpanded = expandedRegions[region.label];
 
                             return (
                                 <Fragment key={region.label}>
-                                    {/* Region header row */}
+                                    {/* Region Header Group */}
                                     <tr
                                         onClick={() => toggleRegion(region.label)}
-                                        className="cursor-pointer hover:bg-slate-700/20 transition-colors"
+                                        className="group cursor-pointer hover:bg-white/5 transition-colors border-b border-white/5"
                                     >
-                                        <td colSpan={5} className="px-0 py-0">
-                                            <div className={`px-5 py-2.5 bg-slate-900/80 border-l-4 ${region.borderColor} flex items-center justify-between`}>
-                                                <span className={`text-sm font-black uppercase tracking-[0.2em] ${region.textColor} flex items-center gap-2`}>
+                                        <td colSpan={4} className={`px-6 py-4 bg-slate-950/30 border-l-4 ${region.borderColor}`}>
+                                            <div className="flex items-center justify-between">
+                                                <span className={`text-xs font-black uppercase tracking-[0.3em] ${region.textColor} flex items-center gap-2`}>
                                                     {isExpanded ? <ChevronDown size={14} className="opacity-70" /> : <ChevronRight size={14} className="opacity-70" />}
-                                                    {region.label}
-                                                    <span className="text-slate-500 font-normal ml-2">({locs.length})</span>
+                                                    {region.label} <span className="text-slate-500 font-normal ml-1">({locs.length} Units)</span>
                                                 </span>
-                                                <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">
-                                                    {isExpanded ? "Collapse" : "Expand"}
+                                                <span className="text-[10px] uppercase tracking-widest text-slate-500 font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    {isExpanded ? "Click to Collapse" : "Click to Expand"}
                                                 </span>
                                             </div>
                                         </td>
                                     </tr>
-                                    {isExpanded && locs.map((loc, i) => {
+
+                                    {/* Location Rows */}
+                                    {isExpanded && locs.map((loc) => {
                                         const city = loc.name.split("(")[0].trim();
                                         const operator = extractOperator(loc.name);
-                                        const reg = regionForLoc(loc.name);
+                                        const reg = getRegionForLoc(loc.name);
                                         return (
                                             <tr
                                                 key={loc.name}
-                                                className={`border-b border-slate-700/40 hover:bg-slate-700/30 transition-colors cursor-pointer ${i % 2 === 0 ? "bg-slate-800/50" : "bg-slate-900/30"}`}
+                                                className="group hover:bg-white/[0.02] transition-colors border-b border-white/5 cursor-pointer"
                                                 onClick={() => { onSelectLocation(loc); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                                             >
-                                                <td className="px-5 py-4">
-                                                    <span className="font-bold text-white">{operator}</span>
+                                                <td className="px-6 py-5">
+                                                    <span className="text-base font-bold text-white group-hover:text-arctic-400 transition-colors">{operator}</span>
                                                 </td>
-                                                <td className="px-5 py-4 text-slate-300 text-sm hidden md:table-cell whitespace-nowrap">
-                                                    {city}
+                                                <td className="px-6 py-5">
+                                                    <span className="text-sm font-medium text-slate-300">{city}</span>
                                                 </td>
-                                                <td className="px-5 py-4">
-                                                    <a
-                                                        href={loc.website}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="inline-flex items-center gap-1.5 text-sky-400 hover:text-sky-300 transition-colors text-sm"
-                                                        onClick={(e) => e.stopPropagation()}
-                                                    >
-                                                        {extractDomain(loc.website)}
-                                                        <ExternalLink size={11} className="opacity-40" />
-                                                    </a>
+                                                <td className="px-6 py-5 max-w-sm">
+                                                    <p className="text-xs text-slate-400 line-clamp-1 leading-relaxed group-hover:line-clamp-none transition-all">{loc.description}</p>
                                                 </td>
-                                                <td className="px-5 py-4 text-slate-300 text-sm hidden lg:table-cell max-w-sm">
-                                                    <span className="line-clamp-1">{loc.description}</span>
-                                                </td>
-                                                <td className="px-5 py-4">
-                                                    <span className={`inline-block text-sm font-semibold px-3 py-1.5 rounded-md border ${reg.badge}`}>
+                                                <td className="px-6 py-5 text-right">
+                                                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border shadow-sm ${reg.badge}`}>
                                                         {loc.pricing}
                                                     </span>
                                                 </td>
@@ -173,8 +114,8 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
 
             {/* Mobile Card View */}
             <div className="md:hidden space-y-8">
-                {regions.map((region) => {
-                    const locs = locsForRegion(region.label);
+                {REGIONS.map((region) => {
+                    const locs = getLocsForRegion(region.label);
                     if (locs.length === 0) return null;
                     const isExpanded = expandedRegions[region.label];
 
@@ -200,7 +141,7 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                                     {locs.map((loc) => {
                                         const city = loc.name.split("(")[0].trim();
                                         const operator = extractOperator(loc.name);
-                                        const reg = regionForLoc(loc.name);
+                                        const reg = getRegionForLoc(loc.name);
                                         return (
                                             <div
                                                 key={loc.name}

@@ -4,7 +4,7 @@ import logoImg from "@/lib/images/Gemini_Generated_Image_q9st6mq9st6mq9st-fotor-
 import { WeatherBackground } from "@/components/WeatherBackground";
 import { useEffect, useState } from "react";
 import { WeatherData } from "@/lib/types";
-import { getWeather, LOCATIONS } from "@/services/weather";
+import { getWeather, LOCATIONS, REGIONS, getRegionForLoc } from "@/services/weather";
 import { Share2, Check } from "lucide-react";
 
 export default function App() {
@@ -19,9 +19,26 @@ export default function App() {
         }
         return LOCATIONS[0];
     });
+
+    // Region filter state
+    const [selectedRegion, setSelectedRegion] = useState("All");
+
     const [weather, setWeather] = useState<WeatherData | null>(null);
     const [loading, setLoading] = useState(true);
     const [copied, setCopied] = useState(false);
+
+    // Sync region filter when location changes (e.g. via URL or Table)
+    useEffect(() => {
+        if (selectedRegion !== "All") {
+            const currentReg = getRegionForLoc(selectedLocation.name);
+            if (currentReg.label !== selectedRegion) {
+                // If the manually selected location is outside the filter, 
+                // we keep the location but maybe we should reset filter?
+                // User preference usually: show me where I am.
+                setSelectedRegion("All");
+            }
+        }
+    }, [selectedLocation]);
 
     // Sync state to URL
     useEffect(() => {
@@ -74,6 +91,11 @@ export default function App() {
         }
     };
 
+    // Filtered locations for the dropdown
+    const filteredLocations = selectedRegion === "All"
+        ? LOCATIONS
+        : LOCATIONS.filter(l => getRegionForLoc(l.name).label === selectedRegion);
+
     return (
         <div className="antialiased min-h-screen relative text-slate-50">
             <WeatherBackground condition={weather?.current.condition} />
@@ -81,70 +103,107 @@ export default function App() {
                 <div className="w-full max-w-[95%] mx-auto relative z-10">
 
                     {/* Header */}
-                    <header className="mb-8 grid grid-cols-1 lg:grid-cols-3 items-center gap-6 p-6 bg-slate-900/40 backdrop-blur-md rounded-3xl border border-white/10 shadow-2xl">
-                        {/* Left: Logo & Title */}
-                        <div className="flex items-center gap-5 justify-start">
-                            <img src={logoImg} alt="Heli Vibes" className="w-20 h-20 rounded-full shadow-lg shadow-arctic-500/20" />
-                            <h1 className="text-4xl xl:text-5xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-arctic-200 leading-none">
-                                HELI<span className="text-arctic-500"> VIBES</span>
-                            </h1>
+                    <header className="mb-8 grid grid-cols-1 lg:grid-cols-2 items-start gap-8 p-8 bg-slate-900/40 backdrop-blur-md rounded-3xl border border-white/10 shadow-2xl">
+                        {/* Left Column: Branding */}
+                        <div className="flex items-center gap-6 justify-start lg:h-full">
+                            <img src={logoImg} alt="Heli Vibes" className="w-24 h-24 rounded-full shadow-lg shadow-arctic-500/20 ring-4 ring-white/5" />
+                            <div className="flex flex-col">
+                                <h1 className="text-5xl xl:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-arctic-200 leading-none">
+                                    HELI<span className="text-arctic-500"> VIBES</span>
+                                </h1>
+                                <p className="text-slate-400 text-sm font-bold tracking-[0.2em] mt-2 uppercase opacity-60">Global Operator Forecasts</p>
+                            </div>
                         </div>
 
-                        {/* Center: Dropdown & Link */}
-                        <div className="flex flex-col items-center justify-center w-full gap-3">
-                            <div className="flex items-center gap-2 w-full max-w-md">
-                                <div className="relative flex-grow">
+                        {/* Right Column: Controls & Description */}
+                        <div className="flex flex-col gap-6 w-full">
+                            {/* Selectors Row */}
+                            <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 w-full">
+                                {/* Region Filter */}
+                                <div className="relative sm:col-span-4">
+                                    <select
+                                        value={selectedRegion}
+                                        onChange={(e) => {
+                                            const newRegion = e.target.value;
+                                            setSelectedRegion(newRegion);
+                                            // If current location is not in new region, switch to first in region
+                                            if (newRegion !== "All") {
+                                                const firstInRegion = LOCATIONS.find(l => getRegionForLoc(l.name).label === newRegion);
+                                                if (firstInRegion && getRegionForLoc(selectedLocation.name).label !== newRegion) {
+                                                    setSelectedLocation(firstInRegion);
+                                                }
+                                            }
+                                        }}
+                                        className="w-full appearance-none bg-slate-950/50 backdrop-blur-md border border-slate-700/60 text-slate-200 text-sm font-bold rounded-xl px-4 py-3 pr-10 focus:outline-none focus:ring-2 focus:ring-arctic-500/50 cursor-pointer hover:bg-slate-900/60 transition-colors shadow-lg"
+                                    >
+                                        <option value="All">All Regions</option>
+                                        {REGIONS.map(reg => (
+                                            <option key={reg.label} value={reg.label}>{reg.label}</option>
+                                        ))}
+                                    </select>
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                                    </div>
+                                </div>
+
+                                {/* Location Selector */}
+                                <div className="relative sm:col-span-6">
                                     <select
                                         value={selectedLocation.name}
                                         onChange={(e) => {
                                             const loc = LOCATIONS.find(l => l.name === e.target.value);
                                             if (loc) setSelectedLocation(loc);
                                         }}
-                                        className="w-full appearance-none bg-slate-950/50 backdrop-blur-md border border-slate-700/60 text-slate-200 text-base font-medium rounded-xl px-4 py-3 pr-10 focus:outline-none focus:ring-2 focus:ring-arctic-500/50 cursor-pointer hover:bg-slate-900/60 transition-colors shadow-lg"
+                                        className="w-full appearance-none bg-slate-950/50 backdrop-blur-md border border-slate-700/60 text-slate-200 text-sm font-bold rounded-xl px-4 py-3 pr-10 focus:outline-none focus:ring-2 focus:ring-arctic-500/50 cursor-pointer hover:bg-slate-900/60 transition-colors shadow-lg"
                                     >
-                                        {LOCATIONS.map(loc => (
+                                        {filteredLocations.map(loc => (
                                             <option key={loc.name} value={loc.name} className="bg-slate-900 text-slate-200">
                                                 {loc.name}
                                             </option>
                                         ))}
                                     </select>
-                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
-                                        <svg className="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
                                     </div>
                                 </div>
+
+                                {/* Share Button */}
                                 <button
                                     onClick={handleShare}
-                                    className={`p-3 rounded-xl border transition-all flex items-center gap-2 shadow-lg backdrop-blur-md ${copied ? 'bg-arctic-500/20 border-arctic-400 text-arctic-300' : 'bg-slate-950/50 border-slate-700/60 text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'}`}
+                                    className={`sm:col-span-2 p-3 rounded-xl border transition-all flex items-center justify-center gap-2 shadow-lg backdrop-blur-md ${copied ? 'bg-arctic-500/20 border-arctic-400 text-arctic-300' : 'bg-slate-950/50 border-slate-700/60 text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'}`}
                                     title="Share current location"
                                 >
-                                    {copied ? <Check size={20} /> : <Share2 size={20} />}
-                                    <span className="text-sm font-bold hidden sm:inline">{copied ? 'Copied' : 'Share'}</span>
+                                    {copied ? <Check size={18} /> : <Share2 size={18} />}
+                                    <span className="text-xs font-bold sm:hidden lg:inline">{copied ? 'Copied' : 'Share'}</span>
                                 </button>
                             </div>
-                            {selectedLocation.website && (
-                                <a
-                                    href={selectedLocation.website}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-arctic-400 hover:text-arctic-300 text-sm font-bold tracking-wide hover:underline decoration-arctic-400/30 underline-offset-4 transition-colors"
-                                >
-                                    {(() => {
-                                        try {
-                                            return new URL(selectedLocation.website).hostname.replace(/^www\./, "");
-                                        } catch {
-                                            return "Visit Website";
-                                        }
-                                    })()}
-                                </a>
-                            )}
-                        </div>
 
-                        {/* Right: Info */}
-                        <div className="flex flex-col items-center lg:items-end justify-center h-full">
-                            <div className="bg-slate-800/40 p-4 rounded-2xl border border-white/5 shadow-inner backdrop-blur-sm max-w-md">
-                                <p className="text-slate-100 text-base lg:text-lg font-medium leading-relaxed text-left">
-                                    {selectedLocation.description}
-                                </p>
+                            {/* Info & Description Group */}
+                            <div className="flex flex-col gap-4">
+                                <div className="flex items-center gap-3">
+                                    <div className={`h-1.5 w-12 rounded-full bg-gradient-to-r ${getRegionForLoc(selectedLocation.name).borderColor.replace('border-l-', 'from-').replace('border-r-', 'to-') || 'from-arctic-500 to-sky-500'}`} />
+                                    {selectedLocation.website && (
+                                        <a
+                                            href={selectedLocation.website}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-arctic-400 hover:text-arctic-300 text-sm font-black tracking-widest uppercase hover:underline decoration-arctic-400/30 underline-offset-4 transition-colors"
+                                        >
+                                            {(() => {
+                                                try {
+                                                    return new URL(selectedLocation.website).hostname.replace(/^www\./, "");
+                                                } catch {
+                                                    return "Visit Website";
+                                                }
+                                            })()}
+                                        </a>
+                                    )}
+                                </div>
+                                <div className="bg-slate-950/30 p-5 rounded-2xl border border-white/5 shadow-inner backdrop-blur-sm">
+                                    <p className="text-slate-200 text-base font-medium leading-relaxed italic opacity-90">
+                                        "{selectedLocation.description}"
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </header>
