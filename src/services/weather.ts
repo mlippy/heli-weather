@@ -231,6 +231,48 @@ export const LOCATIONS: Location[] = [
         pricing: 'Contact for pricing'
     },
 
+    // --- South America ---
+    {
+        name: 'Puma Lodge, Chile (Powder South)',
+        lat: -34.3600,
+        lon: -70.3100,
+        website: 'https://www.powdersouth.com/',
+        description: 'World-class heli-skiing from a 5-star lodge in the Andes, offering vast terrain and luxury amenities.',
+        pricing: 'From $9,500 pp (3-day, groups of 8)'
+    },
+    {
+        name: 'Maipo Valley, Chile (Powder South - Altiplanico)',
+        lat: -33.5800,
+        lon: -70.2600,
+        website: 'https://www.powdersouth.com/',
+        description: 'Boutique heli-skiing experience in the Maipo Valley, close to Santiago, staying at the Altiplanico Lodge.',
+        pricing: 'From $9,500 pp (3-day, groups of 4)'
+    },
+    {
+        name: 'Portillo, Chile (Ski Portillo Heli)',
+        lat: -32.8850,
+        lon: -70.1340,
+        website: 'https://skiportillo.com/',
+        description: 'Iconic ski resort offering single-run or multi-run heliskiing packages in the high Andes.',
+        pricing: '$500 USD (1st run), $250 USD (subsequent runs)'
+    },
+    {
+        name: 'Valle Nevado, Chile (Valle Nevado Heli)',
+        lat: -33.3547,
+        lon: -70.2498,
+        website: 'https://vallenevado.com/',
+        description: 'Guided heli-skiing adventures from Valle Nevado resort, accessing extensive high-altitude terrain.',
+        pricing: '~$1,277 USD pp (2 runs, group of 4)'
+    },
+    {
+        name: 'Santiago/Andes, Chile (Andes Heliboarding)',
+        lat: -33.5700,
+        lon: -70.0600,
+        website: 'https://andesheliboarding.com/',
+        description: 'Pioneers of heli-skiing in Chile, offering flexible packages from Santiago or mountain lodges.',
+        pricing: 'From $16,990 USD (Private week, group of 4)'
+    },
+
     // --- Lower 48 States ---
     {
         name: 'Mazama, WA (North Cascade Heli)',

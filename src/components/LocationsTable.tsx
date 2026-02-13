@@ -7,6 +7,7 @@ const regions = [
     { label: "Alaska", filter: ", AK", borderColor: "border-l-amber-500", badge: "bg-amber-500/15 text-amber-400 border-amber-500/30", textColor: "text-amber-400" },
     { label: "British Columbia", filter: ", BC", borderColor: "border-l-sky-400", badge: "bg-sky-500/15 text-sky-400 border-sky-500/30", textColor: "text-sky-400" },
     { label: "Greenland & Iceland", filter: "__greenland_iceland__", borderColor: "border-l-indigo-400", badge: "bg-indigo-500/15 text-indigo-400 border-indigo-500/30", textColor: "text-indigo-400" },
+    { label: "South America - Andes", filter: "__chile__", borderColor: "border-l-rose-500", badge: "bg-rose-500/15 text-rose-500 border-rose-500/30", textColor: "text-rose-500" },
     { label: "Lower 48 States", filter: "__lower48__", borderColor: "border-l-emerald-400", badge: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30", textColor: "text-emerald-400" },
 ];
 
@@ -14,14 +15,16 @@ function regionForLoc(name: string) {
     if (name.includes(", AK")) return regions[0];
     if (name.includes(", BC")) return regions[1];
     if (name.includes("Greenland") || name.includes("Iceland")) return regions[2];
-    return regions[3];
+    if (name.includes("Chile")) return regions[3];
+    return regions[4];
 }
 
 function locsForRegion(label: string) {
     if (label === "Alaska") return LOCATIONS.filter(l => l.name.includes(", AK"));
     if (label === "British Columbia") return LOCATIONS.filter(l => l.name.includes(", BC"));
     if (label === "Greenland & Iceland") return LOCATIONS.filter(l => l.name.includes("Greenland") || l.name.includes("Iceland"));
-    return LOCATIONS.filter(l => !l.name.includes(", AK") && !l.name.includes(", BC") && !l.name.includes("Greenland") && !l.name.includes("Iceland"));
+    if (label === "South America - Andes") return LOCATIONS.filter(l => l.name.includes("Chile"));
+    return LOCATIONS.filter(l => !l.name.includes(", AK") && !l.name.includes(", BC") && !l.name.includes("Greenland") && !l.name.includes("Iceland") && !l.name.includes("Chile"));
 }
 
 function extractDomain(url: string): string {
