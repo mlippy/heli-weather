@@ -6,25 +6,49 @@ import { Location } from "@/lib/types";
 const regions = [
     { label: "Alaska", filter: ", AK", borderColor: "border-l-amber-500", badge: "bg-amber-500/15 text-amber-400 border-amber-500/30", textColor: "text-amber-400" },
     { label: "British Columbia", filter: ", BC", borderColor: "border-l-sky-400", badge: "bg-sky-500/15 text-sky-400 border-sky-500/30", textColor: "text-sky-400" },
-    { label: "Greenland & Iceland", filter: "__greenland_iceland__", borderColor: "border-l-indigo-400", badge: "bg-indigo-500/15 text-indigo-400 border-indigo-500/30", textColor: "text-indigo-400" },
-    { label: "South America - Andes", filter: "__chile__", borderColor: "border-l-rose-500", badge: "bg-rose-500/15 text-rose-500 border-rose-500/30", textColor: "text-rose-500" },
+    { label: "Europe - Alps & Scandinavia", filter: "__europe__", borderColor: "border-l-indigo-400", badge: "bg-indigo-500/15 text-indigo-400 border-indigo-500/30", textColor: "text-indigo-400" },
+    { label: "Greenland & Iceland", filter: "__arctic__", borderColor: "border-l-cyan-400", badge: "bg-cyan-500/15 text-cyan-400 border-cyan-500/30", textColor: "text-cyan-400" },
+    { label: "Asia & Japan", filter: "__asia__", borderColor: "border-l-rose-400", badge: "bg-rose-500/15 text-rose-400 border-rose-500/30", textColor: "text-rose-400" },
+    { label: "South America - Andes", filter: "__chile__", borderColor: "border-l-rose-600", badge: "bg-rose-600/15 text-rose-500 border-rose-600/30", textColor: "text-rose-500" },
+    { label: "New Zealand", filter: "__nz__", borderColor: "border-l-teal-400", badge: "bg-teal-500/15 text-teal-400 border-teal-500/30", textColor: "text-teal-400" },
     { label: "Lower 48 States", filter: "__lower48__", borderColor: "border-l-emerald-400", badge: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30", textColor: "text-emerald-400" },
 ];
 
 function regionForLoc(name: string) {
     if (name.includes(", AK")) return regions[0];
-    if (name.includes(", BC")) return regions[1];
-    if (name.includes("Greenland") || name.includes("Iceland")) return regions[2];
-    if (name.includes("Chile")) return regions[3];
-    return regions[4];
+    if (name.includes(", BC") || name.includes("Bugaboos")) return regions[1];
+    if (name.includes("Switzerland") || name.includes("Italy") || name.includes("Sweden")) return regions[2];
+    if (name.includes("Greenland") || name.includes("Iceland")) return regions[3];
+    if (name.includes("Japan") || name.includes("India") || name.includes("Nepal")) return regions[4];
+    if (name.includes("Chile") || name.includes("Patagonia")) return regions[5];
+    if (name.includes(", NZ")) return regions[6];
+    return regions[7];
 }
 
 function locsForRegion(label: string) {
     if (label === "Alaska") return LOCATIONS.filter(l => l.name.includes(", AK"));
-    if (label === "British Columbia") return LOCATIONS.filter(l => l.name.includes(", BC"));
+    if (label === "British Columbia") return LOCATIONS.filter(l => l.name.includes(", BC") || l.name.includes("Bugaboos"));
+    if (label === "Europe - Alps & Scandinavia") return LOCATIONS.filter(l => l.name.includes("Switzerland") || l.name.includes("Italy") || l.name.includes("Sweden"));
     if (label === "Greenland & Iceland") return LOCATIONS.filter(l => l.name.includes("Greenland") || l.name.includes("Iceland"));
-    if (label === "South America - Andes") return LOCATIONS.filter(l => l.name.includes("Chile"));
-    return LOCATIONS.filter(l => !l.name.includes(", AK") && !l.name.includes(", BC") && !l.name.includes("Greenland") && !l.name.includes("Iceland") && !l.name.includes("Chile"));
+    if (label === "Asia & Japan") return LOCATIONS.filter(l => l.name.includes("Japan") || l.name.includes("India") || l.name.includes("Nepal"));
+    if (label === "South America - Andes") return LOCATIONS.filter(l => l.name.includes("Chile") || l.name.includes("Patagonia"));
+    if (label === "New Zealand") return LOCATIONS.filter(l => l.name.includes(", NZ"));
+    return LOCATIONS.filter(l =>
+        !l.name.includes(", AK") &&
+        !l.name.includes(", BC") &&
+        !l.name.includes("Bugaboos") &&
+        !l.name.includes("Switzerland") &&
+        !l.name.includes("Italy") &&
+        !l.name.includes("Sweden") &&
+        !l.name.includes("Greenland") &&
+        !l.name.includes("Iceland") &&
+        !l.name.includes("Japan") &&
+        !l.name.includes("India") &&
+        !l.name.includes("Nepal") &&
+        !l.name.includes("Chile") &&
+        !l.name.includes("Patagonia") &&
+        !l.name.includes(", NZ")
+    );
 }
 
 function extractDomain(url: string): string {

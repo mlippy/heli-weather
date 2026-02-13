@@ -188,8 +188,64 @@ export const LOCATIONS: Location[] = [
         description: 'Offers an all-inclusive, unlimited vertical heli-skiing and boarding experience in British Columbia\'s Selkirk Mountains.',
         pricing: 'From ~$5,780 CAD pp (multi-day, groups of 4, unlimited vertical)'
     },
+    {
+        name: 'Bugaboos, BC (CMH Heli-Skiing)',
+        lat: 50.7360,
+        lon: -116.7118,
+        website: 'https://www.cmhheli.com/',
+        description: 'The birthplace of heli-skiing, offering legendary powder across 11 different lodge areas in British Columbia.',
+        pricing: 'From ~$2,100 CAD pp/day (3–7 day packages)'
+    },
 
-    // --- Greenland & Iceland ---
+    // --- Europe ---
+    {
+        name: 'Zermatt, Switzerland (Air Zermatt)',
+        lat: 46.0234,
+        lon: 7.7523,
+        website: 'https://www.air-zermatt.ch/',
+        description: 'Legendary alpine heli-skiing in the shadow of the Matterhorn, accessing some of Europe\'s highest glacial terrain.',
+        pricing: '~$550 CHF pp/drop; full day ~$2,400 CHF'
+    },
+    {
+        name: 'Aosta Valley, Italy (Valgrisenche Heli-Ski)',
+        lat: 45.6030,
+        lon: 7.0620,
+        website: 'https://www.valgrisenche.net/',
+        description: 'Authentic Italian heli-skiing in a rugged, high-altitude valley known for exceptional snow quality and empty slopes.',
+        pricing: '~$320 EUR pp/drop; full day ~$1,100 EUR'
+    },
+    {
+        name: 'Riksgränsen, Sweden (Arctic Elements)',
+        lat: 68.4285,
+        lon: 18.1221,
+        website: 'https://arcticelements.com/',
+        description: 'Exclusive heli-skiing deep within the Swedish Arctic Circle, offering mid-night sun sessions in late spring.',
+        pricing: 'From ~$1,450 EUR pp/day (multi-day packages)'
+    },
+    {
+        name: 'Dalvik, Iceland (Arctic Heli Skiing)',
+        lat: 65.9700,
+        lon: -18.5300,
+        website: 'https://www.arcticheliskiing.com/',
+        description: 'Iceland\'s original heli-ski operator, pioneering the industry on the Troll Peninsula.',
+        pricing: 'From ~$1,800 EUR pp/day'
+    },
+    {
+        name: 'Siglufjörður, Iceland (Summit Heliskiing)',
+        lat: 66.1500,
+        lon: -18.9100,
+        website: 'https://summitheliskiing.is/',
+        description: 'Premier heli-skiing and ski touring experiences based in the spectacular Troll Peninsula.',
+        pricing: 'From ~$1,750 EUR pp/day'
+    },
+    {
+        name: 'Ólafsfjörður, Iceland (Viking Heli Skiing)',
+        lat: 66.0700,
+        lon: -18.6500,
+        website: 'https://vikingheliskiing.com/',
+        description: 'Specializes in boutique heli-skiing and snowboarding adventures in the Troll Peninsula.',
+        pricing: 'From ~$1,650 EUR pp/day'
+    },
     {
         name: 'Kulusuk, Greenland (Greenland Heliskiing)',
         lat: 65.5700,
@@ -206,32 +262,58 @@ export const LOCATIONS: Location[] = [
         description: 'Arctic heli-skiing and ski touring in West Greenland, often utilizing the ship "Tulu" for access to diverse terrain.',
         pricing: 'Contact for pricing'
     },
+
+    // --- Asia & Japan ---
     {
-        name: 'Dalvik, Iceland (Arctic Heli Skiing)',
-        lat: 65.9700,
-        lon: -18.5300,
-        website: 'https://www.arcticheliskiing.com/',
-        description: 'Iceland\'s original heli-ski operator, pioneering the industry on the Troll Peninsula.',
-        pricing: 'Contact for pricing'
+        name: 'Niseko, Japan (Hokkaido Backcountry Club)',
+        lat: 42.8048,
+        lon: 140.6874,
+        website: 'https://hokkaidobackcountryclub.com/',
+        description: 'Accessing world-famous "Deep Japow" on Mount Shiribetsu with breathtaking views and incredible tree skiing.',
+        pricing: '~$1,250 USD pp/day (6 runs)'
     },
     {
-        name: 'Siglufjörður, Iceland (Summit Heliskiing)',
-        lat: 66.1500,
-        lon: -18.9100,
-        website: 'https://summitheliskiing.is/',
-        description: 'Premier heli-skiing and ski touring experiences based in the spectacular Troll Peninsula.',
-        pricing: 'Contact for pricing'
+        name: 'Manali, India (Himachal Helicopter Skiing)',
+        lat: 32.2432,
+        lon: 77.1892,
+        website: 'https://himachal.com/',
+        description: 'High-altitude Himalayan heli-skiing in the Kullu Valley, featuring massive vertical drops and unique cultural experiences.',
+        pricing: '~$2,650 USD pp/day; $15,000 USD/week'
     },
     {
-        name: 'Ólafsfjörður, Iceland (Viking Heli Skiing)',
-        lat: 66.0700,
-        lon: -18.6500,
-        website: 'https://vikingheliskiing.com/',
-        description: 'Specializes in boutique heli-skiing and snowboarding adventures in the Troll Peninsula.',
-        pricing: 'Contact for pricing'
+        name: 'Annapurna Range, Nepal (Himalayan Heliski)',
+        lat: 28.5300,
+        lon: 83.8400,
+        website: 'https://www.himalayanheliski.com/',
+        description: 'Extreme high-altitude heli-skiing in the shadow of the world\'s highest peaks, providing once-in-a-lifetime descents.',
+        pricing: 'Contact for pricing (Expedition style)'
     },
 
     // --- South America ---
+    {
+        name: 'Santiago/Andes, Chile (Powder South)',
+        lat: -33.4489,
+        lon: -70.6693,
+        website: 'https://www.powdersouth.com/',
+        description: 'The Andes\' leading private heli-ski operation, accessing vast high-altitude terrain directly from Santiago or luxury lodges.',
+        pricing: 'From $1,500 USD pp/day'
+    },
+    {
+        name: 'Valle Nevado, Chile (Valle Nevado Heli-Ski)',
+        lat: -33.3547,
+        lon: -70.2498,
+        website: 'https://vallenevado.com/',
+        description: 'Guided heli-skiing adventures from Valle Nevado resort, accessing extensive high-altitude terrain in the central Andes.',
+        pricing: '~$1,277 USD pp (2 runs, group of 4)'
+    },
+    {
+        name: 'Patagonia, Chile (Rio Palena Lodge)',
+        lat: -43.6100,
+        lon: -71.8100,
+        website: 'https://elevenexperience.com/rio-palena-lodge-chile/',
+        description: 'Remote luxury lodge in Northern Patagonia offering exclusive heli-skiing in untapped, pristine mountain ranges.',
+        pricing: 'From $2,250 USD pp/day (all-inclusive)'
+    },
     {
         name: 'Puma Lodge, Chile (Powder South)',
         lat: -34.3600,
@@ -241,14 +323,6 @@ export const LOCATIONS: Location[] = [
         pricing: 'From $9,500 pp (3-day, groups of 8)'
     },
     {
-        name: 'Maipo Valley, Chile (Powder South - Altiplanico)',
-        lat: -33.5800,
-        lon: -70.2600,
-        website: 'https://www.powdersouth.com/',
-        description: 'Boutique heli-skiing experience in the Maipo Valley, close to Santiago, staying at the Altiplanico Lodge.',
-        pricing: 'From $9,500 pp (3-day, groups of 4)'
-    },
-    {
         name: 'Portillo, Chile (Ski Portillo Heli)',
         lat: -32.8850,
         lon: -70.1340,
@@ -256,21 +330,15 @@ export const LOCATIONS: Location[] = [
         description: 'Iconic ski resort offering single-run or multi-run heliskiing packages in the high Andes.',
         pricing: '$500 USD (1st run), $250 USD (subsequent runs)'
     },
+
+    // --- New Zealand ---
     {
-        name: 'Valle Nevado, Chile (Valle Nevado Heli)',
-        lat: -33.3547,
-        lon: -70.2498,
-        website: 'https://vallenevado.com/',
-        description: 'Guided heli-skiing adventures from Valle Nevado resort, accessing extensive high-altitude terrain.',
-        pricing: '~$1,277 USD pp (2 runs, group of 4)'
-    },
-    {
-        name: 'Santiago/Andes, Chile (Andes Heliboarding)',
-        lat: -33.5700,
-        lon: -70.0600,
-        website: 'https://andesheliboarding.com/',
-        description: 'Pioneers of heli-skiing in Chile, offering flexible packages from Santiago or mountain lodges.',
-        pricing: 'From $16,990 USD (Private week, group of 4)'
+        name: 'Queenstown, NZ (Harris Mountains Heli-Ski)',
+        lat: -44.8529,
+        lon: 168.8826,
+        website: 'https://www.heliski.co.nz/',
+        description: 'New Zealand\'s premier heli-ski operator, providing access to extensive terrain across the Southern Alps.',
+        pricing: '~$1,150 NZD pp/day (3–4 runs)'
     },
 
     // --- Lower 48 States ---
