@@ -7,9 +7,29 @@ import { WeatherData } from "@/lib/types";
 import { getWeather, LOCATIONS } from "@/services/weather";
 
 export default function App() {
-    const [selectedLocation, setSelectedLocation] = useState(LOCATIONS[0]);
+    const [selectedLocation, setSelectedLocation] = useState(() => {
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            const locName = params.get('location');
+            if (locName) {
+                const found = LOCATIONS.find(l => l.name === locName);
+                if (found) return found;
+            }
+        }
+        return LOCATIONS[0];
+    });
     const [weather, setWeather] = useState<WeatherData | null>(null);
     const [loading, setLoading] = useState(true);
+
+    // Sync state to URL
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('location') !== selectedLocation.name) {
+            params.set('location', selectedLocation.name);
+            const newUrl = `${window.location.pathname}?${params.toString()}`;
+            window.history.replaceState({}, '', newUrl);
+        }
+    }, [selectedLocation]);
 
     useEffect(() => {
         async function fetchData() {
