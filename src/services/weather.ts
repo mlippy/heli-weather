@@ -189,6 +189,48 @@ export const LOCATIONS: Location[] = [
         pricing: 'From ~$5,780 CAD pp (multi-day, groups of 4, unlimited vertical)'
     },
 
+    // --- Greenland & Iceland ---
+    {
+        name: 'Kulusuk, Greenland (Greenland Heliskiing)',
+        lat: 65.5700,
+        lon: -37.1900,
+        website: 'https://greenlandheliskiing.com/',
+        description: 'Exclusive heli-skiing on the East Coast of Greenland, based in Kulusuk, offering descents to the ocean amidst icebergs.',
+        pricing: 'Contact for pricing (Expedition style)'
+    },
+    {
+        name: 'Maniitsoq, Greenland (Heliskigreenland)',
+        lat: 65.4200,
+        lon: -52.8900,
+        website: 'https://heliskigreenland.com/',
+        description: 'Arctic heli-skiing and ski touring in West Greenland, often utilizing the ship "Tulu" for access to diverse terrain.',
+        pricing: 'Contact for pricing'
+    },
+    {
+        name: 'Dalvik, Iceland (Arctic Heli Skiing)',
+        lat: 65.9700,
+        lon: -18.5300,
+        website: 'https://www.arcticheliskiing.com/',
+        description: 'Iceland\'s original heli-ski operator, pioneering the industry on the Troll Peninsula.',
+        pricing: 'Contact for pricing'
+    },
+    {
+        name: 'Siglufjörður, Iceland (Summit Heliskiing)',
+        lat: 66.1500,
+        lon: -18.9100,
+        website: 'https://summitheliskiing.is/',
+        description: 'Premier heli-skiing and ski touring experiences based in the spectacular Troll Peninsula.',
+        pricing: 'Contact for pricing'
+    },
+    {
+        name: 'Ólafsfjörður, Iceland (Viking Heli Skiing)',
+        lat: 66.0700,
+        lon: -18.6500,
+        website: 'https://vikingheliskiing.com/',
+        description: 'Specializes in boutique heli-skiing and snowboarding adventures in the Troll Peninsula.',
+        pricing: 'Contact for pricing'
+    },
+
     // --- Lower 48 States ---
     {
         name: 'Mazama, WA (North Cascade Heli)',
