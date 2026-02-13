@@ -1,6 +1,6 @@
 import Dashboard from "@/components/Dashboard";
 import LocationsTable from "@/components/LocationsTable";
-import logoImg from "@/lib/images/Gemini_Generated_Image_xokrtixokrtixokr-Picsart-BackgroundRemover.png";
+import logoImg from "@/lib/images/Gemini_Generated_Image_q9st6mq9st6mq9st-fotor-bg-remover-20260212215636.png";
 import { WeatherBackground } from "@/components/WeatherBackground";
 import { useEffect, useState } from "react";
 import { WeatherData } from "@/lib/types";
