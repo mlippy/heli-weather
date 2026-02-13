@@ -5,6 +5,7 @@ import { WeatherBackground } from "@/components/WeatherBackground";
 import { useEffect, useState } from "react";
 import { WeatherData } from "@/lib/types";
 import { getWeather, LOCATIONS } from "@/services/weather";
+import { Share2, Check } from "lucide-react";
 
 export default function App() {
     const [selectedLocation, setSelectedLocation] = useState(() => {
@@ -20,6 +21,7 @@ export default function App() {
     });
     const [weather, setWeather] = useState<WeatherData | null>(null);
     const [loading, setLoading] = useState(true);
+    const [copied, setCopied] = useState(false);
 
     // Sync state to URL
     useEffect(() => {
@@ -46,6 +48,32 @@ export default function App() {
         fetchData();
     }, [selectedLocation]);
 
+    const handleShare = async () => {
+        const shareData = {
+            title: 'Heli Vibes - Weather Forecast',
+            text: `Check out the weather at ${selectedLocation.name} for heli-skiing!`,
+            url: window.location.href,
+        };
+
+        if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+            try {
+                await navigator.share(shareData);
+            } catch (err) {
+                if (err instanceof Error && err.name !== 'AbortError') {
+                    console.error('Error sharing:', err);
+                }
+            }
+        } else {
+            try {
+                await navigator.clipboard.writeText(window.location.href);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+            } catch (err) {
+                console.error('Error copying to clipboard:', err);
+            }
+        }
+    };
+
     return (
         <div className="antialiased min-h-screen relative text-slate-50">
             <WeatherBackground condition={weather?.current.condition} />
@@ -64,24 +92,34 @@ export default function App() {
 
                         {/* Center: Dropdown & Link */}
                         <div className="flex flex-col items-center justify-center w-full gap-3">
-                            <div className="relative w-full max-w-md">
-                                <select
-                                    value={selectedLocation.name}
-                                    onChange={(e) => {
-                                        const loc = LOCATIONS.find(l => l.name === e.target.value);
-                                        if (loc) setSelectedLocation(loc);
-                                    }}
-                                    className="w-full appearance-none bg-slate-950/50 backdrop-blur-md border border-slate-700/60 text-slate-200 text-base font-medium rounded-xl px-4 py-3 pr-10 focus:outline-none focus:ring-2 focus:ring-arctic-500/50 cursor-pointer hover:bg-slate-900/60 transition-colors shadow-lg"
-                                >
-                                    {LOCATIONS.map(loc => (
-                                        <option key={loc.name} value={loc.name} className="bg-slate-900 text-slate-200">
-                                            {loc.name}
-                                        </option>
-                                    ))}
-                                </select>
-                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
-                                    <svg className="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                            <div className="flex items-center gap-2 w-full max-w-md">
+                                <div className="relative flex-grow">
+                                    <select
+                                        value={selectedLocation.name}
+                                        onChange={(e) => {
+                                            const loc = LOCATIONS.find(l => l.name === e.target.value);
+                                            if (loc) setSelectedLocation(loc);
+                                        }}
+                                        className="w-full appearance-none bg-slate-950/50 backdrop-blur-md border border-slate-700/60 text-slate-200 text-base font-medium rounded-xl px-4 py-3 pr-10 focus:outline-none focus:ring-2 focus:ring-arctic-500/50 cursor-pointer hover:bg-slate-900/60 transition-colors shadow-lg"
+                                    >
+                                        {LOCATIONS.map(loc => (
+                                            <option key={loc.name} value={loc.name} className="bg-slate-900 text-slate-200">
+                                                {loc.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+                                        <svg className="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                                    </div>
                                 </div>
+                                <button
+                                    onClick={handleShare}
+                                    className={`p-3 rounded-xl border transition-all flex items-center gap-2 shadow-lg backdrop-blur-md ${copied ? 'bg-arctic-500/20 border-arctic-400 text-arctic-300' : 'bg-slate-950/50 border-slate-700/60 text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'}`}
+                                    title="Share current location"
+                                >
+                                    {copied ? <Check size={20} /> : <Share2 size={20} />}
+                                    <span className="text-sm font-bold hidden sm:inline">{copied ? 'Copied' : 'Share'}</span>
+                                </button>
                             </div>
                             {selectedLocation.website && (
                                 <a
