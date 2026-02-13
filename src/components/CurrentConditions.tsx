@@ -22,46 +22,46 @@ export function CurrentConditions({ data, elevation }: { data: WeatherData["curr
                     {elevation && <p className="text-xs text-slate-500 mt-2">Elev: {Math.round(elevation)} ft</p>}
                 </div>
 
-                <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                        <div className="bg-white/10 p-2 rounded-lg">
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/5">
+                        <div className="bg-white/10 p-2 rounded-lg shrink-0">
                             <Wind size={20} className="text-arctic-300" />
                         </div>
                         <div>
-                            <p className="text-slate-400 text-xs uppercase tracking-wider">Wind Speed</p>
-                            <p className="text-white font-mono text-lg">{Math.round(data.windSpeed)} <span className="text-sm text-slate-500">mph</span></p>
+                            <p className="text-slate-400 text-[10px] uppercase tracking-wider font-bold">Wind Speed</p>
+                            <p className="text-white font-mono text-base">{Math.round(data.windSpeed)} <span className="text-xs text-slate-500">mph</span></p>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-3">
-                        <div className="bg-white/10 p-2 rounded-lg">
+                    <div className="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/5">
+                        <div className="bg-white/10 p-2 rounded-lg shrink-0">
                             <Wind size={20} className="text-arctic-300 opacity-60" />
                         </div>
                         <div>
-                            <p className="text-slate-400 text-xs uppercase tracking-wider">Wind Gust</p>
-                            <p className="text-white font-mono text-lg">{Math.round(data.windGust)} <span className="text-sm text-slate-500">mph</span></p>
+                            <p className="text-slate-400 text-[10px] uppercase tracking-wider font-bold">Wind Gust</p>
+                            <p className="text-white font-mono text-base">{Math.round(data.windGust)} <span className="text-xs text-slate-500">mph</span></p>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-3">
-                        <div className="bg-white/10 p-2 rounded-lg">
+                    <div className="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/5">
+                        <div className="bg-white/10 p-2 rounded-lg shrink-0">
                             <Eye size={20} className="text-arctic-300" />
                         </div>
                         <div>
-                            <p className="text-slate-400 text-xs uppercase tracking-wider">Visibility</p>
-                            <p className="text-white font-mono text-lg">{(data.visibility / 1609.34).toFixed(1)} <span className="text-sm text-slate-500">mi</span></p>
+                            <p className="text-slate-400 text-[10px] uppercase tracking-wider font-bold">Visibility</p>
+                            <p className="text-white font-mono text-base">{(data.visibility / 1609.34).toFixed(1)} <span className="text-xs text-slate-500">mi</span></p>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-3">
-                        <div className="bg-white/10 p-2 rounded-lg">
+                    <div className="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/5">
+                        <div className="bg-white/10 p-2 rounded-lg shrink-0">
                             <Sun size={20} className="text-arctic-300" />
                         </div>
                         <div>
-                            <p className="text-slate-400 text-xs uppercase tracking-wider">Light & Ceiling</p>
-                            <p className="text-white font-mono text-sm leading-tight">
+                            <p className="text-slate-400 text-[10px] uppercase tracking-wider font-bold">Light & Ceiling</p>
+                            <p className="text-white font-mono text-xs leading-tight">
                                 {data.lightCondition}<br />
-                                <span className="text-slate-500 text-xs">{data.cloudCeiling}</span>
+                                <span className="text-slate-500 text-[10px]">{data.cloudCeiling}</span>
                             </p>
                         </div>
                     </div>

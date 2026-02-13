@@ -37,7 +37,7 @@ export default function Dashboard({ weather, loading, location }: DashboardProps
     }
 
     return (
-        <div className="flex flex-col gap-6 max-w-5xl mx-auto">
+        <div className="flex flex-col gap-6 w-full mx-auto">
             {/* Row 1: Current Stats & Heli Status */}
             <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 md:gap-6">
                 <CurrentConditions data={weather.current} elevation={weather.elevation} />
@@ -47,11 +47,13 @@ export default function Dashboard({ weather, loading, location }: DashboardProps
             {/* Row 2: Hourly Forecast */}
             <HourlyForecastList data={weather.hourly} />
 
-            {/* Row 3: Regional Analysis */}
-            <RegionalAnalysis data={weather.regional} />
+            {/* Row 3: Regional Analysis & Main Map */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[600px]">
+                <RegionalAnalysis data={weather.regional} />
+                <SatelliteMap location={location} />
+            </div>
 
-            {/* Row 4: Main Map & Snow Chart */}
-            <SatelliteMap location={location} />
+            {/* Row 4: Snow Chart */}
             <SnowChart data={weather.forecast} />
 
             {/* Footer / Credits */}
