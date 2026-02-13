@@ -103,30 +103,29 @@ export default function App() {
                 <div className="w-full max-w-[95%] mx-auto relative z-10">
 
                     {/* Header */}
-                    <header className="mb-8 grid grid-cols-1 lg:grid-cols-2 items-start gap-8 p-8 bg-slate-900/40 backdrop-blur-md rounded-3xl border border-white/10 shadow-2xl">
+                    <header className="mb-8 grid grid-cols-1 lg:grid-cols-3 items-center gap-8 p-10 bg-slate-900/40 backdrop-blur-md rounded-3xl border border-white/10 shadow-2xl">
                         {/* Left Column: Branding */}
-                        <div className="flex items-center gap-6 justify-start lg:h-full">
-                            <img src={logoImg} alt="Heli Vibes" className="w-24 h-24 rounded-full shadow-lg shadow-arctic-500/20 ring-4 ring-white/5" />
+                        <div className="flex items-center gap-6 justify-start">
+                            <img src={logoImg} alt="Heli Vibes" className="w-24 h-24 rounded-full shadow-lg shadow-arctic-500/20 ring-4 ring-white/5 shrink-0" />
                             <div className="flex flex-col">
                                 <h1 className="text-5xl xl:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-arctic-200 leading-none">
                                     HELI<span className="text-arctic-500"> VIBES</span>
                                 </h1>
-                                <p className="text-slate-400 text-sm font-bold tracking-[0.2em] mt-2 uppercase opacity-60">Global Operator Forecasts</p>
+                                <p className="text-slate-400 text-[10px] font-black tracking-[0.3em] mt-3 uppercase opacity-60">Global Operator Forecasts</p>
                             </div>
                         </div>
 
-                        {/* Right Column: Controls & Description */}
-                        <div className="flex flex-col gap-6 w-full">
+                        {/* Center Column: Controls & Description */}
+                        <div className="flex flex-col items-center gap-6 w-full lg:max-w-xl mx-auto">
                             {/* Selectors Row */}
-                            <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 w-full">
+                            <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
                                 {/* Region Filter */}
-                                <div className="relative sm:col-span-4">
+                                <div className="relative flex-grow sm:flex-1 w-full">
                                     <select
                                         value={selectedRegion}
                                         onChange={(e) => {
                                             const newRegion = e.target.value;
                                             setSelectedRegion(newRegion);
-                                            // If current location is not in new region, switch to first in region
                                             if (newRegion !== "All") {
                                                 const firstInRegion = LOCATIONS.find(l => getRegionForLoc(l.name).label === newRegion);
                                                 if (firstInRegion && getRegionForLoc(selectedLocation.name).label !== newRegion) {
@@ -134,7 +133,7 @@ export default function App() {
                                                 }
                                             }
                                         }}
-                                        className="w-full appearance-none bg-slate-950/50 backdrop-blur-md border border-slate-700/60 text-slate-200 text-sm font-bold rounded-xl px-4 py-3 pr-10 focus:outline-none focus:ring-2 focus:ring-arctic-500/50 cursor-pointer hover:bg-slate-900/60 transition-colors shadow-lg"
+                                        className="w-full appearance-none bg-slate-950/50 backdrop-blur-md border border-slate-700/60 text-slate-200 text-xs font-black uppercase tracking-widest rounded-xl px-4 py-3.5 pr-10 focus:outline-none focus:ring-2 focus:ring-arctic-500/50 cursor-pointer hover:bg-slate-900/60 transition-colors shadow-lg"
                                     >
                                         <option value="All">All Regions</option>
                                         {REGIONS.map(reg => (
@@ -147,14 +146,14 @@ export default function App() {
                                 </div>
 
                                 {/* Location Selector */}
-                                <div className="relative sm:col-span-6">
+                                <div className="relative flex-[1.5] flex-grow w-full">
                                     <select
                                         value={selectedLocation.name}
                                         onChange={(e) => {
                                             const loc = LOCATIONS.find(l => l.name === e.target.value);
                                             if (loc) setSelectedLocation(loc);
                                         }}
-                                        className="w-full appearance-none bg-slate-950/50 backdrop-blur-md border border-slate-700/60 text-slate-200 text-sm font-bold rounded-xl px-4 py-3 pr-10 focus:outline-none focus:ring-2 focus:ring-arctic-500/50 cursor-pointer hover:bg-slate-900/60 transition-colors shadow-lg"
+                                        className="w-full appearance-none bg-slate-950/50 backdrop-blur-md border border-slate-700/60 text-slate-200 text-xs font-black uppercase tracking-widest rounded-xl px-4 py-3.5 pr-10 focus:outline-none focus:ring-2 focus:ring-arctic-500/50 cursor-pointer hover:bg-slate-900/60 transition-colors shadow-lg"
                                     >
                                         {filteredLocations.map(loc => (
                                             <option key={loc.name} value={loc.name} className="bg-slate-900 text-slate-200">
@@ -170,24 +169,24 @@ export default function App() {
                                 {/* Share Button */}
                                 <button
                                     onClick={handleShare}
-                                    className={`sm:col-span-2 p-3 rounded-xl border transition-all flex items-center justify-center gap-2 shadow-lg backdrop-blur-md ${copied ? 'bg-arctic-500/20 border-arctic-400 text-arctic-300' : 'bg-slate-950/50 border-slate-700/60 text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'}`}
+                                    className={`shrink-0 p-3.5 rounded-xl border transition-all flex items-center justify-center gap-2 shadow-lg backdrop-blur-md w-full sm:w-auto min-w-[100px] ${copied ? 'bg-arctic-500/20 border-arctic-400 text-arctic-300' : 'bg-slate-950/50 border-slate-700/60 text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'}`}
                                     title="Share current location"
                                 >
                                     {copied ? <Check size={18} /> : <Share2 size={18} />}
-                                    <span className="text-xs font-bold sm:hidden lg:inline">{copied ? 'Copied' : 'Share'}</span>
+                                    <span className="text-[10px] font-black uppercase tracking-tighter">{copied ? 'Copied' : 'Share'}</span>
                                 </button>
                             </div>
 
                             {/* Info & Description Group */}
-                            <div className="flex flex-col gap-4">
-                                <div className="flex items-center gap-3">
-                                    <div className={`h-1.5 w-12 rounded-full bg-gradient-to-r ${getRegionForLoc(selectedLocation.name).borderColor.replace('border-l-', 'from-').replace('border-r-', 'to-') || 'from-arctic-500 to-sky-500'}`} />
+                            <div className="flex flex-col items-center gap-4 w-full">
+                                <div className="flex items-center justify-center gap-3">
+                                    <div className={`h-1.5 w-12 rounded-full bg-gradient-to-r ${getRegionForLoc(selectedLocation.name).borderColor.replace('border-l-', 'from-')} via-slate-700 to-transparent`} />
                                     {selectedLocation.website && (
                                         <a
                                             href={selectedLocation.website}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="text-arctic-400 hover:text-arctic-300 text-sm font-black tracking-widest uppercase hover:underline decoration-arctic-400/30 underline-offset-4 transition-colors"
+                                            className="text-arctic-400 hover:text-arctic-300 text-[10px] font-black tracking-[0.3em] uppercase hover:underline decoration-arctic-400/30 underline-offset-4 transition-colors"
                                         >
                                             {(() => {
                                                 try {
@@ -198,13 +197,20 @@ export default function App() {
                                             })()}
                                         </a>
                                     )}
+                                    <div className={`h-1.5 w-12 rounded-full bg-gradient-to-l ${getRegionForLoc(selectedLocation.name).borderColor.replace('border-l-', 'from-')} via-slate-700 to-transparent`} />
                                 </div>
-                                <div className="bg-slate-950/30 p-5 rounded-2xl border border-white/5 shadow-inner backdrop-blur-sm">
-                                    <p className="text-slate-200 text-base font-medium leading-relaxed italic opacity-90">
+                                <div className="bg-slate-950/30 p-6 rounded-2xl border border-white/5 shadow-inner backdrop-blur-sm w-full text-center">
+                                    <p className="text-slate-200 text-sm md:text-base font-medium leading-relaxed italic opacity-90 max-w-lg mx-auto">
                                         "{selectedLocation.description}"
                                     </p>
                                 </div>
                             </div>
+                        </div>
+
+                        {/* Right Column: Spacing/Balance (Empty on Desktop) */}
+                        <div className="hidden lg:flex justify-end pr-4 opacity-10">
+                            {/* Subtle deco element for balance */}
+                            <div className="w-16 h-16 rounded-full border-2 border-dashed border-white/20 animate-spin-slow" />
                         </div>
                     </header>
 
