@@ -165,29 +165,19 @@ export default function App() {
                                         <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
                                     </div>
                                 </div>
-
-                                {/* Share Button */}
-                                <button
-                                    onClick={handleShare}
-                                    className={`shrink-0 p-3.5 rounded-xl border transition-all flex items-center justify-center gap-2 shadow-lg backdrop-blur-md w-full sm:w-auto min-w-[100px] ${copied ? 'bg-arctic-500/20 border-arctic-400 text-arctic-300' : 'bg-slate-950/50 border-slate-700/60 text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'}`}
-                                    title="Share current location"
-                                >
-                                    {copied ? <Check size={18} /> : <Share2 size={18} />}
-                                    <span className="text-[10px] font-black uppercase tracking-tighter">{copied ? 'Copied' : 'Share'}</span>
-                                </button>
                             </div>
 
                             {/* Info & Description Group */}
                             <div className="flex flex-col items-center gap-4 w-full">
-                                <div className="flex items-center justify-center gap-3">
-                                    <div className={`h-1.5 w-12 rounded-full bg-gradient-to-r ${getRegionForLoc(selectedLocation.name).borderColor.replace('border-l-', 'from-')} via-slate-700 to-transparent`} />
+                                <div className="flex items-center justify-center gap-4">
                                     {selectedLocation.website && (
                                         <a
                                             href={selectedLocation.website}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="text-arctic-400 hover:text-arctic-300 text-[10px] font-black tracking-[0.3em] uppercase hover:underline decoration-arctic-400/30 underline-offset-4 transition-colors"
+                                            className="text-arctic-400 hover:text-arctic-300 text-[10px] font-black tracking-[0.3em] uppercase hover:underline decoration-arctic-400/30 underline-offset-4 transition-colors flex items-center gap-2"
                                         >
+                                            <span className="w-1.5 h-1.5 rounded-full bg-arctic-500/50" />
                                             {(() => {
                                                 try {
                                                     return new URL(selectedLocation.website).hostname.replace(/^www\./, "");
@@ -197,8 +187,18 @@ export default function App() {
                                             })()}
                                         </a>
                                     )}
-                                    <div className={`h-1.5 w-12 rounded-full bg-gradient-to-l ${getRegionForLoc(selectedLocation.name).borderColor.replace('border-l-', 'from-')} via-slate-700 to-transparent`} />
+
+                                    {/* Share Button relocated next to link */}
+                                    <button
+                                        onClick={handleShare}
+                                        className={`shrink-0 h-8 px-4 rounded-lg border transition-all flex items-center justify-center gap-2 shadow-sm backdrop-blur-md ${copied ? 'bg-arctic-500/20 border-arctic-400 text-arctic-300' : 'bg-slate-950/40 border-slate-700/50 text-slate-400 hover:text-slate-200 hover:bg-slate-900/50'}`}
+                                        title="Share current location"
+                                    >
+                                        {copied ? <Check size={14} /> : <Share2 size={14} />}
+                                        <span className="text-[10px] font-black uppercase tracking-tighter">{copied ? 'Copied' : 'Share'}</span>
+                                    </button>
                                 </div>
+
                                 <div className="bg-slate-950/30 p-6 rounded-2xl border border-white/5 shadow-inner backdrop-blur-sm w-full text-center">
                                     <p className="text-slate-200 text-sm md:text-base font-medium leading-relaxed italic opacity-90 max-w-lg mx-auto">
                                         "{selectedLocation.description}"
