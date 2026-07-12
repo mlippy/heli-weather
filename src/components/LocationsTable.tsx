@@ -1,8 +1,8 @@
 import { Fragment, useState } from "react";
-import { ExternalLink, ChevronDown, ChevronRight, ChevronUp, ChevronsUpDown, Plane, Mountain } from "lucide-react";
+import { ExternalLink, ChevronDown, ChevronRight, ChevronUp, ChevronsUpDown, Plane, Mountain, MountainSnow } from "lucide-react";
 import { Location } from "@/lib/types";
 
-import { LOCATIONS, REGIONS, getRegionForLoc, getLocsForRegion, getTravelEstimate, getNearbyResorts, formatHours } from "@/services/weather";
+import { LOCATIONS, REGIONS, getRegionForLoc, getLocsForRegion, getTravelEstimate, getNearbyResorts, getTerrainElevation, formatHours } from "@/services/weather";
 
 type SortColumn = "operator" | "location" | "travel";
 type SortState = { col: SortColumn; dir: "asc" | "desc" } | null;
@@ -69,6 +69,7 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
         const reg = getRegionForLoc(loc.name);
         const travel = getTravelEstimate(loc.name);
         const resorts = getNearbyResorts(loc.name);
+        const elevation = getTerrainElevation(loc.name);
         return (
             <tr
                 key={loc.name}
@@ -115,6 +116,21 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                         <span className="text-xs text-slate-600">None nearby</span>
                     )}
                 </td>
+                <td className="px-6 py-5">
+                    {elevation ? (
+                        <div className="flex flex-col gap-0.5">
+                            <span className="inline-flex items-center gap-1.5 text-sm font-bold text-slate-200 whitespace-nowrap">
+                                <MountainSnow size={13} className="text-arctic-400 shrink-0" />
+                                {elevation.baseFt.toLocaleString()}&ndash;{elevation.peakFt.toLocaleString()} ft
+                            </span>
+                            <span className="text-[10px] text-slate-500 tracking-wide">
+                                ~{(elevation.peakFt - elevation.baseFt).toLocaleString()} ft vertical
+                            </span>
+                        </div>
+                    ) : (
+                        <span className="text-xs text-slate-600">&mdash;</span>
+                    )}
+                </td>
                 <td className="px-6 py-5 text-right">
                     <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border shadow-sm ${reg.badge}`}>
                         {loc.pricing}
@@ -131,6 +147,7 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
         const reg = getRegionForLoc(loc.name);
         const travel = getTravelEstimate(loc.name);
         const resorts = getNearbyResorts(loc.name);
+        const elevation = getTerrainElevation(loc.name);
         return (
             <div
                 key={loc.name}
@@ -174,6 +191,14 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                     )}
                 </div>
 
+                {elevation && (
+                    <div className="mb-3 flex items-center gap-1.5 text-xs text-slate-300">
+                        <MountainSnow size={13} className="text-arctic-400 shrink-0" />
+                        <span className="font-bold">{elevation.baseFt.toLocaleString()}&ndash;{elevation.peakFt.toLocaleString()} ft</span>
+                        <span className="text-slate-500">(~{(elevation.peakFt - elevation.baseFt).toLocaleString()} ft vert)</span>
+                    </div>
+                )}
+
                 <div>
                     <a
                         href={loc.website}
@@ -203,8 +228,8 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
             </div>
 
             {/* Desktop Table View */}
-            <div className="hidden md:block overflow-hidden rounded-3xl border border-white/10 shadow-2xl bg-slate-900/40 backdrop-blur-md">
-                <table className="w-full text-left border-collapse">
+            <div className="hidden md:block overflow-x-auto rounded-3xl border border-white/10 shadow-2xl bg-slate-900/40 backdrop-blur-md">
+                <table className="w-full text-left border-collapse min-w-[1100px]">
                     <thead className="bg-slate-950/50 backdrop-blur-md">
                         <tr>
                             <th
@@ -227,6 +252,7 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                                 <span className="inline-flex items-center gap-1.5">Travel from DC {sortIcon("travel")}</span>
                             </th>
                             <th className="px-6 py-5 text-xs font-black uppercase tracking-[0.2em] text-slate-400 border-b border-white/5">Nearest Resorts</th>
+                            <th className="px-6 py-5 text-xs font-black uppercase tracking-[0.2em] text-slate-400 border-b border-white/5">Terrain (ft)</th>
                             <th className="px-6 py-5 text-xs font-black uppercase tracking-[0.2em] text-slate-400 border-b border-white/5 text-right">Estimated Pricing</th>
                         </tr>
                     </thead>
@@ -245,7 +271,7 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                                             onClick={() => toggleRegion(region.label)}
                                             className="group cursor-pointer hover:bg-white/5 transition-colors border-b border-white/5"
                                         >
-                                            <td colSpan={6} className={`px-6 py-4 bg-slate-950/30 border-l-4 ${region.borderColor}`}>
+                                            <td colSpan={7} className={`px-6 py-4 bg-slate-950/30 border-l-4 ${region.borderColor}`}>
                                                 <div className="flex items-center justify-between">
                                                     <span className={`text-xs font-black uppercase tracking-[0.3em] ${region.textColor} flex items-center gap-2`}>
                                                         {isExpanded ? <ChevronDown size={14} className="opacity-70" /> : <ChevronRight size={14} className="opacity-70" />}

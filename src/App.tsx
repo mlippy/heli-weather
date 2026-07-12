@@ -4,8 +4,8 @@ import logoImg from "@/lib/images/Gemini_Generated_Image_q9st6mq9st6mq9st-fotor-
 import { WeatherBackground } from "@/components/WeatherBackground";
 import { useEffect, useState } from "react";
 import { WeatherData } from "@/lib/types";
-import { getWeather, LOCATIONS, REGIONS, getRegionForLoc, getTravelEstimate, getNearbyResorts, formatHours } from "@/services/weather";
-import { Share2, Check, Plane, Mountain } from "lucide-react";
+import { getWeather, LOCATIONS, REGIONS, getRegionForLoc, getTravelEstimate, getNearbyResorts, getTerrainElevation, formatHours } from "@/services/weather";
+import { Share2, Check, Plane, Mountain, MountainSnow } from "lucide-react";
 
 export default function App() {
     const [selectedLocation, setSelectedLocation] = useState(() => {
@@ -100,6 +100,8 @@ export default function App() {
     const travel = getTravelEstimate(selectedLocation.name);
     // Closest lift-served resorts for down-day skiing
     const resorts = getNearbyResorts(selectedLocation.name);
+    // Skiable terrain elevation range (base/peak, ft)
+    const elevation = getTerrainElevation(selectedLocation.name);
 
     return (
         <div className="antialiased min-h-screen relative text-slate-50">
@@ -219,6 +221,21 @@ export default function App() {
                                     </div>
                                 )}
 
+                                {elevation && (
+                                    <div
+                                        className="flex items-center gap-2.5 bg-slate-950/40 border border-slate-700/50 rounded-xl px-4 py-2.5 shadow-lg backdrop-blur-md"
+                                        title={`Skiable terrain from ~${elevation.baseFt.toLocaleString()} ft base to ~${elevation.peakFt.toLocaleString()} ft peak`}
+                                    >
+                                        <MountainSnow size={15} className="text-arctic-400 shrink-0" />
+                                        <span className="text-[11px] font-black uppercase tracking-tighter text-slate-200">
+                                            {elevation.baseFt.toLocaleString()}&ndash;{elevation.peakFt.toLocaleString()} ft
+                                        </span>
+                                        <span className="text-[10px] font-medium tracking-wide text-slate-400">
+                                            (~{(elevation.peakFt - elevation.baseFt).toLocaleString()} ft vertical)
+                                        </span>
+                                    </div>
+                                )}
+
                                 <div className="flex items-center gap-2.5 bg-slate-950/40 border border-slate-700/50 rounded-xl px-4 py-2.5 shadow-lg backdrop-blur-md">
                                     <Mountain size={15} className="text-arctic-400 shrink-0" />
                                     {resorts.length > 0 ? (
@@ -241,7 +258,7 @@ export default function App() {
 
                                 <div className="bg-slate-950/30 p-6 rounded-2xl border border-white/5 shadow-inner backdrop-blur-sm w-full text-center">
                                     <p className="text-slate-200 text-sm md:text-base font-medium leading-relaxed italic opacity-90 max-w-lg mx-auto">
-                                        "{selectedLocation.description}"
+                                        &ldquo;{selectedLocation.description}&rdquo;
                                     </p>
                                 </div>
                             </div>

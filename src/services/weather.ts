@@ -1,4 +1,4 @@
-import { WeatherData, RegionalWeather, Location, Region, TravelEstimate, NearbyResort } from '@/lib/types';
+import { WeatherData, RegionalWeather, Location, Region, TravelEstimate, NearbyResort, TerrainElevation } from '@/lib/types';
 
 export const REGIONS: Region[] = [
     { label: "Alaska", filter: ", AK", borderColor: "border-l-amber-500", badge: "bg-amber-500/15 text-amber-400 border-amber-500/30", textColor: "text-amber-400" },
@@ -66,7 +66,7 @@ export const LOCATIONS: Location[] = [
         lon: -151.5564,
         website: 'https://tordrillomountainlodge.com/',
         description: 'Remote, multi-sport luxury lodge nestled in the heart of Alaska\'s Tordrillo Range, offering world-class heli-skiing.',
-        pricing: 'From $18,500 pp/week (7-night all-inclusive, 5 Hobbs hrs/group of 4)'
+        pricing: 'From $21,835 pp/week (7-night all-inclusive, 5 heli excursions)'
     },
     {
         name: 'Girdwood, AK (Chugach Powder Guides)',
@@ -178,7 +178,7 @@ export const LOCATIONS: Location[] = [
         name: 'Revelstoke, BC (Eleven Experience)',
         lat: 50.9981,
         lon: -118.1957,
-        website: 'https://elevenexperience.com/revelstoke-lodge-winter/',
+        website: 'https://elevenexperience.com/lodge-destinations/canada/eleven-revelstoke-lodge/heli-ski-season',
         description: 'Offers exclusive heli-skiing and year-round adventures from a renovated historic lodge in downtown Revelstoke.',
         pricing: 'From $11,436 USD/night for group of 1–3 (private heli + guides)'
     },
@@ -254,13 +254,13 @@ export const LOCATIONS: Location[] = [
         lon: 7.7523,
         website: 'https://www.air-zermatt.ch/',
         description: 'Legendary alpine heli-skiing in the shadow of the Matterhorn, accessing some of Europe\'s highest glacial terrain.',
-        pricing: '~$550 CHF pp/drop; full day ~$2,400 CHF'
+        pricing: '~CHF 470 pp/drop (classic, incl. guide)'
     },
     {
         name: 'Aosta Valley, Italy (Valgrisenche Heli-Ski)',
         lat: 45.6030,
         lon: 7.0620,
-        website: 'https://www.valgrisenche.net/',
+        website: 'https://heliski-valgrisenche.com/',
         description: 'Authentic Italian heli-skiing in a rugged, high-altitude valley known for exceptional snow quality and empty slopes.',
         pricing: '~$320 EUR pp/drop; full day ~$1,100 EUR'
     },
@@ -289,12 +289,12 @@ export const LOCATIONS: Location[] = [
         pricing: 'From ~$1,750 EUR pp/day'
     },
     {
-        name: 'Ólafsfjörður, Iceland (Viking Heli Skiing)',
-        lat: 66.0700,
-        lon: -18.6500,
+        name: 'Siglufjörður, Iceland (Viking Heli Skiing)',
+        lat: 66.1517,
+        lon: -18.9089,
         website: 'https://vikingheliskiing.com/',
         description: 'Specializes in boutique heli-skiing and snowboarding adventures in the Troll Peninsula.',
-        pricing: 'From ~$1,650 EUR pp/day'
+        pricing: 'From ~€1,900 pp/day'
     },
     {
         name: 'Kulusuk, Greenland (Greenland Heliskiing)',
@@ -302,7 +302,7 @@ export const LOCATIONS: Location[] = [
         lon: -37.1900,
         website: 'https://greenlandheliskiing.com/',
         description: 'Exclusive heli-skiing on the East Coast of Greenland, based in Kulusuk, offering descents to the ocean amidst icebergs.',
-        pricing: 'Contact for pricing (Expedition style)'
+        pricing: '~€13,800 pp/week (group of 4)'
     },
     {
         name: 'Maniitsoq, Greenland (Heliskigreenland)',
@@ -310,7 +310,7 @@ export const LOCATIONS: Location[] = [
         lon: -52.8900,
         website: 'https://heliskigreenland.com/',
         description: 'Arctic heli-skiing and ski touring in West Greenland, often utilizing the ship "Tulu" for access to diverse terrain.',
-        pricing: 'Contact for pricing'
+        pricing: 'From ~€12,950 pp/week (Classic; Private ~€11,800)'
     },
 
     // --- Asia, Japan & Caucasus ---
@@ -323,10 +323,10 @@ export const LOCATIONS: Location[] = [
         pricing: '~$1,250 USD pp/day (6 runs)'
     },
     {
-        name: 'Manali, India (Himachal Helicopter Skiing)',
+        name: 'Manali, India (Himalaya Heli Ski)',
         lat: 32.2432,
         lon: 77.1892,
-        website: 'https://himachal.com/',
+        website: 'https://himalayaheliski.com/',
         description: 'High-altitude Himalayan heli-skiing in the Kullu Valley, featuring massive vertical drops and unique cultural experiences.',
         pricing: '~$2,650 USD pp/day; $15,000 USD/week'
     },
@@ -344,7 +344,7 @@ export const LOCATIONS: Location[] = [
         lon: 42.7246,
         website: 'https://www.svanetiheliskiing.com/',
         description: 'Spectacular heli-skiing in the Greater Caucasus, based in the medieval mountain region of Svaneti with access to untracked alpine terrain.',
-        pricing: 'From ~€850 pp/day; ~€5,400 pp/week (all-inclusive)'
+        pricing: '~€6,500 pp/week (7-day semi-private, all-incl); heli day ~€10,000/group (max 8)'
     },
 
     // --- South America ---
@@ -352,7 +352,7 @@ export const LOCATIONS: Location[] = [
         name: 'Santiago/Andes, Chile (Powder South)',
         lat: -33.4489,
         lon: -70.6693,
-        website: 'https://www.powdersouth.com/',
+        website: 'https://heliskiguides.com/',
         description: 'The Andes\' leading private heli-ski operation, accessing vast high-altitude terrain directly from Santiago or luxury lodges.',
         pricing: 'From $1,500 USD pp/day'
     },
@@ -368,7 +368,7 @@ export const LOCATIONS: Location[] = [
         name: 'Patagonia, Chile (Rio Palena Lodge)',
         lat: -43.6100,
         lon: -71.8100,
-        website: 'https://elevenexperience.com/rio-palena-lodge-chile/',
+        website: 'https://elevenexperience.com/lodge-destinations/chile/eleven-rio-palena-lodge',
         description: 'Remote luxury lodge in Northern Patagonia offering exclusive heli-skiing in untapped, pristine mountain ranges.',
         pricing: 'From $2,250 USD pp/day (all-inclusive)'
     },
@@ -376,7 +376,7 @@ export const LOCATIONS: Location[] = [
         name: 'Puma Lodge, Chile (Powder South)',
         lat: -34.3600,
         lon: -70.3100,
-        website: 'https://www.powdersouth.com/',
+        website: 'https://heliskiguides.com/heliski-trips/puma-lodge/',
         description: 'World-class heli-skiing from a 5-star lodge in the Andes, offering vast terrain and luxury amenities.',
         pricing: 'From $9,500 pp (3-day, groups of 8)'
     },
@@ -386,7 +386,7 @@ export const LOCATIONS: Location[] = [
         lon: -70.1340,
         website: 'https://skiportillo.com/',
         description: 'Iconic ski resort offering single-run or multi-run heliskiing packages in the high Andes.',
-        pricing: '$500 USD (1st run), $250 USD (subsequent runs)'
+        pricing: '$480 USD (1st run), $240 USD (subsequent runs)'
     },
 
     // --- New Zealand ---
@@ -406,7 +406,7 @@ export const LOCATIONS: Location[] = [
         lon: -120.4427,
         website: 'https://heli-ski.com/',
         description: 'Premier heli-skiing and heli-boarding operation located in the "American Alps" of the North Cascades.',
-        pricing: '$1,850 pp/day (8 runs guaranteed, groups of 4)'
+        pricing: '$1,950 pp/day (8 runs guaranteed, groups of 4)'
     },
     {
         name: 'Sun Valley, ID (Sun Valley Heli Ski)',
@@ -438,7 +438,7 @@ export const LOCATIONS: Location[] = [
         lon: -111.6669,
         website: 'https://powderbird.com/',
         description: 'Premier heli-skiing and heli-boarding operation based in Utah, accessing the backcountry of the Wasatch Mountains.',
-        pricing: 'From $1,558 pp/day (early bird, 6 laps, groups of up to 8)'
+        pricing: 'From $1,558 pp/day (early bird, 6 laps, groups of 4)'
     },
     {
         name: 'Lamoille, NV (Ruby Mountain Heli)',
@@ -462,7 +462,7 @@ export const LOCATIONS: Location[] = [
         lon: -107.6653,
         website: 'https://silvertonmountain.com/',
         description: 'Unparalleled destination for advanced and expert skiers seeking an authentic, rugged mountain experience.',
-        pricing: '$99 pp/single run; $999–$1,599 pp/6-run day'
+        pricing: '$199 pp/single run; $1,290 pp/6-run day'
     },
     {
         name: 'Bridgeport, CA (Sweetwater Heli)',
@@ -516,13 +516,13 @@ export const TRAVEL_TIMES: Record<string, TravelEstimate> = {
     'Riksgränsen, Sweden (Arctic Elements)': { origin: 'IAD', destAirport: 'KRN', flightHours: 13.0, driveHours: 1.5 },
     'Dalvik, Iceland (Arctic Heli Skiing)': { origin: 'IAD', destAirport: 'AEY', flightHours: 9.0, driveHours: 0.75 },
     'Siglufjörður, Iceland (Summit Heliskiing)': { origin: 'IAD', destAirport: 'AEY', flightHours: 9.0, driveHours: 1.5 },
-    'Ólafsfjörður, Iceland (Viking Heli Skiing)': { origin: 'IAD', destAirport: 'AEY', flightHours: 9.0, driveHours: 1.0 },
+    'Siglufjörður, Iceland (Viking Heli Skiing)': { origin: 'IAD', destAirport: 'AEY', flightHours: 9.0, driveHours: 1.5 },
     'Kulusuk, Greenland (Greenland Heliskiing)': { origin: 'IAD', destAirport: 'KUS', flightHours: 12.0, driveHours: 0.3 },
     'Maniitsoq, Greenland (Heliskigreenland)': { origin: 'IAD', destAirport: 'JSU', flightHours: 16.0, driveHours: 0.3 },
 
     // --- Asia, Japan & Caucasus ---
     'Niseko, Japan (Hokkaido Backcountry Club)': { origin: 'IAD', destAirport: 'CTS', flightHours: 17.0, driveHours: 2.5 },
-    'Manali, India (Himachal Helicopter Skiing)': { origin: 'IAD', destAirport: 'KUU', flightHours: 18.0, driveHours: 1.5 },
+    'Manali, India (Himalaya Heli Ski)': { origin: 'IAD', destAirport: 'KUU', flightHours: 18.0, driveHours: 1.5 },
     'Annapurna Range, Nepal (Himalayan Heliski)': { origin: 'IAD', destAirport: 'KTM', flightHours: 18.0, driveHours: 0.5 },
     'Svaneti, Georgia (Svaneti Heliskiing)': { origin: 'IAD', destAirport: 'TBS', flightHours: 15.0, driveHours: 5.0 },
 
@@ -673,9 +673,9 @@ export const NEARBY_RESORTS: Record<string, NearbyResort[]> = {
         { resort: 'Skarðsdalur (Siglufjörður)', driveHours: 0.1 },
         { resort: 'Hlíðarfjall (Akureyri)', driveHours: 1.15 },
     ],
-    'Ólafsfjörður, Iceland (Viking Heli Skiing)': [
-        { resort: 'Tindaöxl (Ólafsfjörður)', driveHours: 0.1 },
-        { resort: 'Hlíðarfjall (Akureyri)', driveHours: 0.9 },
+    'Siglufjörður, Iceland (Viking Heli Skiing)': [
+        { resort: 'Skarðsdalur (Siglufjörður)', driveHours: 0.1 },
+        { resort: 'Hlíðarfjall (Akureyri)', driveHours: 1.15 },
     ],
     'Kulusuk, Greenland (Greenland Heliskiing)': [],
     'Maniitsoq, Greenland (Heliskigreenland)': [],
@@ -683,7 +683,7 @@ export const NEARBY_RESORTS: Record<string, NearbyResort[]> = {
         { resort: 'Niseko United', driveHours: 0.1 },
         { resort: 'Rusutsu Resort', driveHours: 0.6 },
     ],
-    'Manali, India (Himachal Helicopter Skiing)': [
+    'Manali, India (Himalaya Heli Ski)': [
         { resort: 'Solang Valley', driveHours: 0.5 },
         { resort: 'Narkanda', driveHours: 4.5, note: 'next nearest lift-served area, ~200 km' },
     ],
@@ -750,6 +750,68 @@ export const NEARBY_RESORTS: Record<string, NearbyResort[]> = {
 
 export function getNearbyResorts(name: string): NearbyResort[] {
     return NEARBY_RESORTS[name] ?? [];
+}
+
+// Approximate skiable terrain elevation range (feet) for each operator's heli
+// terrain: base = typical lowest skiing / valley pickup, peak = highest skiable
+// summit or drop-off. Best-effort figures; some operators publish exact ranges,
+// others are estimated from range topography and published vertical drops.
+export const TERRAIN_ELEVATION: Record<string, TerrainElevation> = {
+    'Cordova, AK (Points North Heli-Adventures)': { baseFt: 1000, peakFt: 7000 },
+    'Judd Lake, AK (Tordrillo Mountain Lodge)': { baseFt: 2000, peakFt: 7500 },
+    'Girdwood, AK (Chugach Powder Guides)': { baseFt: 1000, peakFt: 6500 },
+    'Valdez, AK (Valdez Heli-Ski Guides)': { baseFt: 1000, peakFt: 7000 },
+    'Valdez, AK (Black Ops Valdez)': { baseFt: 1500, peakFt: 7000 },
+    'Valdez, AK (Alaska Backcountry Guides)': { baseFt: 1500, peakFt: 8500 },
+    'Glacier View, AK (Majestic Heli Ski)': { baseFt: 2500, peakFt: 10000 },
+    'Haines, AK (SEABA)': { baseFt: 500, peakFt: 6500 },
+    'Haines, AK (Alaska Heliskiing)': { baseFt: 500, peakFt: 7000 },
+    'Seward, AK (Silverton Mountain Guides)': { baseFt: 500, peakFt: 5500 },
+    'Alyeska Resort, AK (Resort Base)': { baseFt: 250, peakFt: 3939 },
+    'Panorama, BC (RK Heliski)': { baseFt: 4500, peakFt: 11000 },
+    'Bella Coola, BC (Bella Coola Heli Sports)': { baseFt: 500, peakFt: 9500 },
+    'Revelstoke, BC (Eagle Pass Heli Skiing)': { baseFt: 3000, peakFt: 8500 },
+    'Revelstoke, BC (Selkirk Tangiers)': { baseFt: 2600, peakFt: 9500 },
+    'Revelstoke, BC (Eleven Experience)': { baseFt: 2600, peakFt: 9000 },
+    'Gold Bridge, BC (Tyax Lodge & Heliskiing)': { baseFt: 3300, peakFt: 9000 },
+    'Golden, BC (Great Canadian Heliskiing)': { baseFt: 5500, peakFt: 10100 },
+    'Blue River, BC (Mike Wiegele Heli Skiing)': { baseFt: 3400, peakFt: 11600 },
+    'Stewart, BC (Last Frontier Heliskiing)': { baseFt: 1000, peakFt: 7500 },
+    'Terrace, BC (Northern Escape Heli Skiing)': { baseFt: 1480, peakFt: 8040 },
+    'Whistler, BC (Whistler Heli-Skiing)': { baseFt: 4500, peakFt: 9000 },
+    'Nelson, BC (Snowwater Heli Skiing)': { baseFt: 4000, peakFt: 9400 },
+    'Bugaboos, BC (CMH Heli-Skiing)': { baseFt: 3100, peakFt: 10000 },
+    'Zermatt, Switzerland (Air Zermatt)': { baseFt: 5500, peakFt: 13940 },
+    'Aosta Valley, Italy (Valgrisenche Heli-Ski)': { baseFt: 5600, peakFt: 12470 },
+    'Riksgränsen, Sweden (Arctic Elements)': { baseFt: 1600, peakFt: 6890 },
+    'Dalvik, Iceland (Arctic Heli Skiing)': { baseFt: 0, peakFt: 4920 },
+    'Siglufjörður, Iceland (Summit Heliskiing)': { baseFt: 0, peakFt: 5050 },
+    'Siglufjörður, Iceland (Viking Heli Skiing)': { baseFt: 0, peakFt: 5000 },
+    'Kulusuk, Greenland (Greenland Heliskiing)': { baseFt: 0, peakFt: 6560 },
+    'Maniitsoq, Greenland (Heliskigreenland)': { baseFt: 0, peakFt: 6560 },
+    'Niseko, Japan (Hokkaido Backcountry Club)': { baseFt: 1500, peakFt: 3632 },
+    'Manali, India (Himalaya Heli Ski)': { baseFt: 8200, peakFt: 16000 },
+    'Annapurna Range, Nepal (Himalayan Heliski)': { baseFt: 10800, peakFt: 17400 },
+    'Svaneti, Georgia (Svaneti Heliskiing)': { baseFt: 7500, peakFt: 13100 },
+    'Santiago/Andes, Chile (Powder South)': { baseFt: 8200, peakFt: 14800 },
+    'Valle Nevado, Chile (Valle Nevado Heli-Ski)': { baseFt: 8200, peakFt: 15000 },
+    'Patagonia, Chile (Rio Palena Lodge)': { baseFt: 2500, peakFt: 7000 },
+    'Puma Lodge, Chile (Powder South)': { baseFt: 8200, peakFt: 14800 },
+    'Portillo, Chile (Ski Portillo Heli)': { baseFt: 8400, peakFt: 13900 },
+    'Queenstown, NZ (Harris Mountains Heli-Ski)': { baseFt: 4500, peakFt: 7500 },
+    'Mazama, WA (North Cascade Heli)': { baseFt: 5000, peakFt: 8600 },
+    'Sun Valley, ID (Sun Valley Heli Ski)': { baseFt: 6500, peakFt: 10500 },
+    'Driggs/Victor, ID (High Mountain Heli)': { baseFt: 6000, peakFt: 10000 },
+    'Jackson, WY (High Mountain Heli - Snake River)': { baseFt: 6000, peakFt: 10000 },
+    'Snowbird, UT (Powderbird)': { baseFt: 7500, peakFt: 11000 },
+    'Lamoille, NV (Ruby Mountain Heli)': { baseFt: 7500, peakFt: 11000 },
+    'Telluride, CO (Helitrax)': { baseFt: 10600, peakFt: 13700 },
+    'Silverton, CO (Silverton Mountain)': { baseFt: 10400, peakFt: 13487 },
+    'Bridgeport, CA (Sweetwater Heli)': { baseFt: 8500, peakFt: 11673 },
+};
+
+export function getTerrainElevation(name: string): TerrainElevation | undefined {
+    return TERRAIN_ELEVATION[name];
 }
 
 export async function getWeather(lat: number, lon: number): Promise<WeatherData> {
