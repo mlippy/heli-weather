@@ -69,6 +69,11 @@ export interface NearbyResort {
     driveHours: number;  // approx drive time from the operator base
     note?: string;       // optional caveat (e.g. not road-connected)
 }
+
+export interface TerrainElevation {
+    baseFt: number;  // approx lowest skiable / valley pickup elevation (ft)
+    peakFt: number;  // approx highest skiable summit / drop-off elevation (ft)
+}
 export interface Region {
     label: string;
     filter: string;
