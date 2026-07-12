@@ -814,6 +814,67 @@ export function getTerrainElevation(name: string): TerrainElevation | undefined 
     return TERRAIN_ELEVATION[name];
 }
 
+// Condensed cancellation / refund policy per operator (a few words each).
+// Best-effort from operators' published terms via research; verify exact terms
+// with the operator before booking. 'Not published' where none was found.
+export const CANCELLATION: Record<string, string> = {
+    'Cordova, AK (Points North Heli-Adventures)': 'No cash refunds; tiered credit only',
+    'Judd Lake, AK (Tordrillo Mountain Lodge)': 'Deposit forfeited if under 120 days',
+    'Girdwood, AK (Chugach Powder Guides)': 'All deposits & payments non-refundable',
+    'Valdez, AK (Valdez Heli-Ski Guides)': 'Refundable before Dec 1 (-$250 fee)',
+    'Valdez, AK (Black Ops Valdez)': '50% deposit non-refundable; credit only',
+    'Valdez, AK (Alaska Backcountry Guides)': '25% deposit non-refundable; no refunds',
+    'Glacier View, AK (Majestic Heli Ski)': 'Not published — contact operator',
+    'Haines, AK (SEABA)': 'Non-refundable unless cancel 90+ days out',
+    'Haines, AK (Alaska Heliskiing)': 'Deposit 75% refundable, 90-day notice',
+    'Seward, AK (Silverton Mountain Guides)': 'Not published — contact operator',
+    'Alyeska Resort, AK (Resort Base)': 'Full refund 48+ hours before arrival',
+    'Panorama, BC (RK Heliski)': 'Non-refundable; refund only if operator cancels',
+    'Bella Coola, BC (Bella Coola Heli Sports)': 'Deposits non-refundable; insurance recommended',
+    'Revelstoke, BC (Eagle Pass Heli Skiing)': 'Non-refundable deposit; none within 90 days',
+    'Revelstoke, BC (Selkirk Tangiers)': '35% deposit non-refundable',
+    'Revelstoke, BC (Eleven Experience)': 'Non-refundable; credit-only, CFAR insurance advised',
+    'Gold Bridge, BC (Tyax Lodge & Heliskiing)': '25% deposit non-refundable',
+    'Golden, BC (Great Canadian Heliskiing)': 'Non-refundable deposit after 48 hours',
+    'Blue River, BC (Mike Wiegele Heli Skiing)': 'No refund unless replacement found',
+    'Stewart, BC (Last Frontier Heliskiing)': '20% deposit non-refundable',
+    'Terrace, BC (Northern Escape Heli Skiing)': '20% deposit non-refundable',
+    'Whistler, BC (Whistler Heli-Skiing)': 'Not published — contact operator',
+    'Nelson, BC (Snowwater Heli Skiing)': 'No refunds; 25% deposit, credit only',
+    'Bugaboos, BC (CMH Heli-Skiing)': '20% deposit non-refundable',
+    'Zermatt, Switzerland (Air Zermatt)': 'Fee non-refundable; refunded if weather cancels',
+    'Aosta Valley, Italy (Valgrisenche Heli-Ski)': '25% deposit; guide services non-refundable',
+    'Riksgränsen, Sweden (Arctic Elements)': 'Registration fee non-refundable; heli refunded',
+    'Dalvik, Iceland (Arctic Heli Skiing)': '30% non-refundable deposit; insurance required',
+    'Siglufjörður, Iceland (Summit Heliskiing)': '20% deposit; 80% refund if 7+ days',
+    'Siglufjörður, Iceland (Viking Heli Skiing)': '25% non-refundable deposit; no weather refund',
+    'Kulusuk, Greenland (Greenland Heliskiing)': 'Non-refundable deposit; no refund unused days',
+    'Maniitsoq, Greenland (Heliskigreenland)': '30% deposit; no refund for weather days',
+    'Niseko, Japan (Hokkaido Backcountry Club)': '25% deposit non-refundable (60+ days)',
+    'Manali, India (Himalaya Heli Ski)': '30% deposit non-refundable',
+    'Annapurna Range, Nepal (Himalayan Heliski)': '30% deposit non-refundable',
+    'Svaneti, Georgia (Svaneti Heliskiing)': '20% deposit; balance due 90 days',
+    'Santiago/Andes, Chile (Powder South)': 'Non-refundable; 50% weather credit',
+    'Valle Nevado, Chile (Valle Nevado Heli-Ski)': 'Full refund if unable to fly',
+    'Patagonia, Chile (Rio Palena Lodge)': 'Non-refundable deposit; rebook credit only',
+    'Puma Lodge, Chile (Powder South)': 'Non-refundable; 50% weather credit',
+    'Portillo, Chile (Ski Portillo Heli)': '50% deposit; tiered refund by date',
+    'Queenstown, NZ (Harris Mountains Heli-Ski)': 'Full refund w/ notice; weather refunded',
+    'Mazama, WA (North Cascade Heli)': '50% refundable 60+ days; none inside',
+    'Sun Valley, ID (Sun Valley Heli Ski)': 'Non-refundable deposit; full credit given',
+    'Driggs/Victor, ID (High Mountain Heli)': 'Non-refundable; credit lapses season end',
+    'Jackson, WY (High Mountain Heli - Snake River)': 'Non-refundable; credit lapses season end',
+    'Snowbird, UT (Powderbird)': 'Non-refundable deposit; weather = credit',
+    'Lamoille, NV (Ruby Mountain Heli)': 'Non-refundable deposit; balance if seat refilled',
+    'Telluride, CO (Helitrax)': 'Deposit non-refundable; weather fully refundable',
+    'Silverton, CO (Silverton Mountain)': 'No refund inside 30 days',
+    'Bridgeport, CA (Sweetwater Heli)': 'Not published — contact operator',
+};
+
+export function getCancellationPolicy(name: string): string | undefined {
+    return CANCELLATION[name];
+}
+
 export async function getWeather(lat: number, lon: number): Promise<WeatherData> {
     // 1. Fetch Main Forecast & Elevation
     const params = new URLSearchParams({
