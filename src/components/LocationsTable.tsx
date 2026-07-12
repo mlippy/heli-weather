@@ -1,8 +1,8 @@
 import { Fragment, useState } from "react";
-import { ExternalLink, ChevronDown, ChevronRight, ChevronUp, ChevronsUpDown, Plane } from "lucide-react";
+import { ExternalLink, ChevronDown, ChevronRight, ChevronUp, ChevronsUpDown, Plane, Mountain } from "lucide-react";
 import { Location } from "@/lib/types";
 
-import { LOCATIONS, REGIONS, getRegionForLoc, getLocsForRegion, getTravelEstimate, formatHours } from "@/services/weather";
+import { LOCATIONS, REGIONS, getRegionForLoc, getLocsForRegion, getTravelEstimate, getNearbyResorts, formatHours } from "@/services/weather";
 
 type SortColumn = "operator" | "location" | "travel";
 type SortState = { col: SortColumn; dir: "asc" | "desc" } | null;
@@ -68,6 +68,7 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
         const operator = extractOperator(loc.name);
         const reg = getRegionForLoc(loc.name);
         const travel = getTravelEstimate(loc.name);
+        const resorts = getNearbyResorts(loc.name);
         return (
             <tr
                 key={loc.name}
@@ -99,6 +100,21 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                         <span className="text-xs text-slate-600">&mdash;</span>
                     )}
                 </td>
+                <td className="px-6 py-5 max-w-xs">
+                    {resorts.length > 0 ? (
+                        <div className="flex flex-col gap-1">
+                            {resorts.map(r => (
+                                <span key={r.resort} className="inline-flex items-center gap-1.5 text-xs">
+                                    <Mountain size={11} className="text-arctic-400/70 shrink-0" />
+                                    <span className="font-medium text-slate-300">{r.resort}</span>
+                                    <span className="text-slate-500">{formatHours(r.driveHours)}</span>
+                                </span>
+                            ))}
+                        </div>
+                    ) : (
+                        <span className="text-xs text-slate-600">None nearby</span>
+                    )}
+                </td>
                 <td className="px-6 py-5 text-right">
                     <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border shadow-sm ${reg.badge}`}>
                         {loc.pricing}
@@ -114,6 +130,7 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
         const operator = extractOperator(loc.name);
         const reg = getRegionForLoc(loc.name);
         const travel = getTravelEstimate(loc.name);
+        const resorts = getNearbyResorts(loc.name);
         return (
             <div
                 key={loc.name}
@@ -140,6 +157,22 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                         <span className="text-slate-500">({formatHours(travel.flightHours)} air &rarr; {travel.destAirport} + {formatHours(travel.driveHours)} drive)</span>
                     </div>
                 )}
+
+                <div className="mb-3 flex items-start gap-1.5 text-xs text-slate-300">
+                    <Mountain size={13} className="text-arctic-400 shrink-0 mt-0.5" />
+                    {resorts.length > 0 ? (
+                        <span className="flex flex-wrap gap-x-2 gap-y-0.5">
+                            {resorts.map(r => (
+                                <span key={r.resort}>
+                                    <span className="font-medium">{r.resort}</span>{" "}
+                                    <span className="text-slate-500">{formatHours(r.driveHours)}</span>
+                                </span>
+                            ))}
+                        </span>
+                    ) : (
+                        <span className="text-slate-500">No resort nearby</span>
+                    )}
+                </div>
 
                 <div>
                     <a
@@ -193,6 +226,7 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                             >
                                 <span className="inline-flex items-center gap-1.5">Travel from DC {sortIcon("travel")}</span>
                             </th>
+                            <th className="px-6 py-5 text-xs font-black uppercase tracking-[0.2em] text-slate-400 border-b border-white/5">Nearest Resorts</th>
                             <th className="px-6 py-5 text-xs font-black uppercase tracking-[0.2em] text-slate-400 border-b border-white/5 text-right">Estimated Pricing</th>
                         </tr>
                     </thead>
@@ -211,7 +245,7 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                                             onClick={() => toggleRegion(region.label)}
                                             className="group cursor-pointer hover:bg-white/5 transition-colors border-b border-white/5"
                                         >
-                                            <td colSpan={5} className={`px-6 py-4 bg-slate-950/30 border-l-4 ${region.borderColor}`}>
+                                            <td colSpan={6} className={`px-6 py-4 bg-slate-950/30 border-l-4 ${region.borderColor}`}>
                                                 <div className="flex items-center justify-between">
                                                     <span className={`text-xs font-black uppercase tracking-[0.3em] ${region.textColor} flex items-center gap-2`}>
                                                         {isExpanded ? <ChevronDown size={14} className="opacity-70" /> : <ChevronRight size={14} className="opacity-70" />}
