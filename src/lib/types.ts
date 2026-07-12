@@ -56,6 +56,13 @@ export interface Location {
     description: string;
     pricing: string;
 }
+
+export interface TravelEstimate {
+    origin: string;       // departure airport: "BWI" or "IAD"
+    destAirport: string;  // practical arrival airport (IATA)
+    flightHours: number;  // approx air travel incl. typical connections
+    driveHours: number;   // approx drive from arrival airport to operator base
+}
 export interface Region {
     label: string;
     filter: string;
