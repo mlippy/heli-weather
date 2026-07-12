@@ -63,6 +63,12 @@ export interface TravelEstimate {
     flightHours: number;  // approx air travel incl. typical connections
     driveHours: number;   // approx drive from arrival airport to operator base
 }
+
+export interface NearbyResort {
+    resort: string;      // name of the lift-served ski resort
+    driveHours: number;  // approx drive time from the operator base
+    note?: string;       // optional caveat (e.g. not road-connected)
+}
 export interface Region {
     label: string;
     filter: string;
