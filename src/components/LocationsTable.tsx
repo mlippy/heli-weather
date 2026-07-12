@@ -366,6 +366,13 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                     })
                 )}
             </div>
+
+            {/* Data disclaimer */}
+            <p className="text-center text-slate-500 text-xs mt-10 max-w-3xl mx-auto leading-relaxed px-4">
+                Pricing, travel times, terrain elevations, nearby resorts, and cancellation terms are
+                approximate best-effort estimates gathered from public sources &mdash; always confirm
+                directly with the operator before booking.
+            </p>
         </section>
     );
 }
