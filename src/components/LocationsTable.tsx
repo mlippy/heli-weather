@@ -1,9 +1,8 @@
 import { Fragment, useState } from "react";
-import { LOCATIONS } from "@/services/weather";
-import { ExternalLink, ChevronDown, ChevronRight } from "lucide-react";
+import { ExternalLink, ChevronDown, ChevronRight, Plane } from "lucide-react";
 import { Location } from "@/lib/types";
 
-import { REGIONS, getRegionForLoc, getLocsForRegion } from "@/services/weather";
+import { REGIONS, getRegionForLoc, getLocsForRegion, getTravelEstimate, formatHours } from "@/services/weather";
 
 function extractDomain(url: string): string {
     try {
@@ -48,6 +47,7 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                             <th className="px-6 py-5 text-xs font-black uppercase tracking-[0.2em] text-slate-400 border-b border-white/5">Operator</th>
                             <th className="px-6 py-5 text-xs font-black uppercase tracking-[0.2em] text-slate-400 border-b border-white/5">Location</th>
                             <th className="px-6 py-5 text-xs font-black uppercase tracking-[0.2em] text-slate-400 border-b border-white/5">Details</th>
+                            <th className="px-6 py-5 text-xs font-black uppercase tracking-[0.2em] text-slate-400 border-b border-white/5">Travel from DC</th>
                             <th className="px-6 py-5 text-xs font-black uppercase tracking-[0.2em] text-slate-400 border-b border-white/5 text-right">Estimated Pricing</th>
                         </tr>
                     </thead>
@@ -64,7 +64,7 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                                         onClick={() => toggleRegion(region.label)}
                                         className="group cursor-pointer hover:bg-white/5 transition-colors border-b border-white/5"
                                     >
-                                        <td colSpan={4} className={`px-6 py-4 bg-slate-950/30 border-l-4 ${region.borderColor}`}>
+                                        <td colSpan={5} className={`px-6 py-4 bg-slate-950/30 border-l-4 ${region.borderColor}`}>
                                             <div className="flex items-center justify-between">
                                                 <span className={`text-xs font-black uppercase tracking-[0.3em] ${region.textColor} flex items-center gap-2`}>
                                                     {isExpanded ? <ChevronDown size={14} className="opacity-70" /> : <ChevronRight size={14} className="opacity-70" />}
@@ -82,6 +82,7 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                                         const city = loc.name.split("(")[0].trim();
                                         const operator = extractOperator(loc.name);
                                         const reg = getRegionForLoc(loc.name);
+                                        const travel = getTravelEstimate(loc.name);
                                         return (
                                             <tr
                                                 key={loc.name}
@@ -96,6 +97,21 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                                                 </td>
                                                 <td className="px-6 py-5 max-w-sm">
                                                     <p className="text-xs text-slate-400 line-clamp-1 leading-relaxed group-hover:line-clamp-none transition-all">{loc.description}</p>
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    {travel ? (
+                                                        <div className="flex flex-col gap-0.5">
+                                                            <span className="inline-flex items-center gap-1.5 text-sm font-bold text-slate-200">
+                                                                <Plane size={13} className="text-arctic-400 shrink-0" />
+                                                                ~{formatHours(travel.flightHours + travel.driveHours)}
+                                                            </span>
+                                                            <span className="text-[10px] text-slate-500 tracking-wide">
+                                                                {travel.origin} · {formatHours(travel.flightHours)} air &rarr; {travel.destAirport} + {formatHours(travel.driveHours)} drive
+                                                            </span>
+                                                        </div>
+                                                    ) : (
+                                                        <span className="text-xs text-slate-600">&mdash;</span>
+                                                    )}
                                                 </td>
                                                 <td className="px-6 py-5 text-right">
                                                     <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border shadow-sm ${reg.badge}`}>
@@ -142,6 +158,7 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                                         const city = loc.name.split("(")[0].trim();
                                         const operator = extractOperator(loc.name);
                                         const reg = getRegionForLoc(loc.name);
+                                        const travel = getTravelEstimate(loc.name);
                                         return (
                                             <div
                                                 key={loc.name}
@@ -159,6 +176,14 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                                                     <p className="text-slate-300 text-sm font-medium mb-1">{city}</p>
                                                     <p className="text-slate-400 text-xs line-clamp-2 leading-relaxed">{loc.description}</p>
                                                 </div>
+
+                                                {travel && (
+                                                    <div className="mb-3 flex items-center gap-1.5 text-xs text-slate-300">
+                                                        <Plane size={13} className="text-arctic-400 shrink-0" />
+                                                        <span className="font-bold">~{formatHours(travel.flightHours + travel.driveHours)} from {travel.origin}</span>
+                                                        <span className="text-slate-500">({formatHours(travel.flightHours)} air &rarr; {travel.destAirport} + {formatHours(travel.driveHours)} drive)</span>
+                                                    </div>
+                                                )}
 
                                                 <div>
                                                     <a

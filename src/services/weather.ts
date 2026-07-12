@@ -1,4 +1,4 @@
-import { WeatherData, RegionalWeather, Location, Region } from '@/lib/types';
+import { WeatherData, RegionalWeather, Location, Region, TravelEstimate } from '@/lib/types';
 
 export const REGIONS: Region[] = [
     { label: "Alaska", filter: ", AK", borderColor: "border-l-amber-500", badge: "bg-amber-500/15 text-amber-400 border-amber-500/30", textColor: "text-amber-400" },
@@ -473,6 +473,93 @@ export const LOCATIONS: Location[] = [
         pricing: 'From $1,800 pp/day (6–8 runs, small groups)'
     },
 ];
+
+// Approximate door-to-mountain travel time from the Washington, DC area,
+// keyed by the operator's `name`. Origin is whichever of BWI or IAD yields the
+// shorter total — BWI for most domestic routes, IAD (United hub) for
+// international/long-haul. Values are best-effort estimates that include a
+// typical connection; `flightHours` is elapsed air travel and `driveHours` is
+// the ground transfer from the arrival airport to the operator base. Verify
+// against real itineraries before booking.
+export const TRAVEL_TIMES: Record<string, TravelEstimate> = {
+    // --- Alaska (via SEA/ANC) ---
+    'Cordova, AK (Points North Heli-Adventures)': { origin: 'BWI', destAirport: 'CDV', flightHours: 12.0, driveHours: 0.3 },
+    'Judd Lake, AK (Tordrillo Mountain Lodge)': { origin: 'BWI', destAirport: 'ANC', flightHours: 10.0, driveHours: 0.5 },
+    'Girdwood, AK (Chugach Powder Guides)': { origin: 'BWI', destAirport: 'ANC', flightHours: 10.0, driveHours: 0.75 },
+    'Valdez, AK (Valdez Heli-Ski Guides)': { origin: 'BWI', destAirport: 'ANC', flightHours: 10.0, driveHours: 5.5 },
+    'Valdez, AK (Black Ops Valdez)': { origin: 'BWI', destAirport: 'ANC', flightHours: 10.0, driveHours: 5.5 },
+    'Valdez, AK (Alaska Backcountry Guides)': { origin: 'BWI', destAirport: 'ANC', flightHours: 10.0, driveHours: 5.5 },
+    'Glacier View, AK (Majestic Heli Ski)': { origin: 'BWI', destAirport: 'ANC', flightHours: 10.0, driveHours: 2.0 },
+    'Haines, AK (SEABA)': { origin: 'BWI', destAirport: 'JNU', flightHours: 11.0, driveHours: 0.5 },
+    'Haines, AK (Alaska Heliskiing)': { origin: 'BWI', destAirport: 'JNU', flightHours: 11.0, driveHours: 0.5 },
+    'Seward, AK (Silverton Mountain Guides)': { origin: 'BWI', destAirport: 'ANC', flightHours: 10.0, driveHours: 2.5 },
+    'Alyeska Resort, AK (Resort Base)': { origin: 'BWI', destAirport: 'ANC', flightHours: 10.0, driveHours: 0.75 },
+
+    // --- British Columbia (via YVR/YYC) ---
+    'Panorama, BC (RK Heliski)': { origin: 'IAD', destAirport: 'YYC', flightHours: 8.0, driveHours: 3.0 },
+    'Bella Coola, BC (Bella Coola Heli Sports)': { origin: 'IAD', destAirport: 'YVR', flightHours: 8.5, driveHours: 0.5 },
+    'Revelstoke, BC (Eagle Pass Heli Skiing)': { origin: 'IAD', destAirport: 'YLW', flightHours: 9.0, driveHours: 2.5 },
+    'Revelstoke, BC (Selkirk Tangiers)': { origin: 'IAD', destAirport: 'YLW', flightHours: 9.0, driveHours: 2.5 },
+    'Revelstoke, BC (Eleven Experience)': { origin: 'IAD', destAirport: 'YLW', flightHours: 9.0, driveHours: 2.5 },
+    'Gold Bridge, BC (Tyax Lodge & Heliskiing)': { origin: 'IAD', destAirport: 'YVR', flightHours: 8.5, driveHours: 4.5 },
+    'Golden, BC (Great Canadian Heliskiing)': { origin: 'IAD', destAirport: 'YYC', flightHours: 8.0, driveHours: 2.75 },
+    'Blue River, BC (Mike Wiegele Heli Skiing)': { origin: 'IAD', destAirport: 'YKA', flightHours: 9.5, driveHours: 2.0 },
+    'Stewart, BC (Last Frontier Heliskiing)': { origin: 'IAD', destAirport: 'YXT', flightHours: 11.0, driveHours: 3.5 },
+    'Terrace, BC (Northern Escape Heli Skiing)': { origin: 'IAD', destAirport: 'YXT', flightHours: 11.0, driveHours: 0.75 },
+    'Whistler, BC (Whistler Heli-Skiing)': { origin: 'IAD', destAirport: 'YVR', flightHours: 8.5, driveHours: 2.0 },
+    'Nelson, BC (Snowwater Heli Skiing)': { origin: 'IAD', destAirport: 'YCG', flightHours: 10.0, driveHours: 1.0 },
+    'Bugaboos, BC (CMH Heli-Skiing)': { origin: 'IAD', destAirport: 'YYC', flightHours: 8.0, driveHours: 4.0 },
+
+    // --- Europe ---
+    'Zermatt, Switzerland (Air Zermatt)': { origin: 'IAD', destAirport: 'ZRH', flightHours: 8.0, driveHours: 3.5 },
+    'Aosta Valley, Italy (Valgrisenche Heli-Ski)': { origin: 'IAD', destAirport: 'GVA', flightHours: 9.0, driveHours: 2.0 },
+    'Riksgränsen, Sweden (Arctic Elements)': { origin: 'IAD', destAirport: 'KRN', flightHours: 13.0, driveHours: 1.5 },
+    'Dalvik, Iceland (Arctic Heli Skiing)': { origin: 'IAD', destAirport: 'AEY', flightHours: 9.0, driveHours: 0.75 },
+    'Siglufjörður, Iceland (Summit Heliskiing)': { origin: 'IAD', destAirport: 'AEY', flightHours: 9.0, driveHours: 1.5 },
+    'Ólafsfjörður, Iceland (Viking Heli Skiing)': { origin: 'IAD', destAirport: 'AEY', flightHours: 9.0, driveHours: 1.0 },
+    'Kulusuk, Greenland (Greenland Heliskiing)': { origin: 'IAD', destAirport: 'KUS', flightHours: 12.0, driveHours: 0.3 },
+    'Maniitsoq, Greenland (Heliskigreenland)': { origin: 'IAD', destAirport: 'JSU', flightHours: 16.0, driveHours: 0.3 },
+
+    // --- Asia, Japan & Caucasus ---
+    'Niseko, Japan (Hokkaido Backcountry Club)': { origin: 'IAD', destAirport: 'CTS', flightHours: 17.0, driveHours: 2.5 },
+    'Manali, India (Himachal Helicopter Skiing)': { origin: 'IAD', destAirport: 'KUU', flightHours: 18.0, driveHours: 1.5 },
+    'Annapurna Range, Nepal (Himalayan Heliski)': { origin: 'IAD', destAirport: 'KTM', flightHours: 18.0, driveHours: 0.5 },
+    'Svaneti, Georgia (Svaneti Heliskiing)': { origin: 'IAD', destAirport: 'TBS', flightHours: 15.0, driveHours: 5.0 },
+
+    // --- South America ---
+    'Santiago/Andes, Chile (Powder South)': { origin: 'IAD', destAirport: 'SCL', flightHours: 12.0, driveHours: 1.5 },
+    'Valle Nevado, Chile (Valle Nevado Heli-Ski)': { origin: 'IAD', destAirport: 'SCL', flightHours: 12.0, driveHours: 2.0 },
+    'Patagonia, Chile (Rio Palena Lodge)': { origin: 'IAD', destAirport: 'BBA', flightHours: 16.0, driveHours: 3.0 },
+    'Puma Lodge, Chile (Powder South)': { origin: 'IAD', destAirport: 'SCL', flightHours: 12.0, driveHours: 3.0 },
+    'Portillo, Chile (Ski Portillo Heli)': { origin: 'IAD', destAirport: 'SCL', flightHours: 12.0, driveHours: 2.5 },
+
+    // --- New Zealand ---
+    'Queenstown, NZ (Harris Mountains Heli-Ski)': { origin: 'IAD', destAirport: 'ZQN', flightHours: 22.0, driveHours: 0.5 },
+
+    // --- Lower 48 States ---
+    'Mazama, WA (North Cascade Heli)': { origin: 'BWI', destAirport: 'SEA', flightHours: 6.0, driveHours: 4.0 },
+    'Sun Valley, ID (Sun Valley Heli Ski)': { origin: 'BWI', destAirport: 'SUN', flightHours: 8.5, driveHours: 0.5 },
+    'Driggs/Victor, ID (High Mountain Heli)': { origin: 'BWI', destAirport: 'JAC', flightHours: 8.0, driveHours: 1.25 },
+    'Jackson, WY (High Mountain Heli - Snake River)': { origin: 'BWI', destAirport: 'JAC', flightHours: 8.0, driveHours: 0.5 },
+    'Snowbird, UT (Powderbird)': { origin: 'BWI', destAirport: 'SLC', flightHours: 4.5, driveHours: 0.75 },
+    'Lamoille, NV (Ruby Mountain Heli)': { origin: 'BWI', destAirport: 'EKO', flightHours: 8.0, driveHours: 0.75 },
+    'Telluride, CO (Helitrax)': { origin: 'BWI', destAirport: 'MTJ', flightHours: 7.0, driveHours: 1.5 },
+    'Silverton, CO (Silverton Mountain)': { origin: 'BWI', destAirport: 'DRO', flightHours: 7.5, driveHours: 1.0 },
+    'Bridgeport, CA (Sweetwater Heli)': { origin: 'BWI', destAirport: 'RNO', flightHours: 7.5, driveHours: 2.0 },
+};
+
+export function getTravelEstimate(name: string): TravelEstimate | undefined {
+    return TRAVEL_TIMES[name];
+}
+
+// Format a decimal-hours value as "12h 30m" / "8h" / "45m".
+export function formatHours(hours: number): string {
+    const h = Math.floor(hours);
+    const m = Math.round((hours - h) * 60);
+    if (h === 0) return `${m}m`;
+    if (m === 0) return `${h}h`;
+    return `${h}h ${m}m`;
+}
 
 export async function getWeather(lat: number, lon: number): Promise<WeatherData> {
     // 1. Fetch Main Forecast & Elevation
