@@ -1,8 +1,8 @@
 import { Fragment, useState } from "react";
-import { ExternalLink, ChevronDown, ChevronRight, ChevronUp, ChevronsUpDown, Plane, Mountain, MountainSnow } from "lucide-react";
+import { ExternalLink, ChevronDown, ChevronRight, ChevronUp, ChevronsUpDown, Plane, Mountain, MountainSnow, CalendarX2 } from "lucide-react";
 import { Location } from "@/lib/types";
 
-import { LOCATIONS, REGIONS, getRegionForLoc, getLocsForRegion, getTravelEstimate, getNearbyResorts, getTerrainElevation, formatHours } from "@/services/weather";
+import { LOCATIONS, REGIONS, getRegionForLoc, getLocsForRegion, getTravelEstimate, getNearbyResorts, getTerrainElevation, getCancellationPolicy, formatHours } from "@/services/weather";
 
 type SortColumn = "operator" | "location" | "travel";
 type SortState = { col: SortColumn; dir: "asc" | "desc" } | null;
@@ -70,6 +70,7 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
         const travel = getTravelEstimate(loc.name);
         const resorts = getNearbyResorts(loc.name);
         const elevation = getTerrainElevation(loc.name);
+        const cancellation = getCancellationPolicy(loc.name);
         return (
             <tr
                 key={loc.name}
@@ -135,6 +136,12 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                     <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border shadow-sm ${reg.badge}`}>
                         {loc.pricing}
                     </span>
+                    {cancellation && (
+                        <span className="mt-1.5 flex items-center justify-end gap-1 text-[10px] text-slate-500 whitespace-nowrap">
+                            <CalendarX2 size={10} className="shrink-0" />
+                            {cancellation}
+                        </span>
+                    )}
                 </td>
             </tr>
         );
@@ -148,6 +155,7 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
         const travel = getTravelEstimate(loc.name);
         const resorts = getNearbyResorts(loc.name);
         const elevation = getTerrainElevation(loc.name);
+        const cancellation = getCancellationPolicy(loc.name);
         return (
             <div
                 key={loc.name}
@@ -196,6 +204,13 @@ export default function LocationsTable({ onSelectLocation }: { onSelectLocation:
                         <MountainSnow size={13} className="text-arctic-400 shrink-0" />
                         <span className="font-bold">{elevation.baseFt.toLocaleString()}&ndash;{elevation.peakFt.toLocaleString()} ft</span>
                         <span className="text-slate-500">(~{(elevation.peakFt - elevation.baseFt).toLocaleString()} ft vert)</span>
+                    </div>
+                )}
+
+                {cancellation && (
+                    <div className="mb-3 flex items-center gap-1.5 text-xs text-slate-400">
+                        <CalendarX2 size={13} className="text-arctic-400/70 shrink-0" />
+                        <span>{cancellation}</span>
                     </div>
                 )}
 
