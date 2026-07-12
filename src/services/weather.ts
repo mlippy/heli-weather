@@ -1,4 +1,4 @@
-import { WeatherData, RegionalWeather, Location, Region, TravelEstimate } from '@/lib/types';
+import { WeatherData, RegionalWeather, Location, Region, TravelEstimate, NearbyResort } from '@/lib/types';
 
 export const REGIONS: Region[] = [
     { label: "Alaska", filter: ", AK", borderColor: "border-l-amber-500", badge: "bg-amber-500/15 text-amber-400 border-amber-500/30", textColor: "text-amber-400" },
@@ -559,6 +559,197 @@ export function formatHours(hours: number): string {
     if (h === 0) return `${m}m`;
     if (m === 0) return `${h}h`;
     return `${h}h ${m}m`;
+}
+
+// Two closest major/notable lift-served resorts to each operator base, with
+// approximate drive time from the base, keyed by operator `name`. For "down-day"
+// resort skiing when you're not flying. Best-effort estimates; a few remote bases
+// (Greenland, Nepal, Bella Coola, Rio Palena) have no lift-served resort nearby.
+export const NEARBY_RESORTS: Record<string, NearbyResort[]> = {
+    'Cordova, AK (Points North Heli-Adventures)': [
+        { resort: 'Mt. Eyak Ski Area', driveHours: 0.15 },
+        { resort: 'Alyeska Resort', driveHours: 1.0, note: 'Cordova not road-connected; ferry/flight required' },
+    ],
+    'Judd Lake, AK (Tordrillo Mountain Lodge)': [
+        { resort: 'Hilltop Ski Area', driveHours: 0.5, note: 'fly-in lodge; via Anchorage' },
+        { resort: 'Alyeska Resort', driveHours: 1.0, note: 'via Anchorage' },
+    ],
+    'Girdwood, AK (Chugach Powder Guides)': [
+        { resort: 'Alyeska Resort', driveHours: 0.1 },
+        { resort: 'Hilltop Ski Area', driveHours: 0.75 },
+    ],
+    'Valdez, AK (Valdez Heli-Ski Guides)': [
+        { resort: 'Hilltop Ski Area', driveHours: 5.5, note: 'no resort in Valdez; nearest is Anchorage' },
+        { resort: 'Alyeska Resort', driveHours: 6.0 },
+    ],
+    'Valdez, AK (Black Ops Valdez)': [
+        { resort: 'Hilltop Ski Area', driveHours: 5.5, note: 'no resort in Valdez; nearest is Anchorage' },
+        { resort: 'Alyeska Resort', driveHours: 6.0 },
+    ],
+    'Valdez, AK (Alaska Backcountry Guides)': [
+        { resort: 'Hilltop Ski Area', driveHours: 5.5, note: 'no resort in Valdez; nearest is Anchorage' },
+        { resort: 'Alyeska Resort', driveHours: 6.0 },
+    ],
+    'Glacier View, AK (Majestic Heli Ski)': [
+        { resort: 'Skeetawk Ski Area', driveHours: 1.5 },
+        { resort: 'Alyeska Resort', driveHours: 2.75 },
+    ],
+    'Haines, AK (SEABA)': [
+        { resort: 'Eaglecrest Ski Area', driveHours: 5.0, note: 'in Juneau; ferry required, not drivable' },
+        { resort: 'Mount Sima', driveHours: 5.0, note: 'near Whitehorse, Yukon; border crossing' },
+    ],
+    'Haines, AK (Alaska Heliskiing)': [
+        { resort: 'Eaglecrest Ski Area', driveHours: 5.0, note: 'in Juneau; ferry required, not drivable' },
+        { resort: 'Mount Sima', driveHours: 5.0, note: 'near Whitehorse, Yukon; border crossing' },
+    ],
+    'Seward, AK (Silverton Mountain Guides)': [
+        { resort: 'Alyeska Resort', driveHours: 1.8 },
+        { resort: 'Hilltop Ski Area', driveHours: 2.3 },
+    ],
+    'Alyeska Resort, AK (Resort Base)': [
+        { resort: 'Alyeska Resort', driveHours: 0.0 },
+        { resort: 'Hilltop Ski Area', driveHours: 0.75 },
+    ],
+    'Panorama, BC (RK Heliski)': [
+        { resort: 'Panorama Mountain Resort', driveHours: 0.1 },
+        { resort: 'Kicking Horse Mountain Resort', driveHours: 1.5 },
+    ],
+    'Bella Coola, BC (Bella Coola Heli Sports)': [],
+    'Revelstoke, BC (Eagle Pass Heli Skiing)': [
+        { resort: 'Revelstoke Mountain Resort', driveHours: 0.2 },
+        { resort: 'Kicking Horse Mountain Resort', driveHours: 1.8 },
+    ],
+    'Revelstoke, BC (Selkirk Tangiers)': [
+        { resort: 'Revelstoke Mountain Resort', driveHours: 0.2 },
+        { resort: 'Kicking Horse Mountain Resort', driveHours: 1.8 },
+    ],
+    'Revelstoke, BC (Eleven Experience)': [
+        { resort: 'Revelstoke Mountain Resort', driveHours: 0.2 },
+        { resort: 'Kicking Horse Mountain Resort', driveHours: 1.8 },
+    ],
+    'Gold Bridge, BC (Tyax Lodge & Heliskiing)': [{ resort: 'Whistler Blackcomb', driveHours: 4.0, note: 'long remote winter route via Duffey Lake Rd' }],
+    'Golden, BC (Great Canadian Heliskiing)': [
+        { resort: 'Kicking Horse Mountain Resort', driveHours: 0.3 },
+        { resort: 'Lake Louise Ski Resort', driveHours: 1.3 },
+    ],
+    'Blue River, BC (Mike Wiegele Heli Skiing)': [
+        { resort: 'Marmot Basin (Jasper)', driveHours: 2.7 },
+        { resort: 'Sun Peaks Resort', driveHours: 3.0 },
+    ],
+    'Stewart, BC (Last Frontier Heliskiing)': [{ resort: 'Hudson Bay Mountain Resort (Smithers)', driveHours: 4.5, note: 'reachable within a day but far' }],
+    'Terrace, BC (Northern Escape Heli Skiing)': [
+        { resort: 'Shames Mountain', driveHours: 0.6 },
+        { resort: 'Hudson Bay Mountain Resort (Smithers)', driveHours: 2.5 },
+    ],
+    'Whistler, BC (Whistler Heli-Skiing)': [
+        { resort: 'Whistler Blackcomb', driveHours: 0.1 },
+        { resort: 'Cypress Mountain', driveHours: 2.0 },
+    ],
+    'Nelson, BC (Snowwater Heli Skiing)': [
+        { resort: 'Whitewater Ski Resort', driveHours: 0.4 },
+        { resort: 'RED Mountain Resort (Rossland)', driveHours: 2.0 },
+    ],
+    'Bugaboos, BC (CMH Heli-Skiing)': [
+        { resort: 'Kicking Horse Mountain Resort', driveHours: 0.3, note: 'from Golden staging; lodge is fly-in only' },
+        { resort: 'Lake Louise Ski Resort', driveHours: 0.7, note: 'from Banff/Lake Louise staging' },
+    ],
+    'Zermatt, Switzerland (Air Zermatt)': [
+        { resort: 'Zermatt (own ski area)', driveHours: 0, note: 'car-free; cog railway & lifts' },
+        { resort: 'Breuil-Cervinia (Italy)', driveHours: 3.0, note: 'ski-connected in ~1h on snow; ~3h by road' },
+    ],
+    'Aosta Valley, Italy (Valgrisenche Heli-Ski)': [
+        { resort: 'Pila (Aosta)', driveHours: 0.75 },
+        { resort: 'La Thuile', driveHours: 0.9 },
+    ],
+    'Riksgränsen, Sweden (Arctic Elements)': [
+        { resort: 'Riksgränsen (own ski area)', driveHours: 0, note: 'lift-served resort at the base' },
+        { resort: 'Björkliden', driveHours: 0.15, note: 'free shuttle, shared pass' },
+    ],
+    'Dalvik, Iceland (Arctic Heli Skiing)': [
+        { resort: 'Böggvisstaðafjall (Dalvík)', driveHours: 0.1 },
+        { resort: 'Hlíðarfjall (Akureyri)', driveHours: 0.67, note: 'largest resort in N. Iceland' },
+    ],
+    'Siglufjörður, Iceland (Summit Heliskiing)': [
+        { resort: 'Skarðsdalur (Siglufjörður)', driveHours: 0.1 },
+        { resort: 'Hlíðarfjall (Akureyri)', driveHours: 1.15 },
+    ],
+    'Ólafsfjörður, Iceland (Viking Heli Skiing)': [
+        { resort: 'Tindaöxl (Ólafsfjörður)', driveHours: 0.1 },
+        { resort: 'Hlíðarfjall (Akureyri)', driveHours: 0.9 },
+    ],
+    'Kulusuk, Greenland (Greenland Heliskiing)': [],
+    'Maniitsoq, Greenland (Heliskigreenland)': [],
+    'Niseko, Japan (Hokkaido Backcountry Club)': [
+        { resort: 'Niseko United', driveHours: 0.1 },
+        { resort: 'Rusutsu Resort', driveHours: 0.6 },
+    ],
+    'Manali, India (Himachal Helicopter Skiing)': [
+        { resort: 'Solang Valley', driveHours: 0.5 },
+        { resort: 'Narkanda', driveHours: 4.5, note: 'next nearest lift-served area, ~200 km' },
+    ],
+    'Annapurna Range, Nepal (Himalayan Heliski)': [],
+    'Svaneti, Georgia (Svaneti Heliskiing)': [
+        { resort: 'Hatsvali', driveHours: 0.25 },
+        { resort: 'Tetnuldi', driveHours: 1.0, note: 'rough road, 4x4 in winter' },
+    ],
+    'Santiago/Andes, Chile (Powder South)': [
+        { resort: 'Valle Nevado', driveHours: 1.5 },
+        { resort: 'El Colorado', driveHours: 1.5, note: 'La Parva equally close' },
+    ],
+    'Valle Nevado, Chile (Valle Nevado Heli-Ski)': [
+        { resort: 'El Colorado', driveHours: 0.5 },
+        { resort: 'La Parva', driveHours: 0.75 },
+    ],
+    'Patagonia, Chile (Rio Palena Lodge)': [],
+    'Puma Lodge, Chile (Powder South)': [{ resort: 'Chapa Verde', driveHours: 2.0, note: 'no private cars; mandatory shuttle from Rancagua' }],
+    'Portillo, Chile (Ski Portillo Heli)': [
+        { resort: 'El Colorado', driveHours: 3.5, note: 'via Santiago' },
+        { resort: 'Valle Nevado', driveHours: 3.5, note: 'via Santiago; Portillo base has on-site lifts' },
+    ],
+    'Queenstown, NZ (Harris Mountains Heli-Ski)': [
+        { resort: 'Coronet Peak', driveHours: 0.4 },
+        { resort: 'The Remarkables', driveHours: 0.75 },
+    ],
+    'Mazama, WA (North Cascade Heli)': [
+        { resort: 'Loup Loup Ski Bowl', driveHours: 0.8, note: 'small, limited operations' },
+        { resort: 'Mission Ridge', driveHours: 2.5, note: 'nearest full-size resort' },
+    ],
+    'Sun Valley, ID (Sun Valley Heli Ski)': [
+        { resort: 'Sun Valley (Bald Mountain)', driveHours: 0.15 },
+        { resort: 'Soldier Mountain', driveHours: 1.0, note: 'small, limited days' },
+    ],
+    'Driggs/Victor, ID (High Mountain Heli)': [
+        { resort: 'Grand Targhee', driveHours: 0.5 },
+        { resort: 'Jackson Hole Mountain Resort', driveHours: 0.9, note: 'over Teton Pass; can close in storms' },
+    ],
+    'Jackson, WY (High Mountain Heli - Snake River)': [
+        { resort: 'Snow King', driveHours: 0.1, note: 'in-town hill' },
+        { resort: 'Jackson Hole Mountain Resort', driveHours: 0.4 },
+    ],
+    'Snowbird, UT (Powderbird)': [
+        { resort: 'Alta', driveHours: 0.1 },
+        { resort: 'Brighton / Solitude', driveHours: 0.6 },
+    ],
+    'Lamoille, NV (Ruby Mountain Heli)': [
+        { resort: 'Elko Snobowl', driveHours: 0.6, note: 'tiny weekend community hill' },
+        { resort: 'Pomerelle', driveHours: 2.2, note: 'nearest small lift resort' },
+    ],
+    'Telluride, CO (Helitrax)': [
+        { resort: 'Telluride Ski Resort', driveHours: 0.15 },
+        { resort: 'Purgatory (Durango)', driveHours: 2.2 },
+    ],
+    'Silverton, CO (Silverton Mountain)': [
+        { resort: 'Purgatory (Durango)', driveHours: 0.9 },
+        { resort: 'Telluride Ski Resort', driveHours: 1.7 },
+    ],
+    'Bridgeport, CA (Sweetwater Heli)': [
+        { resort: 'June Mountain', driveHours: 0.9 },
+        { resort: 'Mammoth Mountain', driveHours: 1.3 },
+    ],
+};
+
+export function getNearbyResorts(name: string): NearbyResort[] {
+    return NEARBY_RESORTS[name] ?? [];
 }
 
 export async function getWeather(lat: number, lon: number): Promise<WeatherData> {

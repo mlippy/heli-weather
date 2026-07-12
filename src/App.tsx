@@ -4,8 +4,8 @@ import logoImg from "@/lib/images/Gemini_Generated_Image_q9st6mq9st6mq9st-fotor-
 import { WeatherBackground } from "@/components/WeatherBackground";
 import { useEffect, useState } from "react";
 import { WeatherData } from "@/lib/types";
-import { getWeather, LOCATIONS, REGIONS, getRegionForLoc, getTravelEstimate, formatHours } from "@/services/weather";
-import { Share2, Check, Plane } from "lucide-react";
+import { getWeather, LOCATIONS, REGIONS, getRegionForLoc, getTravelEstimate, getNearbyResorts, formatHours } from "@/services/weather";
+import { Share2, Check, Plane, Mountain } from "lucide-react";
 
 export default function App() {
     const [selectedLocation, setSelectedLocation] = useState(() => {
@@ -98,6 +98,8 @@ export default function App() {
 
     // Approx travel time from the DC area (BWI/Dulles) to the selected operator
     const travel = getTravelEstimate(selectedLocation.name);
+    // Closest lift-served resorts for down-day skiing
+    const resorts = getNearbyResorts(selectedLocation.name);
 
     return (
         <div className="antialiased min-h-screen relative text-slate-50">
@@ -216,6 +218,26 @@ export default function App() {
                                         </span>
                                     </div>
                                 )}
+
+                                <div className="flex items-center gap-2.5 bg-slate-950/40 border border-slate-700/50 rounded-xl px-4 py-2.5 shadow-lg backdrop-blur-md">
+                                    <Mountain size={15} className="text-arctic-400 shrink-0" />
+                                    {resorts.length > 0 ? (
+                                        <span className="text-[11px] font-medium tracking-wide text-slate-300 flex flex-wrap items-center gap-x-2 gap-y-1">
+                                            <span className="font-black uppercase tracking-tighter text-slate-400">Nearest resorts:</span>
+                                            {resorts.map((r, i) => (
+                                                <span key={r.resort} className="inline-flex items-center gap-1.5">
+                                                    <span className="font-bold text-slate-200">{r.resort}</span>
+                                                    <span className="text-slate-400">{formatHours(r.driveHours)}</span>
+                                                    {i < resorts.length - 1 && <span className="text-slate-600">·</span>}
+                                                </span>
+                                            ))}
+                                        </span>
+                                    ) : (
+                                        <span className="text-[11px] font-medium tracking-wide text-slate-400">
+                                            No lift-served resort nearby (remote base)
+                                        </span>
+                                    )}
+                                </div>
 
                                 <div className="bg-slate-950/30 p-6 rounded-2xl border border-white/5 shadow-inner backdrop-blur-sm w-full text-center">
                                     <p className="text-slate-200 text-sm md:text-base font-medium leading-relaxed italic opacity-90 max-w-lg mx-auto">
